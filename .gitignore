@@ -8,3 +8,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> IDEs ###
+/.idea
+/.vscode
+###< IDEs ###
