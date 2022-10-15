@@ -5,6 +5,9 @@ on:
     branches:
       - 1.x
 
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 jobs:
   pr:
     name: Create PR
