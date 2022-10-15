@@ -60,8 +60,7 @@
     },
     "env": "sh ./bin/env.sh",
     "post-install-cmd": [
-      "@auto-scripts",
-      "@env"
+      "@auto-scripts"
     ],
     "post-update-cmd": [
       "@auto-scripts"
