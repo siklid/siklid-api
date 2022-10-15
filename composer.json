@@ -15,6 +15,8 @@
     "symfony/yaml": "6.1.*"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "vimeo/psalm": "^4.29"
   },
   "config": {
     "allow-plugins": {
@@ -26,7 +28,10 @@
     "preferred-install": {
       "*": "dist"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1.0"
+    }
   },
   "autoload": {
     "psr-4": {
@@ -48,6 +53,7 @@
     "symfony/polyfill-php81": "*"
   },
   "scripts": {
+    "psalm": "vendor/bin/psalm --show-info=true --no-cache --shepherd --stats",
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
