@@ -2,6 +2,7 @@ version: "3.4"
 
 services:
   php:
+    container_name: siklid_php
     build:
       context: .
       target: app_php
@@ -25,6 +26,7 @@ services:
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
 
   caddy:
+    container_name: siklid_caddy
     build:
       context: .
       target: app_caddy
