@@ -10,3 +10,11 @@ To auto-format your code, you can use the PHP CS Fixer command:
 ```bash
 composer format
 ```
+
+## Static Code Analysis
+
+To run static code analysis, you can use the Psalm command:
+
+```bash
+composer psalm
+```
