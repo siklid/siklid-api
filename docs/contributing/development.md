@@ -16,13 +16,13 @@ cd siklid-api
 ```
 
 ```bash
-docker-compose up -d
+docker compose build --pull --no-cache
 ```
 
 ## Stopping the development environment
 
 ```bash
-docker-compose down
+docker compose down --remove-orphans
 ```
 
 ## Commands
