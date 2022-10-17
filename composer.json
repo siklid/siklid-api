@@ -16,11 +16,12 @@
         "symfony/yaml": "6.1.*"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.20",
         "friendsofphp/php-cs-fixer": "^3.12",
-        "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.17.0",
         "psalm/plugin-symfony": "^3.1",
+        "roave/security-advisories": "dev-latest",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
         "symfony/maker-bundle": "^1.47",
