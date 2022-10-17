@@ -5,7 +5,7 @@ if [ ! -f private.key ] || [ ! -f public.key ]; then
     # Get OAUTH_PASSPHRASE from .env
     OAUTH_PASSPHRASE=$(grep OAUTH_PASSPHRASE .env | cut -d '=' -f2)
     # Generate private.key
-    openssl genrsa -aes256 -passout pass:"$OAUTH_PASSPHRASE" -out private.key 4096
+    openssl genrsa -aes128 -passout pass:"$OAUTH_PASSPHRASE" -out private.key 2048
     # Generate public.key
     openssl rsa -passin pass:"$OAUTH_PASSPHRASE" -pubout -in private.key -out public.key
 else
