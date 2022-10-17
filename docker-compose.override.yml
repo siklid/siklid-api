@@ -12,7 +12,7 @@ services:
       #  from the bind-mount for better performance by enabling the next line:
       #- /srv/app/vendor
     environment:
-      # See https://xdebug.org/docs/all_settings#mode 
+      # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
