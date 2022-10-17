@@ -21,9 +21,9 @@ services:
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
     networks:
-        - siklid_network
+      - siklid_network
     depends_on:
-      - mongo
+      - mongodb
 
   caddy:
     container_name: siklid_caddy
@@ -55,10 +55,10 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
     networks:
-        - siklid_network
+      - siklid_network
 
-  mongo:
-    container_name: siklid_mongo
+  mongodb:
+    container_name: siklid_mongo_db
     image: mongo:6.0
     restart: unless-stopped
     environment:
@@ -67,7 +67,7 @@ services:
       - 'MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE:-siklid}'
     volumes:
       - siklid_mongo_data:/data/db
-      - ./docker/mongo/:/docker-entrypoint-initdb.d/
+      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/init.js:ro
     networks:
       - siklid_network
     ports:

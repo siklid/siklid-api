@@ -19,7 +19,7 @@ doctrine_mongodb:
 
         Siklid:
           is_bundle: false
-          type: annotation
+          type: attribute
           dir: '%kernel.project_dir%/src/Siklid/Document'
           prefix: 'App\Siklid\Document'
           alias: Siklid
