@@ -9,6 +9,8 @@ use Faker\Generator;
 
 /**
  * A wrapper for the Faker library.
+ *
+ * @mixin Generator
  */
 final class Faker
 {

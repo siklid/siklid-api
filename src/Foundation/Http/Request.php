@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class Request
 {
-    public function __construct(protected RequestStack $requestStack) { }
+    public function __construct(protected RequestStack $requestStack)
+    {
+    }
 
     /**
      * Get current request.
