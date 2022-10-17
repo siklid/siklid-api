@@ -8,7 +8,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/mongodb-odm-bundle": "^4.5",
-        "league/oauth2-server": "^8.3",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
@@ -18,8 +17,10 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.12",
-        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "psalm/plugin-symfony": "^3.1",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
         "symfony/maker-bundle": "^1.47",
@@ -62,7 +63,6 @@
         "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
         "psalm": "vendor/bin/psalm --show-info=true --no-cache --shepherd --stats",
         "test": "php bin/phpunit --testdox",
-        "console": "php bin/console",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
