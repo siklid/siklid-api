@@ -7,9 +7,27 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * FeatureTestCase is the base class for functional tests.
+ *
+ * @psalm-suppress MissingConstructor
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class FeatureTestCase extends WebTestCase
 {
+    /**
+     * @var Faker Faker instance
+     */
+    protected Faker $faker;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->faker = Faker::create();
+    }
+
     /**
      * A wrapper for the static createClient() method.
      *
