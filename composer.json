@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/mongodb-odm-bundle": "^4.5",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
@@ -75,7 +76,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": "true",
             "require": "6.1.*"
         }
     }
