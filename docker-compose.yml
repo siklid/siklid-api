@@ -62,9 +62,9 @@ services:
     image: mongo:6.0
     restart: unless-stopped
     environment:
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_DATABASE=siklid'
+      - 'MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME:-root}'
+      - 'MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD:-secret}'
+      - 'MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE:-siklid}'
     volumes:
       - siklid_mongo_data:/data/db
       - ./docker/mongo/:/docker-entrypoint-initdb.d/
