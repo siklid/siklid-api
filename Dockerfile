@@ -18,7 +18,7 @@ ENV STABILITY ${STABILITY}
 ARG SYMFONY_VERSION=""
 ENV SYMFONY_VERSION ${SYMFONY_VERSION}
 
-ENV APP_ENV=prod
+ENV APP_ENV=${APP_ENV:-prod}
 
 WORKDIR /srv/app
 
@@ -105,13 +105,7 @@ RUN rm $PHP_INI_DIR/conf.d/app.prod.ini; \
 COPY docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
 RUN set -eux; \
-    install-php-extensions \
-    	intl \
-    	zip \
-    	apcu \
-		opcache \
-        mongodb \
-    ;
+	install-php-extensions xdebug
 
 RUN rm -f .env.local.php
 
