@@ -36,8 +36,8 @@ final class Faker
     /**
      * Send calls to the Faker generator.
      *
-     * @param string $name     The name of the method to call
-     * @param array $arguments The arguments to pass to the method
+     * @param string $name      The name of the method to call
+     * @param array  $arguments The arguments to pass to the method
      *
      * @return mixed
      */
