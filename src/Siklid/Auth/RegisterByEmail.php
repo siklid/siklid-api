@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace App\Siklid\Auth;
 
+use App\Foundation\Actions\AbstractAction;
 use App\Siklid\Document\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
 
-class RegisterByEmail
+class RegisterByEmail extends AbstractAction
 {
-    public function __construct(private readonly DocumentManager $dm)
-    {
-    }
-
     public function execute(): User
     {
         $user = new User();
@@ -21,8 +17,8 @@ class RegisterByEmail
         $user->setPassword('fake_password');
         $user->setUsername('fake_username');
 
-        $this->dm->persist($user);
-        $this->dm->flush();
+        $this->persist($user);
+        $this->flush();
 
         return $user;
     }
