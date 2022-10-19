@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace App\Siklid\Auth;
 
 use App\Foundation\Actions\AbstractAction;
-use App\Foundation\Exceptions\ValidationException;
-use App\Foundation\Http\Request;
-use App\Siklid\Auth\Forms\RegisterByEmailForm;
+use App\Siklid\Auth\Forms\UserType;
+use App\Siklid\Auth\Requests\RegisterByEmailRequest;
 use App\Siklid\Document\User;
 
 class RegisterByEmail extends AbstractAction
 {
-    public function __construct(private readonly Request $request)
+    private readonly RegisterByEmailRequest $request;
+
+    public function __construct(RegisterByEmailRequest $request)
     {
+        $this->request = $request;
     }
 
     /**
@@ -23,16 +25,8 @@ class RegisterByEmail extends AbstractAction
     {
         $user = new User();
 
-        $form = $this->createForm(RegisterByEmailForm::class, $user);
-        $form->submit($this->request->formInput());
-
-        if (! $form->isValid()) {
-            $message = sprintf('Invalid `%s` form for `%s`', get_class($form), __FILE__);
-            $validationException = new ValidationException($message);
-            $validationException->setErrorIterator($form->getErrors(true));
-
-            throw $validationException;
-        }
+        $form = $this->createForm(UserType::class, $user);
+        $this->validate($form, $this->request);
         
         return $user;
     }
