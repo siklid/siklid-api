@@ -8,14 +8,19 @@ use App\Foundation\Actions\AbstractAction;
 use App\Siklid\Auth\Forms\UserType;
 use App\Siklid\Auth\Requests\RegisterByEmailRequest as Request;
 use App\Siklid\Document\User;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class RegisterByEmail extends AbstractAction
 {
     private readonly Request $request;
 
-    public function __construct(Request $request)
+    private readonly DocumentManager $dm;
+
+    public function __construct(Request $request, DocumentManager $dm)
     {
         $this->request = $request;
+
+        $this->dm = $dm;
     }
 
     /**
@@ -27,6 +32,9 @@ class RegisterByEmail extends AbstractAction
 
         $form = $this->createForm(UserType::class, $user);
         $this->validate($form, $this->request);
+
+        $this->dm->persist($user);
+        $this->dm->flush();
 
         return $user;
     }

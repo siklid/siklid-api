@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress MissingConstructor
  */
 #[MongoDB\Document(collection: 'users')]
-#[UniqueDocument(fields: ['email', 'username'])]
+#[UniqueDocument(fields: ['email'])]
+#[UniqueDocument(fields: ['username'])]
 class User
 {
     #[MongoDB\Id]
