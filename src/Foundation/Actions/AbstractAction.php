@@ -4,32 +4,11 @@ declare(strict_types=1);
 
 namespace App\Foundation\Actions;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Base action class.
  */
-abstract class AbstractAction implements ActionInterface
+abstract class AbstractAction extends AbstractController implements ActionInterface
 {
-    public function __construct(protected readonly DocumentManager $dm)
-    {
-    }
-
-    /**
-     * A wrapper for document manager persist method.
-     */
-    protected function persist(object $document): void
-    {
-        $this->dm->persist($document);
-    }
-
-    /**
-     * A wrapper for document manager flush method.
-     *
-     * @psalm-suppress MixedArgumentTypeCoercion
-     */
-    protected function flush(array $options = []): void
-    {
-        $this->dm->flush($options);
-    }
 }

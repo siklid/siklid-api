@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -16,12 +17,17 @@ class User
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
+    #[Assert\Unique]
+    #[Assert\NotBlank]
     private string $email;
 
     #[MongoDB\Field(type: 'string')]
+    #[Assert\NotBlank]
     private string $password;
 
     #[MongoDB\Field(type: 'string')]
+    #[Assert\Unique]
+    #[Assert\NotBlank]
     private string $username;
 
     public function getId(): string
