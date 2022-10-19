@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Annotation
  *
  * @Target({"CLASS", "ANNOTATION"})
+ *
  * @psalm-suppress PossiblyNullArgument
  */
 #[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]

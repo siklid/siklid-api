@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Foundation\Utils\Json;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -15,10 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class FeatureTestCase extends WebTestCase
 {
-    /**
-     * @var Faker Faker instance
-     */
     protected Faker $faker;
+
+    protected Json $json;
 
     /**
      * {@inheritDoc}
@@ -28,6 +29,7 @@ class FeatureTestCase extends WebTestCase
         parent::setUp();
 
         $this->faker = Faker::create();
+        $this->json = new Json();
     }
 
     /**
@@ -69,5 +71,54 @@ class FeatureTestCase extends WebTestCase
     protected function assertResponseIsNotFound(string $message = ''): void
     {
         self::assertResponseStatusCodeSame(404, $message);
+    }
+
+    /**
+     * Asserts that response format is JSON.
+     *
+     * @param string $message Assertion message
+     */
+    protected function assertResponseIsJson(string $message = ''): void
+    {
+        self::assertResponseFormatSame('json', $message);
+    }
+
+    protected function assertResponseJsonStructure(KernelBrowser $client, array $structure): void
+    {
+        $json = (string)$client->getResponse()->getContent();
+        $content = $this->json->jsonToArray($json);
+
+        $this->assertStructure($content, $structure);
+    }
+
+    /**
+     * @psalm-suppress MixedAssignment
+     * @psalm-suppress MixedArgument
+     */
+    protected function assertStructure(array $content, array $structure): void
+    {
+        foreach ($structure as $key => $value) {
+            if (is_int($key)) {
+                $this->assertArrayHasKey($value, $content);
+            } else {
+                $this->assertArrayHasKey($key, $content);
+                $this->assertStructure($content[$key], $value);
+            }
+        }
+    }
+
+    protected function getDocumentManager(): DocumentManager
+    {
+        /** @var DocumentManager $dm */
+        $dm = self::getContainer()->get('doctrine_mongodb.odm.document_manager');
+
+        return $dm;
+    }
+
+    protected function assertExists(string $class, array $criteria): void
+    {
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+        $this->assertNotNull($object);
     }
 }

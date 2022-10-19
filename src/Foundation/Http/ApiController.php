@@ -12,8 +12,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 abstract class ApiController extends AbstractController
 {
-    public function created(mixed $data, array $headers = [], array $context = []): JsonResponse
+    public function created(mixed $data, array $groups = [], array $headers = [], array $context = []): JsonResponse
     {
+        $context = array_replace_recursive($context, [
+            'groups' => $groups,
+        ]);
+
         return $this->json(compact('data'), 201, $headers, $context);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Siklid\Document;
 
 use App\Foundation\Constraints\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,19 +18,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User
 {
     #[MongoDB\Id]
+    #[Groups(['user:read'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
     #[Assert\Email]
+    #[Groups(['user:read'])]
     private string $email;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
+    #[Groups(['_none'])]
     private string $password;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
+    #[Groups(['user:read'])]
     private string $username;
 
     public function getId(): string

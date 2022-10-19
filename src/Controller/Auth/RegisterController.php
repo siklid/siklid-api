@@ -16,6 +16,6 @@ class RegisterController extends ApiController
     {
         return $this->created([
             'user' => $action->execute(),
-        ]);
+        ], ['user:read']);
     }
 }

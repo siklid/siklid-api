@@ -19,7 +19,6 @@ class RegisterByEmail extends AbstractAction
     public function __construct(Request $request, DocumentManager $dm)
     {
         $this->request = $request;
-
         $this->dm = $dm;
     }
 
