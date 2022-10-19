@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique;
+use App\Foundation\Constraints\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress MissingConstructor
  */
 #[MongoDB\Document(collection: 'users')]
-#[Unique(fields: ['email'])]
+#[UniqueDocument(fields: ['email', 'username'])]
 class User
 {
     #[MongoDB\Id]
