@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Http;
 
+use App\Foundation\Actions\ValidatableInterface;
 use App\Foundation\Utils\Json;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 /**
  * Base request class.
  */
-class Request
+class Request implements ValidatableInterface
 {
     protected readonly RequestStack $requestStack;
 
