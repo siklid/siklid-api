@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Foundation\Exceptions;
 
 use Symfony\Component\Form\FormError;
@@ -11,8 +13,6 @@ class ValidationException extends SiklidException
 
     /**
      * @param FormErrorIterator<FormError> $errorIterator
-     *
-     * @return void
      */
     public function setErrorIterator(FormErrorIterator $errorIterator): void
     {

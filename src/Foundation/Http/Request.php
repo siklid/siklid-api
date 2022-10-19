@@ -52,7 +52,7 @@ class Request implements ValidatableInterface
      */
     public function isJson(): bool
     {
-        return $this->request()->getContentType() === 'json';
+        return 'json' === $this->request()->getContentType();
     }
 
     /**
