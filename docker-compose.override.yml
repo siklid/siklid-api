@@ -11,6 +11,11 @@ services:
       # If you develop on Mac or Windows you can remove the vendor/ directory
       #  from the bind-mount for better performance by enabling the next line:
       #- /srv/app/vendor
+    healthcheck:
+      interval: 86400s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
     environment:
       # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
