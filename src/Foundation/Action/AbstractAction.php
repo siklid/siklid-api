@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Actions;
+namespace App\Foundation\Action;
 
-use App\Foundation\Exceptions\ValidationException;
+use App\Foundation\Exception\ValidationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 
@@ -17,7 +17,7 @@ abstract class AbstractAction extends AbstractController implements ActionInterf
     {
         $form->submit($request->formInput());
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $validationException = new ValidationException();
             $validationException->setErrorIterator($form->getErrors(true));
 

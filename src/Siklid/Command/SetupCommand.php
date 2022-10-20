@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Commands;
+namespace App\Siklid\Command;
 
 use App\Siklid\Document\OAuthClient;
 use App\Siklid\Document\User;

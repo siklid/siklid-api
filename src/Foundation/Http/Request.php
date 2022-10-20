@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Foundation\Http;
 
-use App\Foundation\Actions\ValidatableInterface;
-use App\Foundation\Utils\Json;
+use App\Foundation\Action\ValidatableInterface;
+use App\Foundation\Util\Json;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 

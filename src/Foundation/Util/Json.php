@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Utils;
+namespace App\Foundation\Util;
 
 use JsonException;
 
@@ -18,7 +18,7 @@ final class Json
     public function jsonToArray(string $json): array
     {
         try {
-            return (array) json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+            return (array)json_decode($json, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
             return [];
         }

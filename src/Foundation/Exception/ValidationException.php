@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Exceptions;
+namespace App\Foundation\Exception;
 
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
@@ -51,7 +51,7 @@ class ValidationException extends SiklidException implements RenderableInterface
             $errorMessage = $error->getMessage();
 
             /** @var string $propertyPath */
-            if (!isset($errors[$propertyPath])) {
+            if (! isset($errors[$propertyPath])) {
                 $errors[$propertyPath] = [];
             }
 
