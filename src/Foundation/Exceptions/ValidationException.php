@@ -32,6 +32,12 @@ class ValidationException extends SiklidException implements RenderableInterface
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
+    /**
+     * @psalm-suppress MixedAssignment Mixed assignment from error messages and paths
+     * @psalm-suppress PossiblyUndefinedMethod Possibly undefined method error cause.
+     * @psalm-suppress MixedMethodCall Mixed method call from error messages and paths
+     * @psalm-suppress PossiblyUndefinedMethod Possibly undefined method error cause and messages
+     */
     private function formatErrorMessages(): array
     {
         $errors = [];
@@ -41,18 +47,14 @@ class ValidationException extends SiklidException implements RenderableInterface
         }
 
         foreach ($this->errorIterator as $error) {
-            /** @psalm-suppress MixedAssignment, PossiblyUndefinedMethod, MixedMethodCall */
             $propertyPath = $error->getCause()->getPropertyPath();
-
-            /** @psalm-suppress MixedAssignment, PossiblyUndefinedMethod */
             $errorMessage = $error->getMessage();
 
             /** @var string $propertyPath */
-            if (! isset($errors[$propertyPath])) {
+            if (!isset($errors[$propertyPath])) {
                 $errors[$propertyPath] = [];
             }
 
-            /** @psalm-suppress MixedAssignment */
             $errors[$propertyPath][] = $errorMessage;
         }
 
