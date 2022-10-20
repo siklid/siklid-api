@@ -33,16 +33,16 @@ jobs:
           ini-values: memory_limit=-1
           extensions: sodium, fileinfo
 
-      - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-
       - name: "Start MongoDB"
         uses: supercharge/mongodb-github-action@1.8.0
         with:
           mongodb-version: 6.0
           mongodb-db: test
+
+      - name: "Install dependencies"
+        uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
 
       - name: "Tests"
         run: "composer test"
