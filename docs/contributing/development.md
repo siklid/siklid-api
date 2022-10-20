@@ -1,6 +1,7 @@
 # Development Environment
 
-For development, you will need to install Docker and Docker Composer. You can find the installation instructions for
+For development, you will need to install Docker and Docker Composer. You can
+find the installation instructions for
 your operating system [here](https://docs.docker.com/install/).
 
 ## Starting the development environment
@@ -27,4 +28,31 @@ docker compose down --remove-orphans
 
 ## Commands
 
-All commands are supposed to be run from the root of the project inside the container.
+All commands are supposed to be run from the root of the project inside the
+container.
+
+## Test environment
+
+After cloning the repository and installing the dependencies, create
+a `.env.test.local` file in the root of the project. This file will be used to
+override the default environment variables for the test environment.
+
+<summary>Click to expand</summary>
+<details>
+
+```
+# define your env variables for the test env here
+KERNEL_CLASS='App\Kernel'
+APP_SECRET='$ecretf0rt3st'
+SYMFONY_DEPRECATIONS_HELPER=999999
+PANTHER_APP_ENV=panther
+PANTHER_ERROR_SCREENSHOT_DIR=./var/error-screenshots
+
+###> doctrine/mongodb-odm-bundle ###
+MONGODB_URL=mongodb://root:secret@mongodb:27017
+MONGODB_DB=siklid
+###< doctrine/mongodb-odm-bundle ###
+
+```
+
+</details>
