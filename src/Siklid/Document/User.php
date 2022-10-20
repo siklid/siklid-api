@@ -6,6 +6,7 @@ namespace App\Siklid\Document;
 
 use App\Foundation\Constraints\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[MongoDB\Document(collection: 'users')]
 #[UniqueDocument(fields: ['email'])]
 #[UniqueDocument(fields: ['username'])]
-class User
+class User implements PasswordAuthenticatedUserInterface
 {
     #[MongoDB\Id]
     #[Groups(['user:read'])]

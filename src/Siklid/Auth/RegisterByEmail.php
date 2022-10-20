@@ -9,6 +9,7 @@ use App\Siklid\Auth\Forms\UserType;
 use App\Siklid\Auth\Requests\RegisterByEmailRequest as Request;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterByEmail extends AbstractAction
 {
@@ -16,10 +17,13 @@ class RegisterByEmail extends AbstractAction
 
     private readonly DocumentManager $dm;
 
-    public function __construct(Request $request, DocumentManager $dm)
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(Request $request, DocumentManager $dm, UserPasswordHasherInterface $hasher)
     {
         $this->request = $request;
         $this->dm = $dm;
+        $this->hasher = $hasher;
     }
 
     /**
@@ -31,6 +35,8 @@ class RegisterByEmail extends AbstractAction
 
         $form = $this->createForm(UserType::class, $user);
         $this->validate($form, $this->request);
+
+        $user->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
 
         $this->dm->persist($user);
         $this->dm->flush();
