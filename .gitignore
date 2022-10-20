@@ -28,3 +28,7 @@
 /private.key
 /public.key
 ###< league/oauth2-server ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
