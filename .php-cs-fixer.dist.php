@@ -9,4 +9,6 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         // > PHPUnit
         'php_unit_method_casing' => ['case' => 'snake_case'],
+        // > Strict
+        'declare_strict_types' => true,
     ])->setFinder($finder);
