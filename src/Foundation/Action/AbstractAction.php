@@ -17,7 +17,7 @@ abstract class AbstractAction extends AbstractController implements ActionInterf
     {
         $form->submit($request->formInput());
 
-        if (! $form->isValid()) {
+        if (!$form->isValid()) {
             $validationException = new ValidationException();
             $validationException->setErrorIterator($form->getErrors(true));
 

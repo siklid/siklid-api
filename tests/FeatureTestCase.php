@@ -85,7 +85,7 @@ class FeatureTestCase extends WebTestCase
 
     protected function assertResponseJsonStructure(KernelBrowser $client, array $structure): void
     {
-        $json = (string)$client->getResponse()->getContent();
+        $json = (string) $client->getResponse()->getContent();
         $content = $this->json->jsonToArray($json);
 
         $this->assertStructure($content, $structure);
