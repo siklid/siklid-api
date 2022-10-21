@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @psalm-suppress MissingConstructor
  */
 #[MongoDB\Document(collection: 'oauth_clients')]
-class OAuthClient implements ClientEntityInterface
+class OAuthClient
 {
     #[MongoDB\Id]
     private string $id;
