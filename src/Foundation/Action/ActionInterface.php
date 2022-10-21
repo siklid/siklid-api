@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Actions;
+namespace App\Foundation\Action;
 
 interface ActionInterface
 {

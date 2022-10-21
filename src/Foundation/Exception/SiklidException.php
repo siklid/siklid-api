@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Exceptions;
+namespace App\Foundation\Exception;
 
 use RuntimeException;
 

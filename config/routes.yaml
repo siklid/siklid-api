@@ -3,3 +3,6 @@ controllers:
   type: attribute
   prefix: /api/v1
   name_prefix: api_v1_
+
+api_login_check:
+  path: /api/login_check

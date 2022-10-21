@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Utils;
+namespace App\Foundation\Util;
 
 use JsonException;
 
