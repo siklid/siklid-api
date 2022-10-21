@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Auth\Requests;
+namespace App\Siklid\Auth\Request;
 
-use App\Foundation\Http\Request;
+use App\Siklid\Foundation\Http\Request;
 
 final class RegisterByEmailRequest extends Request
 {

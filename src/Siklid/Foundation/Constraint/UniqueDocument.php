@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Constraint;
+namespace App\Siklid\Foundation\Constraint;
 
 use Attribute;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;

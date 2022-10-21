@@ -44,6 +44,9 @@ jobs:
         with:
           dependency-versions: "${{ matrix.dependencies }}"
 
+      - name: "Generate openssl keys"
+        run: "sh ./bin/keypair.sh"
+
       - name: "Tests"
         run: "composer test"
 

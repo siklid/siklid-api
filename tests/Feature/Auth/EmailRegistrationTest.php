@@ -9,7 +9,9 @@ use App\Tests\FeatureTestCase;
 
 /**
  * @psalm-suppress MissingConstructor
+ *
  * @group          legacy
+ *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
 class EmailRegistrationTest extends FeatureTestCase
@@ -38,6 +40,7 @@ class EmailRegistrationTest extends FeatureTestCase
         $this->assertResponseJsonStructure($client, [
             'data' => [
                 'user' => ['id', 'email', 'username'],
+                'token' => ['accessToken', 'expiresAt', 'tokenType'],
             ],
         ]);
 

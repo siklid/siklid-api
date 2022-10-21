@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Exception;
+namespace App\Siklid\Foundation\Exception;
 
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
