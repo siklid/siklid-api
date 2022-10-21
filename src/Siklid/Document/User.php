@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Siklid\Auth\Token\AccessTokenInterface;
+use App\Siklid\Auth\Token\HasAccessToken;
 use App\Siklid\Foundation\Constraint\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
@@ -17,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[MongoDB\Document(collection: 'users')]
 #[UniqueDocument(fields: ['email'])]
 #[UniqueDocument(fields: ['username'])]
-class User implements Authenticable, UserInterface
+class User implements Authenticable, UserInterface, HasAccessToken
 {
     #[MongoDB\Id]
     #[Groups(['user:read'])]
@@ -40,6 +42,8 @@ class User implements Authenticable, UserInterface
     private string $username;
 
     private bool $shouldEraseCredentials = false;
+
+    private ?AccessToken $accessToken = null;
 
     public function getId(): string
     {
@@ -123,5 +127,17 @@ class User implements Authenticable, UserInterface
     public function getUserIdentifier(): string
     {
         return $this->getEmail();
+    }
+
+    public function getAccessToken(): ?AccessTokenInterface
+    {
+        return $this->accessToken;
+    }
+
+    public function setAccessToken(AccessToken|null $accessToken): User
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
     }
 }

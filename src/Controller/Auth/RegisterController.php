@@ -14,8 +14,11 @@ class RegisterController extends ApiController
     #[Route('/auth/register/email', name: 'auth_register_email', methods: ['POST'])]
     public function byEmail(RegisterByEmail $action): Response
     {
+        $user = $action->execute();
+
         return $this->created([
-            'user' => $action->execute(),
-        ], ['user:read']);
+            'user' => $user,
+            'token' => $user->getAccessToken(),
+        ], ['user:read', 'token:read']);
     }
 }

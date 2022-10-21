@@ -6,10 +6,12 @@ namespace App\Siklid\Auth;
 
 use App\Siklid\Auth\Forms\UserType;
 use App\Siklid\Auth\Requests\RegisterByEmailRequest as Request;
+use App\Siklid\Document\AccessToken;
 use App\Siklid\Document\User;
 use App\Siklid\Foundation\Action\AbstractAction;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JWT;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hash;
 
 class RegisterByEmail extends AbstractAction
 {
@@ -17,13 +19,16 @@ class RegisterByEmail extends AbstractAction
 
     private readonly DocumentManager $dm;
 
-    private UserPasswordHasherInterface $hasher;
+    private Hash $hash;
 
-    public function __construct(Request $request, DocumentManager $dm, UserPasswordHasherInterface $hasher)
+    private JWT $jwtManager;
+
+    public function __construct(Request $request, DocumentManager $dm, Hash $hash, JWT $jwtManager)
     {
         $this->request = $request;
         $this->dm = $dm;
-        $this->hasher = $hasher;
+        $this->hash = $hash;
+        $this->jwtManager = $jwtManager;
     }
 
     /**
@@ -36,10 +41,13 @@ class RegisterByEmail extends AbstractAction
         $form = $this->createForm(UserType::class, $user);
         $this->validate($form, $this->request);
 
-        $user->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
+        $user->setPassword($this->hash->hashPassword($user, $user->getPassword()));
 
         $this->dm->persist($user);
         $this->dm->flush();
+
+        $token = $this->jwtManager->create($user);
+        $user->setAccessToken(new AccessToken($token));
 
         return $user;
     }
