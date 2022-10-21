@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Auth;
 
 use App\Siklid\Auth\Forms\UserType;
-use App\Siklid\Auth\Requests\RegisterByEmailRequest as Request;
+use App\Siklid\Auth\Request\RegisterByEmailRequest as Request;
 use App\Siklid\Document\AccessToken;
 use App\Siklid\Document\User;
 use App\Siklid\Foundation\Action\AbstractAction;
