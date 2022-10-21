@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
-use App\Foundation\Http\ApiController;
 use App\Siklid\Auth\RegisterByEmail;
+use App\Siklid\Foundation\Http\ApiController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

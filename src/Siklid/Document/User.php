@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use App\Foundation\Constraint\UniqueDocument;
+use App\Siklid\Foundation\Constraint\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
 use Symfony\Component\Security\Core\User\UserInterface;
