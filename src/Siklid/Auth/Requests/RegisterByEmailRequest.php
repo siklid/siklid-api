@@ -10,6 +10,6 @@ final class RegisterByEmailRequest extends Request
 {
     public function formInput(): array
     {
-        return (array)($this->all()['user'] ?? []);
+        return (array) ($this->all()['user'] ?? []);
     }
 }
