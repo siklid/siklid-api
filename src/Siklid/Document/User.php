@@ -39,6 +39,8 @@ class User implements Authenticable, UserInterface
     #[Groups(['user:read'])]
     private string $username;
 
+    private bool $shouldEraseCredentials = false;
+
     public function getId(): string
     {
         return $this->id;
@@ -106,7 +108,16 @@ class User implements Authenticable, UserInterface
 
     public function eraseCredentials(): void
     {
-        $this->password = '';
+        if ($this->shouldEraseCredentials) {
+            $this->password = '';
+        }
+    }
+
+    public function setShouldEraseCredentials(bool $shouldEraseCredentials): User
+    {
+        $this->shouldEraseCredentials = $shouldEraseCredentials;
+
+        return $this;
     }
 
     public function getUserIdentifier(): string
