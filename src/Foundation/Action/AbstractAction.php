@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Action;
+namespace App\Foundation\Action;
 
-use App\Siklid\Foundation\Exception\ValidationException;
+use App\Foundation\Exception\ValidationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 

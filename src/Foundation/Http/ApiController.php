@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Http;
+namespace App\Foundation\Http;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

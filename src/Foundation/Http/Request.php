@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Http;
+namespace App\Foundation\Http;
 
-use App\Siklid\Foundation\Action\ValidatableInterface;
-use App\Siklid\Foundation\Util\Json;
+use App\Foundation\Action\ValidatableInterface;
+use App\Foundation\Util\Json;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 

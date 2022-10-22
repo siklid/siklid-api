@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Util;
+namespace App\Foundation\Util;
 
 use JsonException;
 

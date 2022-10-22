@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Exception;
+namespace App\Foundation\Exception;
 
 use Symfony\Component\HttpFoundation\Response;
 

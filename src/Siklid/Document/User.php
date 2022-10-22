@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Foundation\Constraint\UniqueDocument;
 use App\Siklid\Application\Auth\Token\AccessTokenInterface;
 use App\Siklid\Application\Auth\Token\HasAccessToken;
-use App\Siklid\Foundation\Constraint\UniqueDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Foundation\Action;
+namespace App\Foundation\Action;
 
 interface ActionInterface
 {
