@@ -10,14 +10,25 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * Base action class.
+ * Each use case in the application layer should extend this class.
+ * It extends the Symfony AbstractController to provide access to the container
+ * besides the use case specific methods.
  */
 abstract class AbstractAction extends AbstractController implements ActionInterface
 {
-    protected function validate(FormInterface $form, ValidatableInterface $request): void
+    /**
+     * Validates the given form and throws a ValidationException if the form is not valid.
+     *
+     * @param FormInterface $form           The form to validate
+     * @param ValidatableInterface $request The validatable object that contains the data to validate
+     *
+     * @return void
+     */
+    public function validate(FormInterface $form, ValidatableInterface $request): void
     {
         $form->submit($request->formInput());
 
-        if (!$form->isValid()) {
+        if (! $form->isValid()) {
             $validationException = new ValidationException();
             $validationException->setErrorIterator($form->getErrors(true));
 
