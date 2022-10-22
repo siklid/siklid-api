@@ -7,6 +7,8 @@ namespace App\Tests;
 use App\Foundation\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -53,5 +55,20 @@ class IntegrationTestCase extends KernelTestCase
         $kernel = self::bootKernel($options);
 
         return new Application($kernel);
+    }
+
+    /**
+     * Creates a command tester
+     *
+     * @param Application $application The console application
+     * @param string|Command $command  The command to test
+     *
+     * @return CommandTester
+     */
+    protected function cmdTester(Application $application, string|Command $command): CommandTester
+    {
+        $command = $command instanceof Command ? $command : $application->find($command);
+
+        return new CommandTester($command);
     }
 }
