@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Base controller for all API controllers.
+ *
+ * @todo: add tests for the api controller
  */
 abstract class ApiController extends AbstractController
 {

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Base request class.
+ *
+ * @todo: add tests for the base request class
  */
 class Request implements ValidatableInterface
 {
