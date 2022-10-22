@@ -6,7 +6,6 @@ namespace App\Siklid\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -41,15 +40,7 @@ abstract class Console extends Command
      * Executes the current command.
      */
     abstract public function handle(): int;
-
-    /**
-     * Creates a new output section.
-     */
-    protected function outputSection(): ConsoleSectionOutput
-    {
-        return $this->output->section();
-    }
-
+    
     protected function info(string $message): void
     {
         $this->output->writeln(sprintf('<info>%s</info>', $message));
