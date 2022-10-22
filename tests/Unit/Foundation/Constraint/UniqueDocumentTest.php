@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Foundation\Constraint;
 
 use App\Foundation\Constraint\UniqueDocument;
-use PHPUnit\Framework\TestCase;
+use App\Tests\TestCase;
 
 class UniqueDocumentTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Foundation\Util;
 
 use App\Foundation\Util\Json;
-use PHPUnit\Framework\TestCase;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
