@@ -14,8 +14,6 @@ use Symfony\Component\PasswordHasher\PasswordHasherInterface;
  * Class SetupCommand.
  *
  * This class is used to set up the application
- *
- * @todo: add test for the setup command
  */
 #[AsCommand(
     name: 'siklid:setup',
