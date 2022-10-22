@@ -7,6 +7,7 @@
     "php": ">=8.1",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "ext-mongodb": "*",
     "doctrine/annotations": "^1.0",
     "doctrine/mongodb-odm-bundle": "^4.5",
     "gesdinet/jwt-refresh-token-bundle": "^1.1",
@@ -38,8 +39,7 @@
     "symfony/maker-bundle": "^1.47",
     "symfony/phpunit-bridge": "^6.1",
     "symfony/var-dumper": "6.1.*",
-    "vimeo/psalm": "^4.29",
-    "ext-mongodb": "*"
+    "vimeo/psalm": "^4.29"
   },
   "config": {
     "allow-plugins": {
