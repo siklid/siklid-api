@@ -9,8 +9,6 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 /**
  * Class ExceptionListener
  * This class is used to listen to exceptions and handle them accordingly.
- *
- * @todo: add tests for the exception listener
  */
 final class ExceptionListener
 {
