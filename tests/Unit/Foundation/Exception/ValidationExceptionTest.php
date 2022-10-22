@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\Foundation;
+namespace App\Tests\Unit\Foundation\Exception;
 
 use App\Foundation\Exception\ValidationException;
 use App\Tests\TestCase;
