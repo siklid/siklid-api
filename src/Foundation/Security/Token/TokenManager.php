@@ -10,6 +10,9 @@ use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * The default token manager.
+ */
 class TokenManager implements TokenManagerInterface
 {
     private JWTTokenManagerInterface $JWTTokenManager;

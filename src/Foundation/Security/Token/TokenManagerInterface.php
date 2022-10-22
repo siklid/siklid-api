@@ -6,6 +6,10 @@ namespace App\Foundation\Security\Token;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Token manager interface.
+ * All access token managers must implement this interface.
+ */
 interface TokenManagerInterface
 {
     /**
