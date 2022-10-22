@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Auth\Token;
+namespace App\Siklid\Application\Auth\Token;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 

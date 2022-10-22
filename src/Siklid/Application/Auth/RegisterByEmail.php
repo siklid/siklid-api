@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Auth;
+namespace App\Siklid\Application\Auth;
 
-use App\Siklid\Auth\Forms\UserType;
-use App\Siklid\Auth\Request\RegisterByEmailRequest as Request;
-use App\Siklid\Auth\Token\TokenManagerInterface;
+use App\Siklid\Application\Auth\Forms\UserType;
+use App\Siklid\Application\Auth\Request\RegisterByEmailRequest as Request;
+use App\Siklid\Application\Auth\Token\TokenManagerInterface;
 use App\Siklid\Document\User;
 use App\Siklid\Foundation\Action\AbstractAction;
 use Doctrine\ODM\MongoDB\DocumentManager;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Auth\Request;
+namespace App\Siklid\Application\Auth\Request;
 
 use App\Siklid\Foundation\Http\Request;
 
