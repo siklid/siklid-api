@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Application\Auth\Token;
+namespace App\Foundation\Security\Token;
 
 use App\Siklid\Document\AccessToken;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
@@ -10,6 +10,9 @@ use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * The default token manager.
+ */
 class TokenManager implements TokenManagerInterface
 {
     private JWTTokenManagerInterface $JWTTokenManager;

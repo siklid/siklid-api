@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Siklid\Command;
 
-use App\Siklid\Document\OAuthClient;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -42,7 +41,6 @@ class SetupCommand extends Console
         $this->info('Setup the application...');
 
         $this->createAdminUser();
-        $this->createOAuthClient();
 
         return self::SUCCESS;
     }
@@ -69,30 +67,5 @@ class SetupCommand extends Console
         $this->dm->flush();
 
         $this->success('- Admin user created.');
-    }
-
-    private function createOAuthClient(): void
-    {
-        $oAuthClientsRepository = $this->dm->getRepository(OAuthClient::class);
-        $first = $oAuthClientsRepository->findOneBy([]);
-
-        if ($first) {
-            $this->warning('- OAuth client already exists.');
-
-            return;
-        }
-
-        $client = new OAuthClient();
-
-        $client->setName('Siklid.1.x');
-        $client->setPersonalAccessClient(true);
-        $client->setPasswordClient(true);
-        $client->setSecret($this->hasher->hash('secret'));
-        $client->setRedirectUri('https://localhost');
-
-        $this->dm->persist($client);
-        $this->dm->flush();
-
-        $this->success('- OAuth client created.');
     }
 }

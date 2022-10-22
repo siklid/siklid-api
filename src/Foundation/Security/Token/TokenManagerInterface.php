@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Application\Auth\Token;
+namespace App\Foundation\Security\Token;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Token manager interface.
+ * All access token managers must implement this interface.
+ */
 interface TokenManagerInterface
 {
     /**

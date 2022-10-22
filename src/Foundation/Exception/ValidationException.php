@@ -9,6 +9,12 @@ use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ValidationException
+ * This exception should be thrown when a validation error occurs.
+ *
+ * @todo: Add tests for the validation exception.
+ */
 class ValidationException extends SiklidException implements RenderableInterface
 {
     protected ?FormErrorIterator $errorIterator = null;
@@ -51,7 +57,7 @@ class ValidationException extends SiklidException implements RenderableInterface
             $errorMessage = $error->getMessage();
 
             /** @var string $propertyPath */
-            if (!isset($errors[$propertyPath])) {
+            if (! isset($errors[$propertyPath])) {
                 $errors[$propertyPath] = [];
             }
 

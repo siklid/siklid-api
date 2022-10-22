@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Foundation\Util\Json;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -17,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class FeatureTestCase extends WebTestCase
 {
+    use DBTrait;
+
     protected Faker $faker;
 
     protected Json $json;
@@ -30,6 +31,13 @@ class FeatureTestCase extends WebTestCase
 
         $this->faker = Faker::create();
         $this->json = new Json();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->dropAllCollections();
+
+        parent::tearDown();
     }
 
     /**
@@ -85,7 +93,7 @@ class FeatureTestCase extends WebTestCase
 
     protected function assertResponseJsonStructure(KernelBrowser $client, array $structure): void
     {
-        $json = (string) $client->getResponse()->getContent();
+        $json = (string)$client->getResponse()->getContent();
         $content = $this->json->jsonToArray($json);
 
         $this->assertStructure($content, $structure);
@@ -105,20 +113,5 @@ class FeatureTestCase extends WebTestCase
                 $this->assertStructure($content[$key], $value);
             }
         }
-    }
-
-    protected function getDocumentManager(): DocumentManager
-    {
-        /** @var DocumentManager $dm */
-        $dm = self::getContainer()->get('doctrine_mongodb.odm.document_manager');
-
-        return $dm;
-    }
-
-    protected function assertExists(string $class, array $criteria): void
-    {
-        $repository = $this->getDocumentManager()->getRepository($class);
-        $object = $repository->findOneBy($criteria);
-        $this->assertNotNull($object);
     }
 }

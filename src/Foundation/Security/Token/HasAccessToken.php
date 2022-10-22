@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Application\Auth\Token;
+namespace App\Foundation\Security\Token;
 
 interface HasAccessToken
 {

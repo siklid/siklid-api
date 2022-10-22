@@ -11,4 +11,8 @@ return (new PhpCsFixer\Config())
         'php_unit_method_casing' => ['case' => 'snake_case'],
         // > Strict
         'declare_strict_types' => true,
+        // > Operator
+        'not_operator_with_successor_space' => true,
+        // > Cast Notation
+        'cast_spaces' => ['space' => 'none'],
     ])->setFinder($finder);
