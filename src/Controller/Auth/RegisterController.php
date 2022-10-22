@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
-use App\Siklid\Auth\RegisterByEmail;
-use App\Siklid\Foundation\Http\ApiController;
+use App\Foundation\Http\ApiController;
+use App\Siklid\Application\Auth\RegisterByEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,9 +16,13 @@ class RegisterController extends ApiController
     {
         $user = $action->execute();
 
-        return $this->created([
+        $data = [
             'user' => $user,
             'token' => $user->getAccessToken(),
-        ], ['user:read', 'token:read']);
+        ];
+
+        $groups = ['user:read', 'token:read'];
+
+        return $this->created($data, $groups);
     }
 }
