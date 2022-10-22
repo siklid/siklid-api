@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class IntegrationTestCase extends KernelTestCase
 {
     use DBTrait;
-    
+
     protected Faker $faker;
 
     protected Json $json;
@@ -34,6 +34,13 @@ class IntegrationTestCase extends KernelTestCase
 
         $this->faker = Faker::create();
         $this->json = new Json();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->dropAllCollections();
+
+        parent::tearDown();
     }
 
     /**

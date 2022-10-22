@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class FeatureTestCase extends WebTestCase
 {
     use DBTrait;
-    
+
     protected Faker $faker;
 
     protected Json $json;
@@ -31,6 +31,13 @@ class FeatureTestCase extends WebTestCase
 
         $this->faker = Faker::create();
         $this->json = new Json();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->dropAllCollections();
+
+        parent::tearDown();
     }
 
     /**

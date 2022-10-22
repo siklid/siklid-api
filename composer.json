@@ -38,7 +38,8 @@
     "symfony/maker-bundle": "^1.47",
     "symfony/phpunit-bridge": "^6.1",
     "symfony/var-dumper": "6.1.*",
-    "vimeo/psalm": "^4.29"
+    "vimeo/psalm": "^4.29",
+    "ext-mongodb": "*"
   },
   "config": {
     "allow-plugins": {
