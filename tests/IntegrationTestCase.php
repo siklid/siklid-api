@@ -19,6 +19,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class IntegrationTestCase extends KernelTestCase
 {
+    use DBTrait;
+    
     protected Faker $faker;
 
     protected Json $json;
