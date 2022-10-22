@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use App\Siklid\Application\Auth\Token\AccessTokenInterface;
+use App\Foundation\Security\Token\AccessTokenInterface;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
