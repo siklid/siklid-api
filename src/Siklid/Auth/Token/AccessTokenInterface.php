@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Siklid\Auth\Token;
 
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
+
 interface AccessTokenInterface
 {
     /**
@@ -12,4 +14,11 @@ interface AccessTokenInterface
      * @return string JWT token
      */
     public function getToken(): string;
+
+    /**
+     * Returns the refresh token associated with the access token.
+     *
+     * @return RefreshTokenInterface|null The refresh token if exists
+     */
+    public function getRefreshToken(): RefreshTokenInterface|null;
 }

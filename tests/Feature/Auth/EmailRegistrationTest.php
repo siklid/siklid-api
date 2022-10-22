@@ -40,7 +40,7 @@ class EmailRegistrationTest extends FeatureTestCase
         $this->assertResponseJsonStructure($client, [
             'data' => [
                 'user' => ['id', 'email', 'username'],
-                'token' => ['accessToken', 'expiresAt', 'tokenType'],
+                'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
 

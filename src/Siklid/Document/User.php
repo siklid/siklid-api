@@ -43,7 +43,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
 
     private bool $shouldEraseCredentials = false;
 
-    private ?AccessToken $accessToken = null;
+    private ?AccessTokenInterface $accessToken = null;
 
     public function getId(): string
     {
@@ -134,7 +134,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
         return $this->accessToken;
     }
 
-    public function setAccessToken(AccessToken|null $accessToken): User
+    public function setAccessToken(AccessTokenInterface|null $accessToken): User
     {
         $this->accessToken = $accessToken;
 
