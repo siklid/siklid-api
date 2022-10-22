@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Foundation\Exception;
 
 use App\Foundation\Exception\ExceptionListener;
@@ -18,13 +20,14 @@ class ExceptionListenerTest extends IntegrationTestCase
 {
     /**
      * @test
+     *
      * @psalm-suppress PossiblyNullReference We know that event has a response
      */
     public function on_kernel_exception_adds_uses_response_from_renderable_exceptions(): void
     {
         $sut = $this->container()->get(ExceptionListener::class);
 
-        $exception = new class extends SiklidException implements RenderableInterface {
+        $exception = new class() extends SiklidException implements RenderableInterface {
             private ?Response $response = null;
 
             public function render(): Response

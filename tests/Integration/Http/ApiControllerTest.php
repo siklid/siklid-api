@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Http;
 
 use App\Foundation\Http\ApiController;
@@ -15,7 +17,7 @@ class ApiControllerTest extends IntegrationTestCase
      */
     public function created(): void
     {
-        $sut = new class extends ApiController {
+        $sut = new class() extends ApiController {
             public function __invoke(): void
             {
                 $this->created('foo');

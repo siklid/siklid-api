@@ -45,7 +45,7 @@ class IntegrationTestCase extends KernelTestCase
 
     /**
      * Provides a dedicated test container
-     * It's a wrapper around the static::getContainer() method
+     * It's a wrapper around the static::getContainer() method.
      */
     protected function container(): ContainerInterface
     {
@@ -53,11 +53,9 @@ class IntegrationTestCase extends KernelTestCase
     }
 
     /**
-     * Creates a dedicated console application
+     * Creates a dedicated console application.
      *
      * @param array $options The kernel options
-     *
-     * @return Application
      */
     protected function consoleApplication(array $options = []): Application
     {
@@ -67,12 +65,10 @@ class IntegrationTestCase extends KernelTestCase
     }
 
     /**
-     * Creates a command tester
+     * Creates a command tester.
      *
-     * @param Application $application The console application
-     * @param string|Command $command  The command to test
-     *
-     * @return CommandTester
+     * @param Application    $application The console application
+     * @param string|Command $command     The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {

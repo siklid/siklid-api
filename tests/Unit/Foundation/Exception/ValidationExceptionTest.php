@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Foundation\Exception;
 
 use App\Foundation\Exception\ValidationException;
@@ -29,7 +31,7 @@ class ValidationExceptionTest extends TestCase
             $this->createMock(FormInterface::class),
             [$formError]
         );
-        /** @psalm-suppress InvalidArgument */
+        /* @psalm-suppress InvalidArgument */
         $sut->setErrorIterator($errorIterator);
 
         $response = $sut->render();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Foundation\Security\Token;
 
 use App\Foundation\Security\Token\TokenManagerInterface;
@@ -14,6 +16,7 @@ class TokenManagerTest extends IntegrationTestCase
 {
     /**
      * @test
+     *
      * @psalm-suppress MixedAssignment The faker email is a string
      * @psalm-suppress MixedArgument The faker email is a string
      */

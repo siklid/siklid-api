@@ -19,10 +19,8 @@ abstract class AbstractAction extends AbstractController implements ActionInterf
     /**
      * Validates the given form and throws a ValidationException if the form is not valid.
      *
-     * @param FormInterface $form           The form to validate
+     * @param FormInterface        $form    The form to validate
      * @param ValidatableInterface $request The validatable object that contains the data to validate
-     *
-     * @return void
      */
     public function validate(FormInterface $form, ValidatableInterface $request): void
     {

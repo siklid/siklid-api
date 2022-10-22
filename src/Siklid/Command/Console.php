@@ -40,7 +40,7 @@ abstract class Console extends Command
      * Executes the current command.
      */
     abstract public function handle(): int;
-    
+
     protected function info(string $message): void
     {
         $this->output->writeln(sprintf('<info>%s</info>', $message));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -7,14 +9,14 @@ use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * This trait is used to extend tests that interact with the database
+ * This trait is used to extend tests that interact with the database.
  *
  * @mixin KernelTestCase
  */
 trait DBTrait
 {
     /**
-     * Get document manager instance
+     * Get document manager instance.
      */
     protected function getDocumentManager(): DocumentManager
     {
@@ -25,7 +27,7 @@ trait DBTrait
     }
 
     /**
-     * Asserts that the given document exists in the database
+     * Asserts that the given document exists in the database.
      */
     protected function assertExists(string $class, array $criteria): void
     {
@@ -35,7 +37,7 @@ trait DBTrait
     }
 
     /**
-     * Deletes all collections and indexes from the database
+     * Deletes all collections and indexes from the database.
      */
     protected function dropAllCollections(): void
     {
