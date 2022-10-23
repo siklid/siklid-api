@@ -32,7 +32,7 @@ class FeatureTestCase extends WebTestCase
         $this->faker = Faker::create();
         $this->json = new Json();
     }
-    
+
     /**
      * A wrapper for the static createClient() method.
      *

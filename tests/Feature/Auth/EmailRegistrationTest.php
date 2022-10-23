@@ -48,5 +48,10 @@ class EmailRegistrationTest extends FeatureTestCase
             'email' => $email,
             'username' => $username,
         ]);
+
+        $this->deleteDocument(User::class, [
+            'email' => $email,
+            'username' => $username,
+        ]);
     }
 }

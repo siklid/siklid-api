@@ -35,7 +35,7 @@ class IntegrationTestCase extends KernelTestCase
         $this->faker = Faker::create();
         $this->json = new Json();
     }
-    
+
     /**
      * Provides a dedicated test container
      * It's a wrapper around the static::getContainer() method.
@@ -60,8 +60,8 @@ class IntegrationTestCase extends KernelTestCase
     /**
      * Creates a command tester.
      *
-     * @param Application $application The console application
-     * @param string|Command $command  The command to test
+     * @param Application    $application The console application
+     * @param string|Command $command     The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {
