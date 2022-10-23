@@ -32,14 +32,7 @@ class FeatureTestCase extends WebTestCase
         $this->faker = Faker::create();
         $this->json = new Json();
     }
-
-    protected function tearDown(): void
-    {
-        $this->dropAllCollections();
-
-        parent::tearDown();
-    }
-
+    
     /**
      * A wrapper for the static createClient() method.
      *
