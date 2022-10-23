@@ -34,4 +34,16 @@ trait DBTrait
         $object = $repository->findOneBy($criteria);
         $this->assertNotNull($object);
     }
+
+    /**
+     * Deletes the given document from the database.
+     */
+    protected function deleteDocument(string $class, array $criteria): void
+    {
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+
+        $this->getDocumentManager()->remove($object);
+        $this->getDocumentManager()->flush();
+    }
 }
