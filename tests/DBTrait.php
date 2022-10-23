@@ -38,8 +38,15 @@ trait DBTrait
     /**
      * Deletes the given document from the database.
      */
-    protected function deleteDocument(string $class, array $criteria): void
+    protected function deleteDocument(string|object $class, array $criteria = []): void
     {
+        if (is_object($class)) {
+            $this->getDocumentManager()->remove($class);
+            $this->getDocumentManager()->flush();
+
+            return;
+        }
+
         $repository = $this->getDocumentManager()->getRepository($class);
         $object = $repository->findOneBy($criteria);
 
