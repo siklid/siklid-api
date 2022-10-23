@@ -7,6 +7,9 @@ namespace App\Tests\Integration\Siklid\Command;
 use App\Siklid\Document\User;
 use App\Tests\IntegrationTestCase;
 
+/**
+ * @psalm-suppress MissingConstructor
+ */
 class SetupCommandTest extends IntegrationTestCase
 {
     /**
@@ -20,5 +23,7 @@ class SetupCommandTest extends IntegrationTestCase
 
         $console->assertCommandIsSuccessful();
         $this->assertExists(User::class, ['username' => 'admin']);
+
+        $this->deleteDocument(User::class, ['username' => 'admin']);
     }
 }

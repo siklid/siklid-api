@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -37,19 +36,14 @@ trait DBTrait
     }
 
     /**
-     * Deletes all collections and indexes from the database.
+     * Deletes the given document from the database.
      */
-    protected function dropAllCollections(): void
+    protected function deleteDocument(string $class, array $criteria): void
     {
-        $env = self::getContainer()->getParameter('kernel.environment');
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $object = $repository->findOneBy($criteria);
 
-        if ('test' !== $env) {
-            throw new RuntimeException('This method can only be used in the test environment');
-        }
-
-        $dm = $this->getDocumentManager();
-        $sm = $dm->getSchemaManager();
-
-        $sm->dropCollections();
+        $this->getDocumentManager()->remove($object);
+        $this->getDocumentManager()->flush();
     }
 }

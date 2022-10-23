@@ -36,13 +36,6 @@ class IntegrationTestCase extends KernelTestCase
         $this->json = new Json();
     }
 
-    protected function tearDown(): void
-    {
-        $this->dropAllCollections();
-
-        parent::tearDown();
-    }
-
     /**
      * Provides a dedicated test container
      * It's a wrapper around the static::getContainer() method.
