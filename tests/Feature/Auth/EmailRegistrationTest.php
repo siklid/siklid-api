@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Auth;
 
+use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Slug;
 use App\Siklid\Document\User;
 use App\Tests\FeatureTestCase;
@@ -24,8 +25,8 @@ class EmailRegistrationTest extends FeatureTestCase
     {
         $client = $this->createCrawler();
 
-        $email = $this->faker->unique()->email();
-        $username = $this->faker->unique()->userName();
+        $email = Email::fromString($this->faker->unique()->email());
+        $username = Slug::fromString($this->faker->unique()->userName());
 
         $client->request('POST', 'api/v1/auth/register/email', [
             'user' => [
@@ -45,15 +46,14 @@ class EmailRegistrationTest extends FeatureTestCase
             ],
         ]);
 
-        $usernameSlug = (string)Slug::fromString($username);
         $this->assertExists(User::class, [
             'email' => $email,
-            'username' => $usernameSlug,
+            'username' => $username,
         ]);
 
         $this->deleteDocument(User::class, [
             'email' => $email,
-            'username' => $usernameSlug,
+            'username' => $username,
         ]);
     }
 }
