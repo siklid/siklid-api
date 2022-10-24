@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Auth;
 
+use App\Foundation\ValueObject\Slug;
 use App\Siklid\Document\User;
 use App\Tests\FeatureTestCase;
 
@@ -44,14 +45,15 @@ class EmailRegistrationTest extends FeatureTestCase
             ],
         ]);
 
+        $usernameSlug = (string)Slug::fromString($username);
         $this->assertExists(User::class, [
             'email' => $email,
-            'username' => $username,
+            'username' => $usernameSlug,
         ]);
 
         $this->deleteDocument(User::class, [
             'email' => $email,
-            'username' => $username,
+            'username' => $usernameSlug,
         ]);
     }
 }

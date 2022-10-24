@@ -8,6 +8,7 @@ use App\Foundation\Constraint\UniqueDocument;
 use App\Foundation\Security\Token\AccessTokenInterface;
 use App\Foundation\Security\Token\HasAccessToken;
 use App\Foundation\ValueObject\Email;
+use App\Foundation\ValueObject\Slug;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -37,10 +38,10 @@ class User implements Authenticable, UserInterface, HasAccessToken
     #[Groups(['_none'])]
     private string $password;
 
-    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Field(type: 'slug')]
     #[Assert\NotBlank]
     #[Groups(['user:read'])]
-    private string $username;
+    private Slug $username;
 
     private bool $shouldEraseCredentials = false;
 
@@ -91,7 +92,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
         return $this;
     }
 
-    public function getUsername(): string
+    public function getUsername(): Slug
     {
         return $this->username;
     }
@@ -99,9 +100,9 @@ class User implements Authenticable, UserInterface, HasAccessToken
     /**
      * @return $this
      */
-    public function setUsername(string $username): User
+    public function setUsername(string|Slug $username): User
     {
-        $this->username = $username;
+        $this->username = Slug::fromString((string)$username);
 
         return $this;
     }
