@@ -6,12 +6,27 @@ namespace App\Tests\Unit\Foundation\ValueObject;
 
 use App\Foundation\ValueObject\Slug;
 use App\Tests\TestCase;
+use Error;
 
 /**
  * @psalm-suppress MissingConstructor
  */
 class SlugTest extends TestCase
 {
+
+    /**
+     * @test
+     * @psalm-suppress InaccessibleMethod
+     */
+    public function it_is_not_instantiable_by_public_constructor(): void
+    {
+        $this->expectException(Error::class);
+
+        // This way prevents IDEs from complaining about the constructor being private.
+        $sut = Slug::class;
+        new $sut('foo');
+    }
+
     /**
      * @test
      */
@@ -19,7 +34,7 @@ class SlugTest extends TestCase
     {
         $invalid = '<[my-slug';
 
-        $slug = Slug::slugify($invalid);
+        $slug = Slug::fromString($invalid);
 
         $this->assertSame('my-slug', (string)$slug);
     }
