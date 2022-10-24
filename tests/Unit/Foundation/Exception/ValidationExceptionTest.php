@@ -15,6 +15,7 @@ class ValidationExceptionTest extends TestCase
 {
     /**
      * @test
+     * @psalm-suppress InvalidArgument - We know the type of ErrorIterator
      */
     public function render(): void
     {
@@ -31,7 +32,6 @@ class ValidationExceptionTest extends TestCase
             $this->createMock(FormInterface::class),
             [$formError]
         );
-        /* @psalm-suppress InvalidArgument */
         $sut->setErrorIterator($errorIterator);
 
         $response = $sut->render();
