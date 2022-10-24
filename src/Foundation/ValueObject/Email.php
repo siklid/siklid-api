@@ -15,7 +15,7 @@ use Stringable;
  */
 final class Email implements Stringable, JsonSerializable
 {
-    private readonly string $email;
+    public readonly string $email;
 
     /**
      * prevents public instantiation.
