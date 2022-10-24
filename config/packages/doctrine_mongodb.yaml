@@ -16,6 +16,9 @@ doctrine_mongodb:
           dir: '%kernel.project_dir%/src/Siklid/Document'
           prefix: 'App\Siklid\Document'
           alias: Siklid
+  types:
+    email:
+      class: App\Foundation\ValueObject\EmailType
 
 when@prod:
   doctrine_mongodb:
