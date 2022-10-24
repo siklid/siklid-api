@@ -7,6 +7,7 @@ namespace App\Siklid\Document;
 use App\Foundation\Constraint\UniqueDocument;
 use App\Foundation\Security\Token\AccessTokenInterface;
 use App\Foundation\Security\Token\HasAccessToken;
+use App\Foundation\ValueObject\Email;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -25,11 +26,11 @@ class User implements Authenticable, UserInterface, HasAccessToken
     #[Groups(['user:read'])]
     private string $id;
 
-    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Field(type: 'email')]
     #[Assert\NotBlank]
     #[Assert\Email]
     #[Groups(['user:read'])]
-    private string $email;
+    private Email $email;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
@@ -60,7 +61,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->email;
     }
@@ -68,9 +69,9 @@ class User implements Authenticable, UserInterface, HasAccessToken
     /**
      * @return $this
      */
-    public function setEmail(string $email): User
+    public function setEmail(string|Email $email): User
     {
-        $this->email = $email;
+        $this->email = Email::fromString((string)$email);
 
         return $this;
     }
@@ -126,7 +127,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
 
     public function getUserIdentifier(): string
     {
-        return $this->getEmail();
+        return $this->getEmail()->__toString();
     }
 
     public function getAccessToken(): ?AccessTokenInterface
