@@ -19,6 +19,8 @@ doctrine_mongodb:
   types:
     email:
       class: App\Foundation\ValueObject\EmailType
+    slug:
+      class: App\Foundation\ValueObject\SlugType
 
 when@prod:
   doctrine_mongodb:
