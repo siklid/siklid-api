@@ -15,6 +15,7 @@ class ValidationExceptionTest extends TestCase
 {
     /**
      * @test
+     *
      * @psalm-suppress InvalidArgument - We know the type of ErrorIterator
      */
     public function render(): void
