@@ -13,9 +13,9 @@ use Error;
  */
 class SlugTest extends TestCase
 {
-
     /**
      * @test
+     *
      * @psalm-suppress InaccessibleMethod
      */
     public function it_is_not_instantiable_by_public_constructor(): void
