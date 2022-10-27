@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace App\Foundation\Validator;
 
-use App\Foundation\Constraint\IsSlug;
+use App\Foundation\Constraint\Slug as ConstraintSlug;
 use App\Foundation\ValueObject\Slug;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class IsSlugValidator extends ConstraintValidator
+class SlugValidator extends ConstraintValidator
 {
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (! $constraint instanceof IsSlug) {
-            throw new UnexpectedTypeException($constraint, IsSlug::class);
+        if (!$constraint instanceof ConstraintSlug) {
+            throw new UnexpectedTypeException($constraint, ConstraintSlug::class);
         }
 
         if (null === $value || '' === $value) {
             return;
         }
 
-        if (! $this->isValidatable($value)) {
+        if (!$this->isValidatable($value)) {
             throw new UnexpectedValueException($value, sprintf('string or %s', Slug::class));
         }
 
         $value = $value instanceof Slug ? $value->original() : (string)$value;
 
-        if (! $this->isSlug($value)) {
+        if (!$this->isSlug($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
