@@ -16,12 +16,15 @@ final class Slug implements Stringable
 {
     public readonly string $slug;
 
+    private readonly string $original;
+
     /**
      * prevents instantiation from outside the class.
      */
-    private function __construct(string $slug)
+    private function __construct(string $slug, string $original)
     {
         $this->slug = $slug;
+        $this->original = $original;
     }
 
     /**
@@ -29,7 +32,7 @@ final class Slug implements Stringable
      */
     public static function fromString(string $str): self
     {
-        return new self(ASCII::to_slugify($str));
+        return new self(ASCII::to_slugify($str), $str);
     }
 
     public function __toString(): string
@@ -40,5 +43,10 @@ final class Slug implements Stringable
     public function equals(Slug $other): bool
     {
         return $this->slug === $other->slug;
+    }
+
+    public function original():string
+    {
+        return $this->original;
     }
 }
