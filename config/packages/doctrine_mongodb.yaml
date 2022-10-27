@@ -21,6 +21,8 @@ doctrine_mongodb:
       class: App\Foundation\ValueObject\EmailType
     slug:
       class: App\Foundation\ValueObject\SlugType
+    username:
+      class: App\Foundation\ValueObject\UsernameType
 
 when@prod:
   doctrine_mongodb:

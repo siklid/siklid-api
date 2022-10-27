@@ -11,8 +11,6 @@ class SlugType extends Type
 {
     use ClosureToPHP;
 
-    public const NAME = 'slug';
-
     public function convertToDatabaseValue($value): string
     {
         return (string)$value;

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Foundation\Constraint;
 
-use App\Foundation\Validator\IsSlugValidator;
+use App\Foundation\Validator\SlugValidator;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 #[Attribute]
-class IsSlug extends Constraint
+class Slug extends Constraint
 {
     public string $message = 'The string "{{ string }}" is not a valid slug.';
 
     public function validatedBy(): string
     {
-        return IsSlugValidator::class;
+        return SlugValidator::class;
     }
 }
