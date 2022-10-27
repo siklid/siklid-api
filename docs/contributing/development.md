@@ -16,8 +16,16 @@ git clone https://github.com/piscibus/siklid-api.git
 cd siklid-api
 ```
 
+Build the docker containers with no cache for the first time:
+
 ```bash
-XDEBUG_MODE=debug,develop docker-compose up -d
+docker-compose build --no-cache
+```
+
+Start the docker containers:
+
+```bash
+docker-compose up -d
 ```
 
 ## Stopping the development environment
@@ -56,3 +64,7 @@ MONGODB_DB=siklid
 ```
 
 </details>
+
+## PHPStorm
+
+- Make sure Xdebug debugging port is set to 9003 not `9000,9003` in PHPStorm settings
