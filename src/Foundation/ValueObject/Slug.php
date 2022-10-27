@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\ValueObject;
 
+use JsonSerializable;
 use Stringable;
 use voku\helper\ASCII;
 
@@ -12,7 +13,7 @@ use voku\helper\ASCII;
  *
  * @psalm-immutable
  */
-final class Slug implements Stringable
+final class Slug implements Stringable, JsonSerializable
 {
     public readonly string $slug;
 
@@ -48,5 +49,10 @@ final class Slug implements Stringable
     public function original(): string
     {
         return $this->original;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return $this->slug;
     }
 }

@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Foundation\ValueObject;
 use App\Foundation\ValueObject\Slug;
 use App\Tests\TestCase;
 use Error;
+use JsonException;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -47,6 +48,18 @@ class SlugTest extends TestCase
         $slug = Slug::fromString('my-slug');
 
         $this->assertSame('my-slug', (string)$slug);
+    }
+
+    /**
+     * @test
+     *
+     * @throws JsonException
+     */
+    public function json_serialize(): void
+    {
+        $sut = Slug::fromString('my-slug');
+
+        $this->assertSame('"my-slug"', json_encode($sut, JSON_THROW_ON_ERROR));
     }
 
     /**
