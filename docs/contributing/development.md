@@ -17,7 +17,7 @@ cd siklid-api
 ```
 
 ```bash
-docker compose up -d
+XDEBUG_MODE=debug,develop docker-compose up -d
 ```
 
 ## Stopping the development environment

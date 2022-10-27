@@ -7,6 +7,9 @@ namespace App\Tests\Unit\Siklid\Document;
 use App\Siklid\Document\User;
 use App\Tests\TestCase;
 
+/**
+ * @psalm-suppress MissingConstructor
+ */
 class UserTest extends TestCase
 {
     /**

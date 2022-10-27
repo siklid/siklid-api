@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Foundation\ValueObject;
 use App\Foundation\ValueObject\Slug;
 use App\Tests\TestCase;
 use Error;
+use JsonException;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -24,7 +25,7 @@ class SlugTest extends TestCase
 
         // This way prevents IDEs from complaining about the constructor being private.
         $sut = Slug::class;
-        new $sut('foo');
+        new $sut('foo', 'foo');
     }
 
     /**
@@ -51,6 +52,18 @@ class SlugTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws JsonException
+     */
+    public function json_serialize(): void
+    {
+        $sut = Slug::fromString('my-slug');
+
+        $this->assertSame('"my-slug"', json_encode($sut, JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @test
      */
     public function equals(): void
     {
@@ -58,5 +71,17 @@ class SlugTest extends TestCase
         $other = Slug::fromString('my-slug');
 
         $this->assertTrue($sut->equals($other));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_preserve_the_original_value(): void
+    {
+        $original = 'My Slug';
+
+        $sut = Slug::fromString($original);
+
+        $this->assertSame($original, $sut->original());
     }
 }
