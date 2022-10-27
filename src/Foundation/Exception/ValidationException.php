@@ -19,6 +19,11 @@ class ValidationException extends SiklidException implements RenderableInterface
 {
     protected ?FormErrorIterator $errorIterator = null;
 
+    public function __construct(string $message = 'Invalid request', int $code = 0, \Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
+
     /**
      * @param FormErrorIterator<FormError> $errorIterator
      */
@@ -33,7 +38,7 @@ class ValidationException extends SiklidException implements RenderableInterface
     public function render(): Response
     {
         return new JsonResponse([
-            'message' => 'Invalid request',
+            'message' => $this->getMessage(),
             'errors' => $this->formatErrorMessages(),
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
