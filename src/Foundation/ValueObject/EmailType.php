@@ -11,8 +11,6 @@ class EmailType extends Type
 {
     use ClosureToPHP;
 
-    public const NAME = 'email';
-
     public function convertToDatabaseValue($value): string
     {
         return (string)$value;
