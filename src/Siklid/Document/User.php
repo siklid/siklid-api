@@ -74,7 +74,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
      */
     public function setEmail(string|Email $email): User
     {
-        $this->email = Email::fromString((string) $email);
+        $this->email = Email::fromString((string)$email);
 
         return $this;
     }
@@ -104,7 +104,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
      */
     public function setUsername(string|Username $username): User
     {
-        $this->username = Username::fromString((string) $username);
+        $this->username = Username::fromString((string)$username);
 
         return $this;
     }

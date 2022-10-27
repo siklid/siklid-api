@@ -27,9 +27,11 @@ class UsernameValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, sprintf('string or %s', Username::class));
         }
 
-        if (! $this->isUsername((string)$value)) {
+        $value = $value instanceof Username ? $value->original() : (string)$value;
+
+        if (! $this->isUsername($value)) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ string }}', (string)$value)
+                ->setParameter('{{ string }}', $value)
                 ->addViolation();
         }
     }
