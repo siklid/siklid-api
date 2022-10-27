@@ -45,7 +45,7 @@ final class Slug implements Stringable
         return $this->slug === $other->slug;
     }
 
-    public function original():string
+    public function original(): string
     {
         return $this->original;
     }

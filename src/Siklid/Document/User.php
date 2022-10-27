@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Foundation\Constraint as AppAssert;
 use App\Foundation\Constraint\UniqueDocument;
 use App\Foundation\Security\Token\AccessTokenInterface;
 use App\Foundation\Security\Token\HasAccessToken;
@@ -41,6 +42,7 @@ class User implements Authenticable, UserInterface, HasAccessToken
     #[MongoDB\Field(type: 'slug')]
     #[Assert\NotBlank]
     #[Groups(['user:read'])]
+    #[AppAssert\IsSlug]
     private Slug $username;
 
     private bool $shouldEraseCredentials = false;
