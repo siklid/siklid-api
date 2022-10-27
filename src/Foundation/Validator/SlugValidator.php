@@ -15,7 +15,7 @@ class SlugValidator extends ConstraintValidator
 {
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!$constraint instanceof ConstraintSlug) {
+        if (! $constraint instanceof ConstraintSlug) {
             throw new UnexpectedTypeException($constraint, ConstraintSlug::class);
         }
 
@@ -23,13 +23,13 @@ class SlugValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->isValidatable($value)) {
+        if (! $this->isValidatable($value)) {
             throw new UnexpectedValueException($value, sprintf('string or %s', Slug::class));
         }
 
         $value = $value instanceof Slug ? $value->original() : (string)$value;
 
-        if (!$this->isSlug($value)) {
+        if (! $this->isSlug($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
