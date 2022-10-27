@@ -30,7 +30,7 @@ class SlugValidator extends ConstraintValidator
         $value = $value instanceof Slug ? $value->original() : (string)$value;
 
         if (! $this->isSlug($value)) {
-            $this->context->buildViolation($constraint->message)
+            $this->context->buildViolation($constraint->message())
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
         }

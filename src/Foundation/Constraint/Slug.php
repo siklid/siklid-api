@@ -11,10 +11,13 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute]
 class Slug extends Constraint
 {
-    public string $message = 'The string "{{ string }}" is not a valid slug.';
-
     public function validatedBy(): string
     {
         return SlugValidator::class;
+    }
+
+    public function message(): string
+    {
+        return 'The string "{{ string }}" is not a valid slug.';
     }
 }
