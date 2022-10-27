@@ -11,10 +11,13 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute]
 class Username extends Constraint
 {
-    public string $message = 'The string "{{ string }}" is not a valid username.';
-
     public function validatedBy(): string
     {
         return UsernameValidator::class;
+    }
+
+    public function message(): string
+    {
+        return 'The string "{{ string }}" is not a valid username.';
     }
 }
