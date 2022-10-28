@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Foundation\Validator;
@@ -104,7 +105,7 @@ class UsernameValidatorTest extends TestCase
         $violations = $this->context->getViolations();
         $this->assertCount(1, $violations);
         $violation = $violations->get(0);
-        $this->assertSame('The string "{{ string }}" is not a valid username.', $violation->getMessageTemplate());
+        $this->assertSame($this->constraint->message(), $violation->getMessageTemplate());
     }
 
     /**
@@ -121,7 +122,7 @@ class UsernameValidatorTest extends TestCase
         $violations = $this->context->getViolations();
         $this->assertCount(1, $violations);
         $violation = $violations->get(0);
-        $this->assertSame('The string "{{ string }}" is not a valid username.', $violation->getMessageTemplate());
+        $this->assertSame($this->constraint->message(), $violation->getMessageTemplate());
     }
 
     /**

@@ -105,7 +105,7 @@ class SlugValidatorTest extends TestCase
         $violations = $this->context->getViolations();
         $this->assertCount(1, $violations);
         $violation = $violations->get(0);
-        $this->assertSame('The string "{{ string }}" is not a valid slug.', $violation->getMessageTemplate());
+        $this->assertSame($this->constraint->message(), $violation->getMessageTemplate());
     }
 
     /**
@@ -122,7 +122,7 @@ class SlugValidatorTest extends TestCase
         $violations = $this->context->getViolations();
         $this->assertCount(1, $violations);
         $violation = $violations->get(0);
-        $this->assertSame('The string "{{ string }}" is not a valid slug.', $violation->getMessageTemplate());
+        $this->assertSame($this->constraint->message(), $violation->getMessageTemplate());
     }
 
     /**
