@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Foundation\Http;
 
 use App\Foundation\Action\ValidatableInterface;
-use App\Foundation\Util\Json;
+use App\Foundation\Util\RequestUtil;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -14,14 +14,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class Request implements ValidatableInterface
 {
-    protected readonly RequestStack $requestStack;
+    protected RequestStack $requestStack;
 
-    protected readonly Json $json;
+    protected RequestUtil $util;
 
-    public function __construct(RequestStack $requestStack, Json $json)
+    public function __construct(RequestStack $requestStack, RequestUtil $util)
     {
         $this->requestStack = $requestStack;
-        $this->json = $json;
+        $this->util = $util;
     }
 
     /**
@@ -41,7 +41,7 @@ class Request implements ValidatableInterface
     public function all(): array
     {
         if ($this->isJson()) {
-            return $this->json->jsonToArray($this->request()->getContent());
+            return $this->util->json()->jsonToArray($this->request()->getContent());
         }
 
         return $this->request()->request->all();

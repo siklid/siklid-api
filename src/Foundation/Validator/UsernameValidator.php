@@ -30,7 +30,7 @@ class UsernameValidator extends ConstraintValidator
         $value = $value instanceof Username ? $value->original() : (string)$value;
 
         if (! $this->isUsername($value)) {
-            $this->context->buildViolation($constraint->message)
+            $this->context->buildViolation($constraint->message())
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
         }
