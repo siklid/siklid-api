@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Foundation\Util;
@@ -19,6 +20,6 @@ class RequestUtilTest extends TestCase
     {
         $json = new Json();
         $sut = new RequestUtil($json);
-        $this->assertSame($json, $sut->getJson());
+        $this->assertSame($json, $sut->json());
     }
 }

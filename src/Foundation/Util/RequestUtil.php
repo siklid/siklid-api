@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Foundation\Util;
@@ -11,17 +12,11 @@ final class RequestUtil
 {
     private Json $json;
 
-    /**
-     * @param Json $json
-     */
     public function __construct(Json $json)
     {
         $this->json = $json;
     }
 
-    /**
-     * @return Json
-     */
     public function json(): Json
     {
         return $this->json;
