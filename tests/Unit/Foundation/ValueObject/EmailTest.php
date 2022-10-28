@@ -56,8 +56,10 @@ class EmailTest extends TestCase
 
     /**
      * @test
+     *
      * @psalm-suppress MixedAssignment - $value is a string
      * @psalm-suppress MixedArgument - $value is a string
+     *
      * @throws JsonException
      */
     public function json_serialize(): void
