@@ -16,7 +16,7 @@ use App\Tests\FeatureTestCase;
  *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
-class EmailRegistrationTest extends FeatureTestCase
+class EmailAuthTest extends FeatureTestCase
 {
     /**
      * @test
