@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Http;
 
 use App\Foundation\Http\Request as Sut;
+use App\Foundation\Util\RequestUtil;
 use App\Tests\IntegrationTestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class RequestTest extends IntegrationTestCase
         $currentRequest = new Request();
         $requestStack->push($currentRequest);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertSame($currentRequest, $sut->request());
     }
@@ -42,7 +43,7 @@ class RequestTest extends IntegrationTestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertSame(['foo' => 'bar'], $sut->all());
     }
@@ -60,7 +61,7 @@ class RequestTest extends IntegrationTestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertSame(['foo' => 'bar'], $sut->all());
     }
@@ -76,7 +77,7 @@ class RequestTest extends IntegrationTestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertTrue($sut->isJson());
     }
@@ -92,7 +93,7 @@ class RequestTest extends IntegrationTestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertFalse($sut->isJson());
     }
@@ -110,7 +111,7 @@ class RequestTest extends IntegrationTestCase
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
-        $sut = new Sut($requestStack, $this->json);
+        $sut = new Sut($requestStack, new RequestUtil($this->json));
 
         $this->assertSame($sut->all(), $sut->formInput());
     }

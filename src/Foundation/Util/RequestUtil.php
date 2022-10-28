@@ -9,7 +9,7 @@ namespace App\Foundation\Util;
  */
 final class RequestUtil
 {
-    private readonly Json $json;
+    private Json $json;
 
     /**
      * @param Json $json
@@ -22,7 +22,7 @@ final class RequestUtil
     /**
      * @return Json
      */
-    public function getJson(): Json
+    public function json(): Json
     {
         return $this->json;
     }
