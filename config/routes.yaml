@@ -9,4 +9,5 @@ api_login_check:
   methods: [ POST ]
 
 api_refresh_token:
-  path: /api/token/refresh
+  path: /api/v1/auth/token/refresh
+  methods: [ POST ]
