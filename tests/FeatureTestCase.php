@@ -7,6 +7,7 @@ namespace App\Tests;
 use App\Foundation\Util\Json;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FeatureTestCase is the base class for functional tests.
@@ -106,5 +107,13 @@ class FeatureTestCase extends WebTestCase
                 $this->assertStructure($content[$key], $value);
             }
         }
+    }
+
+    /**
+     * Returns the container instance.
+     */
+    protected function container(): ContainerInterface
+    {
+        return self::getContainer();
     }
 }
