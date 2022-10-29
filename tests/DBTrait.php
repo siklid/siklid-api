@@ -53,4 +53,13 @@ trait DBTrait
         $this->getDocumentManager()->remove($object);
         $this->getDocumentManager()->flush();
     }
+
+    /**
+     * Persists the given document to the database.
+     */
+    protected function persistDocument(object $document): void
+    {
+        $this->getDocumentManager()->persist($document);
+        $this->getDocumentManager()->flush();
+    }
 }
