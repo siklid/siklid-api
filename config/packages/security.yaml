@@ -15,15 +15,6 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
 
-    authToken:
-      pattern: ^/api/login
-      stateless: true
-      provider: users_from_database
-      json_login:
-        check_path: /api/login_check
-        success_handler: lexik_jwt_authentication.handler.authentication_success
-        failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
     api:
       pattern: ^/api
       stateless: true
@@ -32,6 +23,9 @@ security:
       jwt: ~
       refresh_jwt:
         check_path: /api/token/refresh
+      json_login:
+        check_path: /api/v1/auth/login/email
+        success_handler: App\Siklid\Application\Auth\LoginSuccessHandler
 
     main:
       lazy: true
@@ -49,7 +43,7 @@ security:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
     - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
-    - { path: ^/api/v1/auth/register, roles: PUBLIC_ACCESS }
+    - { path: ^/api/v1/auth/(register|login), roles: PUBLIC_ACCESS }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
