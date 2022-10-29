@@ -62,6 +62,7 @@ class EmailAuthTest extends FeatureTestCase
 
     /**
      * @test
+     *
      * @psalm-suppress MixedArrayAccess
      */
     public function json_login_is_configured(): void
@@ -76,7 +77,7 @@ class EmailAuthTest extends FeatureTestCase
             'username_path' => 'email',
             'password_path' => 'password',
         ];
-        
+
         $this->assertSame($expected, $securityConfig['security']['firewalls']['api']['json_login']);
     }
 }

@@ -38,7 +38,6 @@ class ApiControllerTest extends TestCase
         $this->assertSame($data, $content['data']);
     }
 
-
     /**
      * @test
      */

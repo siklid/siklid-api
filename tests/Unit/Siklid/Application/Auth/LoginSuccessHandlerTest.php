@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Unit\Siklid\Application\Auth;
@@ -20,6 +21,7 @@ class LoginSuccessHandlerTest extends TestCase
 {
     /**
      * @test
+     *
      * @psalm-suppress MixedArgument - All used $faker-> methods return string
      */
     public function get_response_data(): void
@@ -53,6 +55,7 @@ class LoginSuccessHandlerTest extends TestCase
 
     /**
      * @test
+     *
      * @psalm-suppress MixedArgument - All used $faker-> methods return string
      */
     public function on_authentication_success(): void

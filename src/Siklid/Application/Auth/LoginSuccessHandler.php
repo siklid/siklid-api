@@ -36,10 +36,6 @@ class LoginSuccessHandler extends ApiController implements AuthenticationSuccess
         return $this->ok($data, $groups);
     }
 
-    /**
-     * @param TokenInterface $token
-     * @return array
-     */
     public function getResponseData(TokenInterface $token): array
     {
         /** @var User $user */
