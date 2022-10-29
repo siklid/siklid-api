@@ -24,7 +24,7 @@ security:
       refresh_jwt:
         check_path: /api/token/refresh
       json_login:
-        check_path: /api/v1/auth/login/email
+        check_path: api_login_check
         success_handler: App\Siklid\Application\Auth\LoginSuccessHandler
 
     main:
