@@ -26,6 +26,9 @@ security:
       json_login:
         check_path: api_login_check
         success_handler: App\Siklid\Application\Auth\LoginSuccessHandler
+        failure_handler: App\Siklid\Application\Auth\LoginFailureHandler
+        username_path: email
+        password_path: password
 
     main:
       lazy: true
