@@ -6,8 +6,11 @@ namespace App\Tests\Feature\Auth;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use App\Siklid\Application\Auth\LoginFailureHandler;
+use App\Siklid\Application\Auth\LoginSuccessHandler;
 use App\Siklid\Document\User;
 use App\Tests\FeatureTestCase;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -16,7 +19,7 @@ use App\Tests\FeatureTestCase;
  *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
-class EmailRegistrationTest extends FeatureTestCase
+class EmailAuthTest extends FeatureTestCase
 {
     /**
      * @test
@@ -55,5 +58,26 @@ class EmailRegistrationTest extends FeatureTestCase
             'email' => $email,
             'username' => $username,
         ]);
+    }
+
+    /**
+     * @test
+     *
+     * @psalm-suppress MixedArrayAccess
+     */
+    public function json_login_is_configured(): void
+    {
+        /** @var array $securityConfig */
+        $securityConfig = Yaml::parse(file_get_contents(__DIR__.'/../../../config/packages/security.yaml'));
+
+        $expected = [
+            'check_path' => 'api_login_check',
+            'success_handler' => LoginSuccessHandler::class,
+            'failure_handler' => LoginFailureHandler::class,
+            'username_path' => 'email',
+            'password_path' => 'password',
+        ];
+
+        $this->assertSame($expected, $securityConfig['security']['firewalls']['api']['json_login']);
     }
 }
