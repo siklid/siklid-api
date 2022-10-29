@@ -36,4 +36,12 @@ abstract class ApiController extends AbstractController
 
         return $this->json(compact('data'), Response::HTTP_CREATED, $headers, $context);
     }
+
+    /**
+     * Returns a JSON response with a 400 status code.
+     */
+    public function badRequest(mixed $body, array $headers = []): JsonResponse
+    {
+        return $this->json($body, Response::HTTP_BAD_REQUEST, $headers);
+    }
 }
