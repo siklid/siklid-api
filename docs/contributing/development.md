@@ -65,4 +65,4 @@ MONGODB_DB=siklid
 
 ## PHPStorm
 
-- Make sure Xdebug debugging port is set to 9003 not `9000,9003` in PHPStorm settings
+- Make sure Xdebug debugging port is set to `9003` not ~~`9000,9003`~~ in PHPStorm settings
