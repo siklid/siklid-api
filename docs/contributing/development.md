@@ -8,9 +8,7 @@ find the installation instructions for your operating system [here](https://docs
 [Fork](https://github.com/piscibus/siklid-api/fork) the latest version of this repository and start the docker
 containers:
 
-```bash
-git clone https://github.com/piscibus/siklid-api.git
-```
+After cloning the repository, you can start the development environment by running:
 
 ```bash
 cd siklid-api
