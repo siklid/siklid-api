@@ -1,12 +1,12 @@
 # Development Environment
 
 For development, you will need to install Docker and Docker Composer. You can
-find the installation instructions for
-your operating system [here](https://docs.docker.com/install/).
+find the installation instructions for your operating system [here](https://docs.docker.com/install/).
 
 ## Starting the development environment
 
-Pull the latest version of this repository and start the docker containers:
+[Fork](https://github.com/piscibus/siklid-api/fork) the latest version of this repository and start the docker
+containers:
 
 ```bash
 git clone https://github.com/piscibus/siklid-api.git
