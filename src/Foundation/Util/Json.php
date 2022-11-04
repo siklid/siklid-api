@@ -23,4 +23,20 @@ final class Json
             return [];
         }
     }
+
+    /**
+     * Encodes an array to a JSON string.
+     *
+     * @param array $array The json string being encoded
+     *
+     * @return string The json encoded string or an empty array in case of an error
+     */
+    public function arrayToJson(array $array): string
+    {
+        try {
+            return json_encode($array, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            return '[]';
+        }
+    }
 }
