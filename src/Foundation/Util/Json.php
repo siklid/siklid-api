@@ -34,7 +34,7 @@ final class Json
     public function arrayToJson(array $array): string
     {
         try {
-            return (string)json_encode($array, JSON_THROW_ON_ERROR,512);
+            return (string)json_encode($array, JSON_THROW_ON_ERROR, 512);
         } catch (\Exception $exception) {
             return '';
         }
