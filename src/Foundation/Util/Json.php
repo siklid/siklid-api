@@ -29,7 +29,7 @@ final class Json
      *
      * @param array $array The json string being encoded
      *
-     * @return Json The json encoded to an Json
+     * @return String The json encoded to an Json
      */
     public function arrayToJson(array $array): string
     {
