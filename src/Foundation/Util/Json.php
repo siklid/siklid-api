@@ -29,13 +29,13 @@ final class Json
      *
      * @param array $array The json string being encoded
      *
-     * @return String The json encoded to an Json
+     * @return string The json encoded to an Json
      */
     public function arrayToJson(array $array): string
     {
         try {
-            return (string)json_encode($array, JSON_THROW_ON_ERROR, 512);
-        } catch (\Exception $exception) {
+            return json_encode($array, JSON_THROW_ON_ERROR, 512);
+        } catch (JsonException) {
             return '';
         }
     }
