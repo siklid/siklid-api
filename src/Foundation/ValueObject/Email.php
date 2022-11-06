@@ -4,49 +4,58 @@ declare(strict_types=1);
 
 namespace App\Foundation\ValueObject;
 
+use App\Foundation\Exception\ValidationException;
 use App\Foundation\Util\Assert;
+use Assert\AssertionFailedException;
 use JsonSerializable;
 use Stringable;
 
 /**
  * Email value object.
- *
- * @psalm-immutable
  */
 final class Email implements Stringable, JsonSerializable
 {
-    public readonly string $email;
+    /**
+     * @psalm-immutable
+     */
+    private string $value;
 
     /**
      * prevents public instantiation.
      */
-    private function __construct(string $email)
+    private function __construct(string $value)
     {
-        $this->email = $email;
+        $this->value = $value;
     }
 
     /**
      * static constructor.
      */
-    public static function fromString(string $email): self
+    public static function fromString(string $value): self
     {
-        Assert::email($email);
-
-        return new self($email);
+        return new self($value);
     }
 
     public function equals(self $other): bool
     {
-        return $this->email === $other->email;
+        return $this->value === $other->value;
     }
 
     public function __toString(): string
     {
-        return $this->email;
+        return $this->value;
     }
 
     public function jsonSerialize(): string
     {
-        return $this->email;
+        return $this->value;
+    }
+
+    /**
+     * @throws AssertionFailedException|ValidationException
+     */
+    public function validate(): void
+    {
+        Assert::email($this->value);
     }
 }

@@ -31,7 +31,7 @@
   },
   "require-dev": {
     "fakerphp/faker": "^1.20",
-    "friendsofphp/php-cs-fixer": "^3.12",
+    "friendsofphp/php-cs-fixer": "3.12",
     "phpunit/phpunit": "^9.5",
     "psalm/plugin-phpunit": "^0.17.0",
     "psalm/plugin-symfony": "^3.1",
@@ -75,7 +75,7 @@
     "symfony/polyfill-php81": "*"
   },
   "scripts": {
-    "check-style": "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes",
+    "check-style": "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --format=txt --verbose",
     "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
     "psalm": "vendor/bin/psalm --show-info=true --no-cache --shepherd --stats",
     "test": "php bin/phpunit --testdox",
