@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Action\AbstractAction;
+use App\Foundation\Http\Request;
 use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Siklid\Document\User;
 use App\Siklid\Form\UserType;
-use App\Siklid\Request\Auth\RegisterByEmailRequest as Request;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hash;
 

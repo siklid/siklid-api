@@ -32,11 +32,9 @@ class EmailAuthTest extends FeatureTestCase
         $username = Username::fromString($this->faker->unique()->userName());
 
         $client->request('POST', 'api/v1/auth/register/email', [
-            'user' => [
-                'email' => $email,
-                'username' => $username,
-                'password' => $this->faker->password(),
-            ],
+            'email' => $email,
+            'username' => $username,
+            'password' => $this->faker->password(),
         ]);
 
         $this->assertResponseIsCreated();
