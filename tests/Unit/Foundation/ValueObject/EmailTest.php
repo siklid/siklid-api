@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Foundation\ValueObject;
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\ValueObject\Email;
 use App\Tests\TestCase;
+use Assert\AssertionFailedException;
 use JsonException;
 
 /**
@@ -16,12 +17,14 @@ class EmailTest extends TestCase
 {
     /**
      * @test
+     * @throws AssertionFailedException
      */
-    public function it_requires_a_valid_email(): void
+    public function validate(): void
     {
         $this->expectException(ValidationException::class);
 
-        Email::fromString('invalid-email');
+        $email = Email::fromString('invalid-email');
+        $email->validate();
     }
 
     /**
