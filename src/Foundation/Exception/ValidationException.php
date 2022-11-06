@@ -57,7 +57,7 @@ class ValidationException extends SiklidException implements RenderableInterface
         }
 
         foreach ($this->errorIterator as $error) {
-            $propertyPath = (string)$error->getCause()->getPropertyPath();
+            $propertyPath = (string)$error->getCause()?->getPropertyPath();
             $errorMessage = $error->getMessage();
 
             if (! isset($errors[$propertyPath])) {
