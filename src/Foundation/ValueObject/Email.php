@@ -16,7 +16,6 @@ use Stringable;
 final class Email implements Stringable, JsonSerializable
 {
     /**
-     * @var string
      * @psalm-immutable
      */
     private string $value;
@@ -53,7 +52,6 @@ final class Email implements Stringable, JsonSerializable
     }
 
     /**
-     * @return void
      * @throws AssertionFailedException|ValidationException
      */
     public function validate(): void

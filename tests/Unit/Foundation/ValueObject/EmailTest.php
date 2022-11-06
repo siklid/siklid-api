@@ -17,6 +17,7 @@ class EmailTest extends TestCase
 {
     /**
      * @test
+     *
      * @throws AssertionFailedException
      */
     public function validate(): void
