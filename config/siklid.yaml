@@ -1,0 +1,14 @@
+# This file contains custom configuration for the Siklid application.
+parameters:
+  postman:
+    directory: '%kernel.project_dir%/docs/postman'
+    info:
+      name: 'siklid.api.v1'
+      description: 'Siklid API v1'
+      schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
+      postman_id: '9f6f7d88-bfd4-446c-b2ed-79f4db0d195e'
+      exporter_id: '1271923'
+
+services:
+  Symfony\Component\Finder\Finder:
+    class: Symfony\Component\Finder\Finder
