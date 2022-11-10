@@ -11,6 +11,7 @@ final class Yaml
 {
     private Parser $parser;
     private Json $json;
+    public const INDENT = 2;
 
     public function __construct(Parser $parser, Json $json)
     {
@@ -27,7 +28,7 @@ final class Yaml
      *
      * @return string The JSON content to export
      */
-    public function yamlToJson(string $yaml, string $yamlLocation = '', int $yamlIndent = 4): string
+    public function yamlToJson(string $yaml, string $yamlLocation = '', int $yamlIndent = self::INDENT): string
     {
         $yaml = $this->render($yaml, $yamlLocation, $yamlIndent);
 
@@ -43,7 +44,7 @@ final class Yaml
      *
      * @return string The prepared YAML content
      */
-    public function render(string $yaml, string $yamlLocation = '', int $yamlIndent = 4): string
+    public function render(string $yaml, string $yamlLocation = '', int $yamlIndent = self::INDENT): string
     {
         // match all import statements '%import(path/to/file.yaml)%'
         preg_match_all('/%import\((.+)\)%/', $yaml, $matches);
@@ -63,6 +64,7 @@ final class Yaml
 
     private function fixIndentation(string $importedYaml, int $yamlIndent, string $path): string
     {
+        $yamlIndent = 2 * $yamlIndent;
         // add spaces for each underscore in the beginning of the filename
         if (preg_match('/^_*/', basename($path), $matches) && '' !== $matches[0]) {
             $underscore_count = strlen($matches[0]);
