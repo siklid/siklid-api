@@ -1,0 +1,10 @@
+info:
+  name: postman
+  description: |-
+    Multiple 
+    lines 
+    of 
+    text
+item:
+  - '%import(/first_item.yaml)%'
+  - '%import(/second_item.yaml)%'

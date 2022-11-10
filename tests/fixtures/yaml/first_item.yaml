@@ -1,0 +1,4 @@
+name: first_item
+request:
+  url: /auth/register/email
+  method: POST

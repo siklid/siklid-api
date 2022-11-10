@@ -1,0 +1,3 @@
+url: '%import(/url.yaml)%'
+method: POST
+foo: bar
