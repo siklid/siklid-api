@@ -64,8 +64,7 @@ final class Yaml
     private function fixIndentation(string $importedYaml, int $yamlIndent, string $path): string
     {
         // add spaces for each underscore in the beginning of the filename
-        if (str_starts_with(basename($path), '_')) {
-            preg_match('/^_*/', basename($path), $matches);
+        if (preg_match('/^_*/', basename($path), $matches) && '' !== $matches[0]) {
             $underscore_count = strlen($matches[0]);
             $importedYaml = preg_replace('/^/m', str_repeat(' ', $underscore_count), $importedYaml);
         }
