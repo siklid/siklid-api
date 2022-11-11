@@ -8,3 +8,9 @@ parameters:
 services:
   Symfony\Component\Finder\Finder:
     class: Symfony\Component\Finder\Finder
+
+  Symfony\Component\Yaml\Parser:
+    class: Symfony\Component\Yaml\Parser
+
+  App\Foundation\Service\Storage\LocalStorage: ~
+  App\Foundation\Service\Storage\StorageInterface: '@App\Foundation\Service\Storage\LocalStorage'
