@@ -7,6 +7,10 @@ namespace App\Foundation\Service;
 use App\Foundation\Util\Json;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * This class is used to parse and combine YAML files into a single YAML string.
+ * It also provides a method to convert the YAML string into a JSON string.
+ */
 final class Yaml
 {
     private Parser $parser;
