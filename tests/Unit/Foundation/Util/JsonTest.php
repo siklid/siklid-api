@@ -14,6 +14,13 @@ class JsonTest extends TestCase
 {
     private Json $sut;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new Json();
+    }
+
     /**
      * @return array[]
      */
@@ -37,13 +44,6 @@ class JsonTest extends TestCase
                 'expected' => '{"foo":"bar","baz":"qux"}',
             ],
         ];
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->sut = new Json();
     }
 
     /**
@@ -93,6 +93,30 @@ class JsonTest extends TestCase
         $expected = '[]';
 
         $actual = $this->sut->arrayToJson($array);
+
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function array_to_pretty_json(): void
+    {
+        $array = [
+            'foo' => 'bar',
+            'baz' => ['qux' => 'quux'],
+        ];
+
+        $expected = <<<JSON
+{
+    "foo": "bar",
+    "baz": {
+        "qux": "quux"
+    }
+}
+JSON;
+
+        $actual = $this->sut->arrayToPrettyJson($array);
 
         $this->assertSame($expected, $actual);
     }
