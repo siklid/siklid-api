@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Foundation\Service;
+namespace App\Tests\Unit\Foundation\Util;
 
-use App\Foundation\Service\Yaml;
+use App\Foundation\Util\Yaml;
 use App\Tests\TestCase;
 use Symfony\Component\Yaml\Parser;
 

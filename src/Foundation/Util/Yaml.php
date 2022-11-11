@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Service;
+namespace App\Foundation\Util;
 
-use App\Foundation\Util\Json;
 use Symfony\Component\Yaml\Parser;
 
 /**
