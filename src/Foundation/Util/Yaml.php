@@ -31,7 +31,7 @@ final class Yaml
      *
      * @return string The JSON content to export
      */
-    public function yamlToJson(string $yaml, string $yamlLocation = '', int $yamlIndent = self::INDENT): string
+    public function toJson(string $yaml, string $yamlLocation = '', int $yamlIndent = self::INDENT): string
     {
         $yaml = $this->render($yaml, $yamlLocation, $yamlIndent);
 

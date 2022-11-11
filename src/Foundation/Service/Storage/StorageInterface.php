@@ -17,5 +17,5 @@ interface StorageInterface
     /**
      * Writes file contents to the storage.
      */
-    public function write(string $path, string $contents, array $config): void;
+    public function write(string $path, string $contents, array $config = []): void;
 }

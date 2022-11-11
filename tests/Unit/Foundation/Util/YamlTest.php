@@ -32,9 +32,9 @@ class YamlTest extends TestCase
     /**
      * @test
      */
-    public function yaml_to_json(): void
+    public function to_json(): void
     {
-        $json = $this->sut->yamlToJson($this->yaml, $this->yamlLocation);
+        $json = $this->sut->toJson($this->yaml, $this->yamlLocation);
 
         $this->assertJsonStringEqualsJsonString(
             $this->json->arrayToJson([

@@ -1,6 +1,33 @@
+# Collection info
 info:
-  '%import(/info.yaml)%'
+  _postman_id: 9f6f7d88-bfd4-446c-b2ed-79f4db0d195e
+  name: siklid.api.v1
+  description: |-
+    # Introduction
+    What does your API do?
+
+    # Overview
+    Things that the developers should know about
+
+    # Authentication
+    What is the preferred way of using the API?
+
+    # Error Codes
+    What errors and status codes can a user expect?
+
+    # Rate limit
+    Is there a limit to the number of requests a user can send?
+  schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+  _exporter_id: '1271923'
+
+## Collection variables
 variable:
-  '%import(/variable.yaml)%'
+  - key: host
+    value: https://localhost
+  - key: version
+    value: v1
+  - key: base
+    value: "{{host}}/api/{{version}}"
+
+## Collection requests
 item:
-  '%import(/item.yaml)%'

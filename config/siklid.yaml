@@ -1,7 +1,7 @@
 # This file contains custom configuration for the Siklid application.
 parameters:
   postman:
-    directory: '%kernel.project_dir%/docs/postman'
+    dir: '%kernel.project_dir%/docs/postman'
     src: '%kernel.project_dir%/docs/postman/v1.yaml'
     dist: '%kernel.project_dir%/docs/postman/dist/v1.json'
 
