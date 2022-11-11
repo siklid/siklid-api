@@ -42,7 +42,9 @@ final class Json
 
     /**
      * Encodes an array to a JSON string with pretty print.
+     *
      * @param array $array The array to be encoded
+     *
      * @return string The json encoded string or an empty array in case of an error
      */
     public function arrayToPrettyJson(array $array): string

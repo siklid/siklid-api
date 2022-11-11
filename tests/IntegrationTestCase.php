@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @psalm-suppress MissingConstructor
  * @psalm-suppress PropertyNotSetInConstructor
+ * @psalm-suppress PossiblyNullArgument
  */
 class IntegrationTestCase extends KernelTestCase
 {

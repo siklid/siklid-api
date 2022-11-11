@@ -35,7 +35,7 @@ final class Yaml
     {
         $yaml = $this->render($yaml, $yamlLocation, $yamlIndent);
 
-        return $this->json->arrayToJson((array)$this->parser->parse($yaml));
+        return $this->json->arrayToPrettyJson((array)$this->parser->parse($yaml));
     }
 
     /**
