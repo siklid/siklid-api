@@ -65,10 +65,10 @@ final class Yaml
     private function fixIndentation(string $importedYaml, int $yamlIndent, string $path): string
     {
         $yamlIndent = 2 * $yamlIndent;
-        // add spaces for each underscore in the beginning of the filename
+        // add indentation for each underscore in the beginning of the filename
         if (preg_match('/^_*/', basename($path), $matches) && '' !== $matches[0]) {
             $underscore_count = strlen($matches[0]);
-            $importedYaml = preg_replace('/^/m', str_repeat(' ', $underscore_count), $importedYaml);
+            $importedYaml = preg_replace('/^/m', str_repeat(' ', $underscore_count * self::INDENT), $importedYaml);
         }
 
         // auto indent all lines

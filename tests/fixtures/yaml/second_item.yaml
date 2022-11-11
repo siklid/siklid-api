@@ -1,6 +1,6 @@
 name: second_item
 request:
-  '%import(/__second_item_request.yaml)%'
+  '%import(/_second_item_request.yaml)%'
 response:
   foo: bar
   baz: qux
