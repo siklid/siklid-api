@@ -99,8 +99,6 @@ abstract class Console extends Command
     }
 
     /**
-     * @param string $name
-     * @return mixed
      * @psalm-suppress MixedAssignment
      * @psalm-suppress MixedArrayAccess
      * @psalm-suppress PossiblyNullArrayAccess

@@ -1,0 +1,6 @@
+- key: host
+  value: https://localhost
+- key: version
+  value: v1
+- key: base
+  value: "{{host}}/api/{{version}}"

@@ -2,8 +2,8 @@
 parameters:
   postman:
     directory: '%kernel.project_dir%/docs/postman'
-    src: '%kernel.project_dir%/docs/postman/v1.yml'
-    dist: '%kernel.project_dir%/docs/postman/v1.dist.yml'
+    src: '%kernel.project_dir%/docs/postman/v1.yaml'
+    dist: '%kernel.project_dir%/docs/postman/dist/v1.json'
 
 services:
   Symfony\Component\Finder\Finder:

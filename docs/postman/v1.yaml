@@ -1,0 +1,6 @@
+info:
+  '%import(/info.yaml)%'
+variable:
+  '%import(/variable.yaml)%'
+item:
+  '%import(/item.yaml)%'
