@@ -113,6 +113,28 @@ class FeatureTestCase extends WebTestCase
     }
 
     /**
+     * Get response or a part of it.
+     *
+     * @psalm-suppress MixedReturnStatement
+     */
+    protected function getFromResponse(KernelBrowser $client, ?string $key = null): mixed
+    {
+        $json = (string)$client->getResponse()->getContent();
+        $content = $this->json->jsonToArray($json);
+
+        if (null === $key) {
+            return $content;
+        }
+
+        $keyParts = explode('.', $key);
+        foreach ($keyParts as $iValue) {
+            $content = $content[$iValue];
+        }
+
+        return $content;
+    }
+
+    /**
      * Returns the container instance.
      */
     protected function container(): ContainerInterface
