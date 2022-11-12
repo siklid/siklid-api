@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Foundation\Action;
 
 use App\Foundation\Exception\ValidationException;
+use App\Siklid\Document\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 
@@ -13,6 +14,8 @@ use Symfony\Component\Form\FormInterface;
  * Each use case in the application layer should extend this class.
  * It extends the Symfony AbstractController to provide access to the container
  * besides the use case specific methods.
+ *
+ * @method User getUser() - Returns the current user.
  */
 abstract class AbstractAction extends AbstractController implements ActionInterface
 {
