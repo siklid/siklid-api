@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Foundation\Util\Json;
+use App\Tests\Concerns\DBTrait;
+use App\Tests\Concerns\UserFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -18,6 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class FeatureTestCase extends WebTestCase
 {
     use DBTrait;
+    use UserFactoryTrait;
 
     protected Faker $faker;
 

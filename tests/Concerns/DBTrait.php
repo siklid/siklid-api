@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests;
+namespace App\Tests\Concerns;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -51,6 +51,21 @@ trait DBTrait
         $object = $repository->findOneBy($criteria);
 
         $this->getDocumentManager()->remove($object);
+        $this->getDocumentManager()->flush();
+    }
+
+    /**
+     * Deletes all documents from the given collection.
+     */
+    protected function deleteAllDocuments(string $class): void
+    {
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $objects = $repository->findAll();
+
+        foreach ($objects as $object) {
+            $this->getDocumentManager()->remove($object);
+        }
+
         $this->getDocumentManager()->flush();
     }
 
