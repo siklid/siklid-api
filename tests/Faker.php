@@ -43,7 +43,10 @@ final class Faker
      * @param string $name      The name of the method to call
      * @param array  $arguments The arguments to pass to the method
      *
-     * @return mixed
+     * @return string
+     *
+     * @psalm-suppress MixedReturnStatement
+     * @psalm-suppress MixedInferredReturnType
      */
     public function __call(string $name, array $arguments)
     {
