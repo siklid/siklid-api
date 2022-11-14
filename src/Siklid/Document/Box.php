@@ -42,6 +42,10 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private Collection $flashcards;
 
+    #[MongoDB\Field(type: 'collection')]
+    #[Groups(['box:read'])]
+    private array $hashtags = [];
+
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
     private UserInterface $user;
 
@@ -168,6 +172,18 @@ class Box implements BoxInterface
     public function setFlashcards(Collection $flashcards): Box
     {
         $this->flashcards = $flashcards;
+
+        return $this;
+    }
+
+    public function getHashtags(): Collection
+    {
+        return new ArrayCollection($this->hashtags);
+    }
+
+    public function setHashtags(Collection|array $hashtags): Box
+    {
+        $this->hashtags = $hashtags instanceof Collection ? $hashtags->toArray() : $hashtags;
 
         return $this;
     }

@@ -23,6 +23,8 @@ interface BoxInterface
 
     public function getFlashcards(): Collection;
 
+    public function getHashtags(): Collection;
+
     public function getUser(): UserInterface;
 
     public function setUser(UserInterface $user): BoxInterface;
