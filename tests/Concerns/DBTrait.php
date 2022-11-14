@@ -32,7 +32,7 @@ trait DBTrait
     {
         $repository = $this->getDocumentManager()->getRepository($class);
         $object = $repository->findOneBy($criteria);
-        $this->assertNotNull($object);
+        $this->assertNotNull($object, 'Failed asserting that the document exists.');
     }
 
     /**
@@ -42,7 +42,7 @@ trait DBTrait
     {
         $repository = $this->getDocumentManager()->getRepository($class);
         $object = $repository->findOneBy($criteria);
-        $this->assertNull($object);
+        $this->assertNull($object, 'Failed asserting that the document does not exist.');
     }
 
     /**
