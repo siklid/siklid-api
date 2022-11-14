@@ -38,7 +38,7 @@
     "roave/security-advisories": "dev-latest",
     "symfony/browser-kit": "6.1.*",
     "symfony/css-selector": "6.1.*",
-    "symfony/maker-bundle": "^1.47",
+    "symfony/maker-bundle": "^1.48",
     "symfony/phpunit-bridge": "^6.1",
     "symfony/var-dumper": "6.1.*",
     "vimeo/psalm": "^4.29"
