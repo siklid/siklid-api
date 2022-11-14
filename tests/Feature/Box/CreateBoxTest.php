@@ -19,7 +19,6 @@ class CreateBoxTest extends FeatureTestCase
     public function user_can_create_a_box(): void
     {
         $client = $this->createCrawler();
-
         $user = $this->makeUser();
         $this->persistDocument($user);
         $client->loginUser($user);
@@ -49,5 +48,31 @@ class CreateBoxTest extends FeatureTestCase
 
         $this->deleteDocument(User::class, ['id' => $user->getId()]);
         $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
+    }
+
+    /**
+     * @test
+     */
+    public function box_name_is_required(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $client->loginUser($user);
+        $description = $this->faker->sentence();
+
+        $client->request('POST', '/api/v1/boxes', [
+            'description' => $description,
+        ]);
+
+        $this->assertResponseHasValidationError();
+        $this->assertResponseJsonStructure($client, [
+            'message',
+            'errors' => ['name' => []],
+        ]);
+        $this->assertNotExists(Box::class, [
+            'description' => $description,
+            'user' => $user,
+        ]);
     }
 }
