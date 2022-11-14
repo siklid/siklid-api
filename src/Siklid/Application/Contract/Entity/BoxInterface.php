@@ -18,13 +18,15 @@ interface BoxInterface
 
     public function getDescription(): ?string;
 
-    public function getCreatedAt(): DateTimeImmutable;
-
-    public function getUpdatedAt(): DateTimeImmutable;
+    public function getRepetitionAlgorithm(): RepetitionAlgorithm;
 
     public function getUser(): UserInterface;
 
     public function setUser(UserInterface $user): BoxInterface;
 
-    public function getRepetitionAlgorithm(): RepetitionAlgorithm;
+    public function getCreatedAt(): DateTimeImmutable;
+
+    public function getUpdatedAt(): DateTimeImmutable;
+
+    public function getDeletedAt(): ?DateTimeImmutable;
 }

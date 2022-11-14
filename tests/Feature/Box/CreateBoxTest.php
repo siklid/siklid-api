@@ -39,6 +39,7 @@ class CreateBoxTest extends FeatureTestCase
                 'description',
                 'createdAt',
                 'updatedAt',
+                'deletedAt',
             ],
         ]);
         $this->assertExists(Box::class, [
