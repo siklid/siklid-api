@@ -41,7 +41,7 @@ class FeatureTestCase extends WebTestCase
      * A wrapper for the static createClient() method.
      *
      * @param array $options An array of options to pass to the createKernel method
-     * @param array $server  An array of server parameters
+     * @param array $server An array of server parameters
      */
     protected function createCrawler(array $options = [], array $server = []): KernelBrowser
     {
@@ -76,6 +76,16 @@ class FeatureTestCase extends WebTestCase
     protected function assertResponseIsNotFound(string $message = ''): void
     {
         self::assertResponseStatusCodeSame(404, $message);
+    }
+
+    /**
+     * Asserts that the response status code is 400
+     *
+     * @param string $message Assertion message
+     */
+    protected function assertResponseIsBadRequest(string $message = ''): void
+    {
+        self::assertResponseStatusCodeSame(400, $message);
     }
 
     /**
