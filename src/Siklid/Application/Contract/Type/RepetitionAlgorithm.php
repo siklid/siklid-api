@@ -11,12 +11,15 @@ enum RepetitionAlgorithm: string
 {
     case Leitner = 'leitner';
 
-    public static function coerce(RepetitionAlgorithm|string $repetitionAlgorithm): self
+    /**
+     * Coerce value to enum.
+     */
+    public static function coerce(RepetitionAlgorithm|string $value): self
     {
-        if ($repetitionAlgorithm instanceof self) {
-            return $repetitionAlgorithm;
+        if ($value instanceof self) {
+            return $value;
         }
 
-        return self::from($repetitionAlgorithm);
+        return self::from($value);
     }
 }
