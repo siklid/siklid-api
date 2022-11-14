@@ -35,6 +35,7 @@ class CreateBoxTest extends FeatureTestCase
             'data' => [
                 'id',
                 'name',
+                'repetitionAlgorithm',
                 'description',
                 'createdAt',
                 'updatedAt',
