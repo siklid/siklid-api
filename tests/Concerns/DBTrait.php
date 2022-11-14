@@ -36,6 +36,26 @@ trait DBTrait
     }
 
     /**
+     * Asserts that the given document does not exist in the database.
+     */
+    protected function assertNotExists(string $class, array $criteria): void
+    {
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+        $this->assertNull($object);
+    }
+
+    /**
+     * Asserts that the given collection is empty.
+     */
+    protected function assertEmptyCollection(string $class): void
+    {
+        $repository = $this->getDocumentManager()->getRepository($class);
+        $objects = $repository->findAll();
+        $this->assertEmpty($objects);
+    }
+
+    /**
      * Deletes the given document from the database.
      */
     protected function deleteDocument(string|object $class, array $criteria = []): void
