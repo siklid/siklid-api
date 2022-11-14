@@ -10,6 +10,7 @@ use App\Tests\Concerns\UserFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * FeatureTestCase is the base class for functional tests.
@@ -55,7 +56,7 @@ class FeatureTestCase extends WebTestCase
      */
     protected function assertResponseIsOk(string $message = ''): void
     {
-        self::assertResponseStatusCodeSame(200, $message);
+        self::assertResponseStatusCodeSame(Response::HTTP_OK, $message);
     }
 
     /**
@@ -65,7 +66,7 @@ class FeatureTestCase extends WebTestCase
      */
     protected function assertResponseIsCreated(string $message = ''): void
     {
-        self::assertResponseStatusCodeSame(201, $message);
+        self::assertResponseStatusCodeSame(Response::HTTP_CREATED, $message);
     }
 
     /**
@@ -75,7 +76,7 @@ class FeatureTestCase extends WebTestCase
      */
     protected function assertResponseIsNotFound(string $message = ''): void
     {
-        self::assertResponseStatusCodeSame(404, $message);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND, $message);
     }
 
     /**
@@ -85,7 +86,23 @@ class FeatureTestCase extends WebTestCase
      */
     protected function assertResponseIsBadRequest(string $message = ''): void
     {
-        self::assertResponseStatusCodeSame(400, $message);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST, $message);
+    }
+
+    /**
+     * Assert that the response has validation errors.
+     */
+    protected function assertResponseHasValidationError(string $message = ''): void
+    {
+        $this->assertResponseIsunprocessableEntity($message);
+    }
+
+    /**
+     * Asserts that the response status code is 422.
+     */
+    protected function assertResponseIsunprocessableEntity(string $message = ''): void
+    {
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY, $message);
     }
 
     /**
