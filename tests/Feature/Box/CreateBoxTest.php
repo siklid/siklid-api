@@ -75,4 +75,29 @@ class CreateBoxTest extends FeatureTestCase
             'user' => $user,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function box_description_is_optional(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $client->loginUser($user);
+        $name = $this->faker->word();
+
+        $client->request('POST', '/api/v1/boxes', [
+            'name' => $name,
+        ]);
+
+        $this->assertResponseIsCreated();
+        $this->assertExists(Box::class, [
+            'name' => $name,
+            'user' => $user,
+        ]);
+
+        $actual = $this->getFromResponse($client, 'data.description');
+        $this->assertNull($actual);
+    }
 }

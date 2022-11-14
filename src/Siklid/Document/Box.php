@@ -25,10 +25,9 @@ class Box
     #[Groups(['box:read'])]
     private string $name;
 
-    #[MongoDB\Field(type: 'string')]
-    #[Assert\NotBlank]
+    #[MongoDB\Field(type: 'string', nullable: true)]
     #[Groups(['box:read'])]
-    private string $description;
+    private ?string $description = null;
 
     #[MongoDB\Field(type: 'date_immutable')]
     #[Groups(['box:read'])]
@@ -71,12 +70,12 @@ class Box
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): Box
+    public function setDescription(?string $description): Box
     {
         $this->description = $description;
 
