@@ -10,7 +10,7 @@ use App\Siklid\Document\Box;
 use App\Siklid\Form\BoxType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-class CreateBox extends AbstractAction
+final class CreateBox extends AbstractAction
 {
     private Request $request;
     private DocumentManager $dm;
