@@ -8,6 +8,8 @@ use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,6 +38,13 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private ?string $description = null;
 
+    #[MongoDB\ReferenceMany(targetDocument: Flashcard::class)]
+    #[Groups(['box:read'])]
+    private Collection $flashcards;
+
+    #[MongoDB\ReferenceOne(targetDocument: User::class)]
+    private UserInterface $user;
+
     #[MongoDB\Field(type: 'date_immutable')]
     #[Groups(['box:read'])]
     private DateTimeImmutable $createdAt;
@@ -48,13 +57,11 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    #[MongoDB\ReferenceOne(targetDocument: User::class)]
-    private UserInterface $user;
-
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->flashcards = new ArrayCollection();
     }
 
     public function getId(): string
@@ -149,6 +156,18 @@ class Box implements BoxInterface
     public function setDeletedAt(?DateTimeImmutable $deletedAt): Box
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getFlashcards(): Collection
+    {
+        return $this->flashcards;
+    }
+
+    public function setFlashcards(Collection $flashcards): Box
+    {
+        $this->flashcards = $flashcards;
 
         return $this;
     }

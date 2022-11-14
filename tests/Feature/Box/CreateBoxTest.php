@@ -37,6 +37,7 @@ class CreateBoxTest extends FeatureTestCase
                 'name',
                 'repetitionAlgorithm',
                 'description',
+                'flashcards',
                 'createdAt',
                 'updatedAt',
                 'deletedAt',
