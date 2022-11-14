@@ -30,9 +30,27 @@ final class CreateBox extends AbstractAction
         $box = $form->getData();
         $box->setUser($this->getUser());
 
+        $box->setHashtags($this->extractHashtags($box->getDescription()));
+
         $this->dm->persist($box);
         $this->dm->flush();
 
         return $box;
+    }
+
+    private function extractHashtags(?string $getDescription): array
+    {
+        if (null === $getDescription) {
+            return [];
+        }
+
+        $hashtags = [];
+        preg_match_all('/#(\S+)/', $getDescription, $matches);
+        foreach ($matches[1] as $match) {
+            $match = mb_strtolower($match);
+            $hashtags[] = '#'.$match;
+        }
+
+        return $hashtags;
     }
 }

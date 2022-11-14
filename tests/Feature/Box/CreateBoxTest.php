@@ -103,5 +103,40 @@ class CreateBoxTest extends FeatureTestCase
 
         $actual = $this->getFromResponse($client, 'data.description');
         $this->assertNull($actual);
+
+        $this->deleteDocument(User::class, ['id' => $user->getId()]);
+        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
+    }
+
+    /**
+     * @test
+     */
+    public function box_hashtags_are_extracted_from_the_box_description(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $client->loginUser($user);
+        $name = $this->faker->word();
+        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2';
+
+        $client->request('POST', '/api/v1/boxes', [
+            'name' => $name,
+            'description' => $description,
+        ]);
+
+        $this->assertResponseIsCreated();
+        $this->assertExists(Box::class, [
+            'name' => $name,
+            'description' => $description,
+            'user' => $user,
+            'hashtags' => ['#hashtag1', '#hashtag2'],
+        ]);
+
+        $actual = (array)$this->getFromResponse($client, 'data.hashtags');
+        $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
+
+        $this->deleteDocument(User::class, ['id' => $user->getId()]);
+        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
     }
 }
