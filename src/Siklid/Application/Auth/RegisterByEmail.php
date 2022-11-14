@@ -12,7 +12,7 @@ use App\Siklid\Form\UserType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hash;
 
-class RegisterByEmail extends AbstractAction
+final class RegisterByEmail extends AbstractAction
 {
     private readonly Request $request;
 
