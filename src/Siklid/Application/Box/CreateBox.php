@@ -38,14 +38,14 @@ final class CreateBox extends AbstractAction
         return $box;
     }
 
-    private function extractHashtags(?string $getDescription): array
+    private function extractHashtags(?string $text): array
     {
-        if (null === $getDescription) {
+        if (null === $text) {
             return [];
         }
 
         $hashtags = [];
-        preg_match_all('/#(\S+)/', $getDescription, $matches);
+        preg_match_all('/#(\S+)/', $text, $matches);
         foreach ($matches[1] as $match) {
             $match = mb_strtolower($match);
             $hashtags[] = '#'.$match;
