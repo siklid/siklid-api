@@ -6,6 +6,7 @@ namespace App\Siklid\Application\Contract\Entity;
 
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Box Entity Interface.
@@ -19,6 +20,8 @@ interface BoxInterface
     public function getDescription(): ?string;
 
     public function getRepetitionAlgorithm(): RepetitionAlgorithm;
+
+    public function getFlashcards(): Collection;
 
     public function getUser(): UserInterface;
 
