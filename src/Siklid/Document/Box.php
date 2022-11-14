@@ -44,6 +44,10 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private DateTimeImmutable $updatedAt;
 
+    #[MongoDB\Field(type: 'date_immutable', nullable: true)]
+    #[Groups(['box:read'])]
+    private ?DateTimeImmutable $deletedAt = null;
+
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
     private UserInterface $user;
 
@@ -133,6 +137,18 @@ class Box implements BoxInterface
     public function setRepetitionAlgorithm(RepetitionAlgorithm|string $repetitionAlgorithm): Box
     {
         $this->repetitionAlgorithm = RepetitionAlgorithm::coerce($repetitionAlgorithm);
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?DateTimeImmutable $deletedAt): Box
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
