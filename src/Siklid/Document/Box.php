@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Siklid\Application\Contract\Entity\BoxInterface;
+use App\Siklid\Application\Contract\Entity\UserInterface;
 use DateTimeImmutable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -14,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[MongoDB\Document(collection: 'boxes')]
-class Box
+class Box implements BoxInterface
 {
     #[MongoDB\Id]
     #[Groups(['box:read'])]
@@ -38,7 +40,7 @@ class Box
     private DateTimeImmutable $updatedAt;
 
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
-    private User $user;
+    private UserInterface $user;
 
     public function __construct()
     {
@@ -51,7 +53,7 @@ class Box
         return $this->id;
     }
 
-    public function setId(string $id): Box
+    public function setId(string $id): BoxInterface
     {
         $this->id = $id;
 
@@ -63,7 +65,7 @@ class Box
         return $this->name;
     }
 
-    public function setName(string $name): Box
+    public function setName(string $name): BoxInterface
     {
         $this->name = $name;
 
@@ -75,7 +77,7 @@ class Box
         return $this->description;
     }
 
-    public function setDescription(?string $description): Box
+    public function setDescription(?string $description): BoxInterface
     {
         $this->description = $description;
 
@@ -87,7 +89,7 @@ class Box
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): Box
+    public function setCreatedAt(DateTimeImmutable $createdAt): BoxInterface
     {
         $this->createdAt = $createdAt;
 
@@ -99,19 +101,19 @@ class Box
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): Box
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): BoxInterface
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(User $user): Box
+    public function setUser(UserInterface $user): BoxInterface
     {
         $this->user = $user;
 
