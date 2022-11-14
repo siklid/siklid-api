@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Contract\Entity;
 
+use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use DateTimeImmutable;
 
 /**
@@ -24,4 +25,6 @@ interface BoxInterface
     public function getUser(): UserInterface;
 
     public function setUser(UserInterface $user): BoxInterface;
+
+    public function getRepetitionAlgorithm(): RepetitionAlgorithm;
 }

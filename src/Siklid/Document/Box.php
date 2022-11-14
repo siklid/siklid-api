@@ -6,6 +6,7 @@ namespace App\Siklid\Document;
 
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
+use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use DateTimeImmutable;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -26,6 +27,10 @@ class Box implements BoxInterface
     #[Assert\NotBlank]
     #[Groups(['box:read'])]
     private string $name;
+
+    #[MongoDB\Field(type: 'specific')]
+    #[Groups(['box:read'])]
+    private RepetitionAlgorithm $repetitionAlgorithm = RepetitionAlgorithm::Leitner;
 
     #[MongoDB\Field(type: 'string', nullable: true)]
     #[Groups(['box:read'])]
@@ -116,6 +121,18 @@ class Box implements BoxInterface
     public function setUser(UserInterface $user): BoxInterface
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRepetitionAlgorithm(): RepetitionAlgorithm
+    {
+        return $this->repetitionAlgorithm;
+    }
+
+    public function setRepetitionAlgorithm(RepetitionAlgorithm|string $repetitionAlgorithm): Box
+    {
+        $this->repetitionAlgorithm = RepetitionAlgorithm::coerce($repetitionAlgorithm);
 
         return $this;
     }
