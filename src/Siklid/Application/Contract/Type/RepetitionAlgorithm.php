@@ -10,4 +10,13 @@ namespace App\Siklid\Application\Contract\Type;
 enum RepetitionAlgorithm: string
 {
     case Leitner = 'leitner';
+
+    public static function coerce(RepetitionAlgorithm|string $repetitionAlgorithm): self
+    {
+        if ($repetitionAlgorithm instanceof self) {
+            return $repetitionAlgorithm;
+        }
+
+        return self::from($repetitionAlgorithm);
+    }
 }
