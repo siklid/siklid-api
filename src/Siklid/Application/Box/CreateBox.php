@@ -46,9 +46,8 @@ final class CreateBox extends AbstractAction
 
         $hashtags = [];
         preg_match_all('/#(\S+)/', $text, $matches);
-        foreach ($matches[1] as $match) {
-            $match = mb_strtolower($match);
-            $hashtags[] = '#'.$match;
+        foreach ($matches[0] as $match) {
+            $hashtags[] = mb_strtolower($match);
         }
 
         return $hashtags;
