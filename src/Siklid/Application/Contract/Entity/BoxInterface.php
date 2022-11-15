@@ -25,11 +25,7 @@ interface BoxInterface
 
     public function getHashtags(): Collection;
 
-    public function setHashtags(Collection|array $hashtags): BoxInterface;
-
     public function getUser(): UserInterface;
-
-    public function setUser(UserInterface $user): BoxInterface;
 
     public function getCreatedAt(): DateTimeImmutable;
 
