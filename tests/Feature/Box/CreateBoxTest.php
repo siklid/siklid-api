@@ -78,6 +78,8 @@ class CreateBoxTest extends FeatureTestCase
             'description' => $description,
             'user' => $user,
         ]);
+
+        $this->deleteDocument(User::class, ['id' => $user->getId()]);
     }
 
     /**
@@ -100,7 +102,6 @@ class CreateBoxTest extends FeatureTestCase
             'name' => $name,
             'user' => $user,
         ]);
-
         $actual = $this->getFromResponse($client, 'data.description');
         $this->assertNull($actual);
 
