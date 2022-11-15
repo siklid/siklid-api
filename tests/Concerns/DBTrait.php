@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Concerns;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\GridFSRepository;
+use Doctrine\ODM\MongoDB\Repository\ViewRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -26,11 +29,25 @@ trait DBTrait
     }
 
     /**
+     * Gets the repository for a document class.
+     *
+     * @param class-string $className the name of the Document
+     *
+     * @return DocumentRepository<T>|GridFSRepository<T>|ViewRepository<T> the repository
+     *
+     * @template T of object
+     */
+    protected function getRepository(string $className): DocumentRepository|ViewRepository|GridFSRepository
+    {
+        return $this->getDocumentManager()->getRepository($className);
+    }
+
+    /**
      * Asserts that the given document exists in the database.
      */
     protected function assertExists(string $class, array $criteria): void
     {
-        $repository = $this->getDocumentManager()->getRepository($class);
+        $repository = $this->getRepository($class);
         $object = $repository->findOneBy($criteria);
         $this->assertNotNull($object, 'Failed asserting that the document exists.');
     }
@@ -40,7 +57,7 @@ trait DBTrait
      */
     protected function assertNotExists(string $class, array $criteria): void
     {
-        $repository = $this->getDocumentManager()->getRepository($class);
+        $repository = $this->getRepository($class);
         $object = $repository->findOneBy($criteria);
         $this->assertNull($object, 'Failed asserting that the document does not exist.');
     }
@@ -50,7 +67,7 @@ trait DBTrait
      */
     protected function assertEmptyCollection(string $class): void
     {
-        $repository = $this->getDocumentManager()->getRepository($class);
+        $repository = $this->getRepository($class);
         $objects = $repository->findAll();
         $this->assertEmpty($objects);
     }
@@ -67,7 +84,7 @@ trait DBTrait
             return;
         }
 
-        $repository = $this->getDocumentManager()->getRepository($class);
+        $repository = $this->getRepository($class);
         $object = $repository->findOneBy($criteria);
 
         $this->getDocumentManager()->remove($object);
@@ -79,7 +96,7 @@ trait DBTrait
      */
     protected function deleteAllDocuments(string $class): void
     {
-        $repository = $this->getDocumentManager()->getRepository($class);
+        $repository = $this->getRepository($class);
         $objects = $repository->findAll();
 
         foreach ($objects as $object) {
