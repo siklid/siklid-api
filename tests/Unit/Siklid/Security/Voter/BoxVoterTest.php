@@ -20,10 +20,10 @@ class BoxVoterTest extends TestCase
     public function box_is_public(): void
     {
         $sut = new BoxVoter();
-        $user = new User();
+        $visitor = new User();
         $box = new Box();
 
-        $actual = $sut->canView($box, $user);
+        $actual = $sut->canView($box, $visitor);
 
         self::assertTrue($actual);
     }
@@ -34,12 +34,12 @@ class BoxVoterTest extends TestCase
     public function deleted_box_is_not_public(): void
     {
         $sut = new BoxVoter();
-        $user = new User();
+        $visitor = new User();
         $box = new Box();
         $box->setUser(new User());
         $box->delete();
 
-        $actual = $sut->canView($box, $user);
+        $actual = $sut->canView($box, $visitor);
 
         self::assertFalse($actual);
     }
@@ -66,11 +66,11 @@ class BoxVoterTest extends TestCase
     public function box_visitor_can_not_update_it(): void
     {
         $sut = new BoxVoter();
-        $user = new User();
+        $visitor = new User();
         $box = new Box();
         $box->setUser(new User());
 
-        $actual = $sut->canUpdate($box, $user);
+        $actual = $sut->canUpdate($box, $visitor);
 
         self::assertFalse($actual);
     }
@@ -96,11 +96,11 @@ class BoxVoterTest extends TestCase
     public function box_visitor_can_not_delete_it(): void
     {
         $sut = new BoxVoter();
-        $user = new User();
+        $visitor = new User();
         $box = new Box();
         $box->setUser(new User());
 
-        $actual = $sut->canDelete($box, $user);
+        $actual = $sut->canDelete($box, $visitor);
 
         self::assertFalse($actual);
     }
