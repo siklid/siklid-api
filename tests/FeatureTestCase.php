@@ -42,7 +42,7 @@ class FeatureTestCase extends WebTestCase
      * A wrapper for the static createClient() method.
      *
      * @param array $options An array of options to pass to the createKernel method
-     * @param array $server An array of server parameters
+     * @param array $server  An array of server parameters
      */
     protected function createCrawler(array $options = [], array $server = []): KernelBrowser
     {
@@ -90,7 +90,7 @@ class FeatureTestCase extends WebTestCase
     }
 
     /**
-     * Asserts that the response status code is 403
+     * Asserts that the response status code is 403.
      */
     protected function assertResponseIsForbidden(string $message = ''): void
     {
