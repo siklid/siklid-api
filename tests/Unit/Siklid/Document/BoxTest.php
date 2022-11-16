@@ -42,6 +42,16 @@ class BoxTest extends TestCase
 
     /**
      * @test
+     *
+     * @dataProvider provideIsDeleted
+     */
+    public function is_deleted(Box $sut, bool $expected): void
+    {
+        $this->assertSame($expected, $sut->isDeleted());
+    }
+
+    /**
+     * @test
      */
     public function touch(): void
     {
@@ -50,5 +60,25 @@ class BoxTest extends TestCase
         $sut->touch();
 
         $this->assertNotNull($sut->getUpdatedAt());
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideIsDeleted(): array
+    {
+        $deletedBox = new Box();
+        $deletedBox->delete();
+
+        return [
+            'deleted' => [
+                'sut' => $deletedBox,
+                'expected' => true,
+            ],
+            'not deleted' => [
+                'sut' => new Box(),
+                'expected' => false,
+            ],
+        ];
     }
 }

@@ -207,4 +207,9 @@ class Box implements BoxInterface
     {
         $this->updatedAt = new DateTimeImmutable();
     }
+
+    public function isDeleted(): bool
+    {
+        return null !== $this->deletedAt;
+    }
 }
