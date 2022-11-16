@@ -32,4 +32,6 @@ interface BoxInterface
     public function getUpdatedAt(): DateTimeImmutable;
 
     public function getDeletedAt(): ?DateTimeImmutable;
+
+    public function delete(): void;
 }
