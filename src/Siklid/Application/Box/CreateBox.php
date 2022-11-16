@@ -10,6 +10,7 @@ use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Document\Box;
 use App\Siklid\Form\BoxType;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use function Symfony\Component\String\u;
 
 final class CreateBox extends AbstractAction
 {
@@ -47,7 +48,7 @@ final class CreateBox extends AbstractAction
         $hashtags = [];
         preg_match_all('/#(\S+)/', $text, $matches);
         foreach ($matches[0] as $match) {
-            $hashtags[] = mb_strtolower($match);
+            $hashtags[] = u(mb_strtolower($match))->append(' ')->toString();
         }
 
         return $hashtags;
