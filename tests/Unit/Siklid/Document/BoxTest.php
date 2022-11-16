@@ -39,4 +39,16 @@ class BoxTest extends TestCase
 
         $sut->delete();
     }
+
+    /**
+     * @test
+     */
+    public function touch(): void
+    {
+        $sut = new Box();
+
+        $sut->touch();
+
+        $this->assertNotNull($sut->getUpdatedAt());
+    }
 }
