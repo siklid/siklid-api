@@ -168,4 +168,12 @@ class FeatureTestCase extends WebTestCase
     {
         return self::getContainer();
     }
+
+    /**
+     * Returns the faker instance.
+     */
+    protected function faker(): Faker
+    {
+        return $this->faker;
+    }
 }
