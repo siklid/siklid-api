@@ -14,13 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BoxController extends ApiController
 {
-    #[Route('/boxes', name: 'api_v1_boxes_create', methods: ['POST'])]
+    #[Route('/boxes', name: 'box_store', methods: ['POST'])]
     public function store(CreateBox $action): Response
     {
         return $this->created($action->execute(), ['box:read']);
     }
 
-    #[Route('/boxes/{id}', name: 'api_v1_boxes_delete', methods: ['DELETE'])]
+    #[Route('/boxes/{id}', name: 'box_delete', methods: ['DELETE'])]
     #[IsGranted('delete', subject: 'box')]
     public function delete(DeleteBox $action, Box $box): Response
     {
