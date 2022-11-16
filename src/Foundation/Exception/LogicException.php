@@ -11,8 +11,6 @@ class LogicException extends SiklidException implements RenderableInterface
 {
     public function render(): Response
     {
-        return new JsonResponse([
-            'message' => $this->getMessage(),
-        ], Response::HTTP_BAD_REQUEST);
+        return new JsonResponse(['message' => $this->getMessage()], Response::HTTP_BAD_REQUEST);
     }
 }
