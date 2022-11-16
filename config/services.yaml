@@ -28,3 +28,7 @@ services:
   App\Foundation\Exception\ExceptionListener:
     tags:
       - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+  Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter:
+    arguments:
+      $registry: '@doctrine_mongodb'
