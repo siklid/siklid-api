@@ -56,6 +56,7 @@ class BoxTest extends TestCase
     public function touch(): void
     {
         $sut = new Box();
+        $sut->setDeletedAt(null);
 
         $sut->touch();
 
