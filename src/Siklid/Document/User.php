@@ -10,6 +10,7 @@ use App\Foundation\Security\Token\AccessTokenInterface;
 use App\Foundation\Security\Token\HasAccessToken;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as Authenticable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[MongoDB\Document(collection: 'users')]
 #[UniqueDocument(fields: ['email'])]
 #[UniqueDocument(fields: ['username'])]
-class User implements Authenticable, UserInterface, HasAccessToken
+class User implements SiklidUserInterface, Authenticable, UserInterface, HasAccessToken
 {
     #[MongoDB\Id]
     #[Groups(['user:read'])]

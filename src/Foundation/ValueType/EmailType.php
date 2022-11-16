@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\ValueObject;
+namespace App\Foundation\ValueType;
 
+use App\Foundation\ValueObject\Email;
 use Doctrine\ODM\MongoDB\Types\ClosureToPHP;
 use Doctrine\ODM\MongoDB\Types\Type;
 
-class SlugType extends Type
+class EmailType extends Type
 {
     use ClosureToPHP;
 
@@ -16,8 +17,8 @@ class SlugType extends Type
         return (string)$value;
     }
 
-    public function convertToPHPValue($value): ?Slug
+    public function convertToPHPValue($value): ?Email
     {
-        return is_string($value) ? Slug::fromString($value) : null;
+        return is_string($value) ? Email::fromString($value) : null;
     }
 }

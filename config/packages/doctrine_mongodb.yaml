@@ -18,11 +18,13 @@ doctrine_mongodb:
           alias: Siklid
   types:
     email:
-      class: App\Foundation\ValueObject\EmailType
+      class: App\Foundation\ValueType\EmailType
     slug:
-      class: App\Foundation\ValueObject\SlugType
+      class: App\Foundation\ValueType\SlugType
     username:
-      class: App\Foundation\ValueObject\UsernameType
+      class: App\Foundation\ValueType\UsernameType
+    specific:
+      class: App\Foundation\ValueType\SpecificType
 
 when@prod:
   doctrine_mongodb:

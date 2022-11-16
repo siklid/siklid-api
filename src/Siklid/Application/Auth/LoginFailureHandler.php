@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
-class LoginFailureHandler extends ApiController implements AuthenticationFailureHandlerInterface
+final class LoginFailureHandler extends ApiController implements AuthenticationFailureHandlerInterface
 {
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {

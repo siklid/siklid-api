@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 /**
  * Authentication success handler.
  */
-class LoginSuccessHandler extends ApiController implements AuthenticationSuccessHandlerInterface
+final class LoginSuccessHandler extends ApiController implements AuthenticationSuccessHandlerInterface
 {
     private TokenManagerInterface $tokenManager;
 
