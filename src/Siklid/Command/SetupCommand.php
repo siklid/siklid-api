@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Command;
 
+use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -62,7 +63,7 @@ class SetupCommand extends Console
         $user->setUsername(Username::fromString('admin'));
         // @todo: config admin password or ask for it
         $user->setPassword($this->hasher->hash('admin'));
-        $user->setEmail('admin@siklid.io');
+        $user->setEmail(Email::fromString('admin@siklid.io'));
 
         $this->dm->persist($user);
         $this->dm->flush();
