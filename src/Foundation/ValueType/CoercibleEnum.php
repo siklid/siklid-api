@@ -14,7 +14,7 @@ interface CoercibleEnum extends BackedEnum
     /**
      * Coerce value to enum.
      */
-    public static function coerce(self|string $value): self;
+    public static function coerce(mixed $value): self;
 
     /**
      * Converts the enum to an array.
