@@ -10,7 +10,7 @@ class InvalidArgumentException extends SiklidException
     {
         return new self(
             sprintf(
-                'Expected instance of %s, got %s',
+                'Expected instance of %s, got %s.',
                 $expected,
                 $got
             )
