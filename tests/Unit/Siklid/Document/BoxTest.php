@@ -7,22 +7,36 @@ namespace App\Tests\Unit\Siklid\Document;
 use App\Foundation\Exception\LogicException;
 use App\Siklid\Document\Box;
 use App\Tests\TestCase;
+use DateInterval;
+use Lcobucci\Clock\Clock;
+use Lcobucci\Clock\FrozenClock;
 
 /**
  * @psalm-suppress MissingConstructor
  */
 class BoxTest extends TestCase
 {
+    private Clock $clock;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->clock = FrozenClock::fromUTC();
+    }
+
     /**
      * @test
      */
     public function delete(): Box
     {
-        $sut = new Box();
+        $sut = new Box($this->clock);
+        $sut->setDeletedAt(null);
 
         $sut->delete();
 
         $this->assertNotNull($sut->getDeletedAt());
+        $this->assertEquals($this->clock->now(), $sut->getDeletedAt());
 
         return $sut;
     }
@@ -55,12 +69,13 @@ class BoxTest extends TestCase
      */
     public function touch(): void
     {
-        $sut = new Box();
-        $sut->setDeletedAt(null);
+        $sut = new Box($this->clock);
+        $yesterday = $this->clock->now()->sub(new DateInterval('P1D'));
+        $sut->setUpdatedAt($yesterday);
 
         $sut->touch();
 
-        $this->assertNotNull($sut->getUpdatedAt());
+        $this->assertEquals($this->clock->now(), $sut->getUpdatedAt());
     }
 
     /**

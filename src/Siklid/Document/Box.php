@@ -12,6 +12,8 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Lcobucci\Clock\Clock;
+use Lcobucci\Clock\SystemClock;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -63,10 +65,14 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    public function __construct()
+    private Clock $clock;
+
+    public function __construct(?Clock $clock = null)
     {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
+        $this->clock = $clock ?? SystemClock::fromSystemTimezone();
+
+        $this->createdAt = $this->clock->now();
+        $this->updatedAt = $this->clock->now();
         $this->flashcards = new ArrayCollection();
     }
 
@@ -193,7 +199,7 @@ class Box implements BoxInterface
     public function delete(): void
     {
         if (null === $this->deletedAt) {
-            $this->deletedAt = new DateTimeImmutable();
+            $this->deletedAt = $this->clock->now();
 
             return;
         }
@@ -205,7 +211,7 @@ class Box implements BoxInterface
     #[MongoDB\PreUpdate]
     public function touch(): void
     {
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = $this->clock->now();
     }
 
     public function isDeleted(): bool
