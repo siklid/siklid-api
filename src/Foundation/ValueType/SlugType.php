@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\ValueType;
 
+use App\Foundation\Exception\InvalidArgumentException;
 use App\Foundation\ValueObject\Slug;
 use Doctrine\ODM\MongoDB\Types\ClosureToPHP;
 use Doctrine\ODM\MongoDB\Types\Type;
@@ -14,11 +15,19 @@ class SlugType extends Type
 
     public function convertToDatabaseValue($value): string
     {
+        if (! $value instanceof Slug) {
+            throw new InvalidArgumentException('SlugType can process only Slug value object.');
+        }
+
         return (string)$value;
     }
 
-    public function convertToPHPValue($value): ?Slug
+    public function convertToPHPValue($value): Slug
     {
-        return is_string($value) ? Slug::fromString($value) : null;
+        if (null === $value) {
+            throw new InvalidArgumentException('Null values should be skipped by Doctrine.');
+        }
+
+        return Slug::fromString($value);
     }
 }
