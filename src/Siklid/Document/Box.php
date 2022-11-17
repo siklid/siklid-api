@@ -153,9 +153,9 @@ class Box implements BoxInterface
         return $this->repetitionAlgorithm;
     }
 
-    public function setRepetitionAlgorithm(RepetitionAlgorithm|string $repetitionAlgorithm): Box
+    public function setRepetitionAlgorithm(RepetitionAlgorithm $repetitionAlgorithm): Box
     {
-        $this->repetitionAlgorithm = RepetitionAlgorithm::coerce($repetitionAlgorithm);
+        $this->repetitionAlgorithm = $repetitionAlgorithm;
 
         return $this;
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Concerns;
 
+use App\Foundation\ValueObject\Email;
+use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -18,8 +20,8 @@ trait UserFactoryTrait
     {
         $user = new User();
 
-        $user->setEmail($attributes['email'] ?? $this->faker->email());
-        $user->setUsername($attributes['username'] ?? $this->faker()->userName());
+        $user->setEmail($attributes['email'] ?? Email::fromString($this->faker->email()));
+        $user->setUsername($attributes['username'] ?? Username::fromString($this->faker()->userName()));
         $user->setPassword($attributes['password'] ?? $this->faker()->password());
 
         /** @var UserPasswordHasherInterface $passwordHasher */

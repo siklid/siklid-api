@@ -69,4 +69,16 @@ class UsernameTest extends TestCase
             ['imdhemy', '@imdhemy'],
         ];
     }
+
+    /**
+     * @test
+     */
+    public function equals(): void
+    {
+        $value = $this->faker->userName();
+        $obj1 = Username::fromString($value);
+        $obj2 = Username::fromString($value);
+
+        $this->assertTrue($obj1->equals($obj2));
+    }
 }

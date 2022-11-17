@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Foundation\Security\Token;
 
 use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
 use App\Tests\IntegrationTestCase;
@@ -27,7 +28,7 @@ class TokenManagerTest extends IntegrationTestCase
         $user = new User();
 
         $email = $this->faker->email();
-        $user->setEmail($email);
+        $user->setEmail(Email::fromString($email));
 
         $sut = $container->get(TokenManagerInterface::class);
 

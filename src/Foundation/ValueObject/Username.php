@@ -14,9 +14,9 @@ use Stringable;
  */
 final class Username implements Stringable, JsonSerializable
 {
-    private readonly string $username;
+    public readonly string $username;
 
-    private readonly string $original;
+    public readonly string $original;
 
     private function __construct(string $username, string $original)
     {
@@ -54,5 +54,10 @@ final class Username implements Stringable, JsonSerializable
     public function jsonSerialize(): string
     {
         return $this->username;
+    }
+
+    public function equals(Username $other): bool
+    {
+        return $this->username === $other->username;
     }
 }
