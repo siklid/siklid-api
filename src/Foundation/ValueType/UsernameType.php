@@ -28,6 +28,6 @@ class UsernameType extends Type
             throw new InvalidArgumentException('Null values should be skipped by Doctrine.');
         }
 
-        return Username::fromString($value);
+        return Username::fromString((string)$value);
     }
 }
