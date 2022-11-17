@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
@@ -11,6 +12,8 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Lcobucci\Clock\Clock;
+use Lcobucci\Clock\SystemClock;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[MongoDB\Document(collection: 'boxes')]
+#[MongoDB\HasLifecycleCallbacks]
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
@@ -61,10 +65,14 @@ class Box implements BoxInterface
     #[Groups(['box:read'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    public function __construct()
+    private Clock $clock;
+
+    public function __construct(?Clock $clock = null)
     {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
+        $this->clock = $clock ?? SystemClock::fromSystemTimezone();
+
+        $this->createdAt = $this->clock->now();
+        $this->updatedAt = $this->clock->now();
         $this->flashcards = new ArrayCollection();
     }
 
@@ -186,5 +194,28 @@ class Box implements BoxInterface
         $this->hashtags = $hashtags instanceof Collection ? $hashtags->toArray() : $hashtags;
 
         return $this;
+    }
+
+    public function delete(): void
+    {
+        if (null === $this->deletedAt) {
+            $this->deletedAt = $this->clock->now();
+
+            return;
+        }
+
+        throw new LogicException('Box is already deleted');
+    }
+
+    #[MongoDB\PrePersist]
+    #[MongoDB\PreUpdate]
+    public function touch(): void
+    {
+        $this->updatedAt = $this->clock->now();
+    }
+
+    public function isDeleted(): bool
+    {
+        return null !== $this->deletedAt;
     }
 }
