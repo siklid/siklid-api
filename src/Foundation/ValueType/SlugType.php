@@ -28,6 +28,6 @@ class SlugType extends Type
             throw new InvalidArgumentException('Null values should be skipped by Doctrine.');
         }
 
-        return Slug::fromString($value);
+        return Slug::fromString((string)$value);
     }
 }
