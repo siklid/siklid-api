@@ -16,7 +16,7 @@ class SlugType extends Type
     public function convertToDatabaseValue($value): string
     {
         if (! $value instanceof Slug) {
-            throw new InvalidArgumentException('SlugType can process only Slug value object.');
+            throw InvalidArgumentException::create(Slug::class, get_debug_type($value));
         }
 
         return (string)$value;
