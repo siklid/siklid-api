@@ -28,6 +28,6 @@ class EmailType extends Type
             throw new InvalidArgumentException('Null value should be skipped by Doctrine.');
         }
 
-        return Email::fromString($value);
+        return Email::fromString((string)$value);
     }
 }
