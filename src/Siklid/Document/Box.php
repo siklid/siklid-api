@@ -218,4 +218,10 @@ class Box implements BoxInterface
     {
         return null !== $this->deletedAt;
     }
+
+    #[MongoDB\PostLoad]
+    public function setClock(): void
+    {
+        $this->clock = SystemClock::fromSystemTimezone();
+    }
 }
