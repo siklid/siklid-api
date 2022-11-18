@@ -27,13 +27,14 @@ class EmailTypeTest extends TestCase
     /**
      * @test
      */
-    public function convert_to_database_value_accepts_only_email_value_object(): void
+    public function convert_to_database_value_accepts_string_email_value(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $sut = $this->createMongoType(EmailType::class);
+        $value = $this->faker->email();
 
-        $sut->convertToDatabaseValue($this->faker->email());
+        $sut->convertToDatabaseValue($value);
+
+        $this->assertSame($value, $sut->convertToDatabaseValue($value));
     }
 
     /**
