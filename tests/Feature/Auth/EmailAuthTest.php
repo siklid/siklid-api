@@ -6,11 +6,8 @@ namespace App\Tests\Feature\Auth;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
-use App\Siklid\Application\Auth\LoginFailureHandler;
-use App\Siklid\Application\Auth\LoginSuccessHandler;
 use App\Siklid\Document\User;
 use App\Tests\FeatureTestCase;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -39,18 +36,13 @@ class EmailAuthTest extends FeatureTestCase
 
         $this->assertResponseIsCreated();
         $this->assertResponseIsJson();
-
         $this->assertResponseJsonStructure($client, [
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-
-        $this->assertExists(User::class, [
-            'email' => $email,
-            'username' => $username,
-        ]);
+        $this->assertExists(User::class, ['email' => $email]);
 
         $this->deleteDocument(User::class, [
             'email' => $email,
@@ -60,22 +52,36 @@ class EmailAuthTest extends FeatureTestCase
 
     /**
      * @test
-     *
-     * @psalm-suppress MixedArrayAccess
      */
-    public function json_login_is_configured(): void
+    public function guest_can_login_by_email(): void
     {
-        /** @var array $securityConfig */
-        $securityConfig = Yaml::parse(file_get_contents(__DIR__.'/../../../config/packages/security.yaml'));
+        $client = $this->createCrawler();
+        $email = Email::fromString($this->faker->unique()->email());
+        $password = $this->faker->password();
+        $user = $this->makeUser(compact('email', 'password'));
+        $this->persistDocument($user);
 
-        $expected = [
-            'check_path' => 'api_login_check',
-            'success_handler' => LoginSuccessHandler::class,
-            'failure_handler' => LoginFailureHandler::class,
-            'username_path' => 'email',
-            'password_path' => 'password',
-        ];
+        $client->request(
+            'POST',
+            'api/v1/auth/login/email',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            $this->json->arrayToJson([
+                'email' => $email,
+                'password' => $password,
+            ])
+        );
 
-        $this->assertSame($expected, $securityConfig['security']['firewalls']['api']['json_login']);
+        $this->assertResponseIsOk();
+        $this->assertResponseIsJson();
+        $this->assertResponseJsonStructure($client, [
+            'data' => [
+                'user' => ['id', 'email', 'username'],
+                'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
+            ],
+        ]);
+
+        $this->deleteDocument(User::class, ['email' => $email]);
     }
 }
