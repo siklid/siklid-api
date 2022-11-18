@@ -17,13 +17,13 @@ class BoxController extends ApiController
     #[Route('/boxes', name: 'box_store', methods: ['POST'])]
     public function store(CreateBox $action): Response
     {
-        return $this->created($action->execute(), ['box:read']);
+        return $this->created($action->execute(), ['box:create']);
     }
 
     #[Route('/boxes/{id}', name: 'box_delete', methods: ['DELETE'])]
     #[IsGranted('delete', subject: 'box')]
     public function delete(DeleteBox $action, Box $box): Response
     {
-        return $this->ok($action->setBox($box)->execute());
+        return $this->ok($action->setBox($box)->execute(), ['box:delete']);
     }
 }

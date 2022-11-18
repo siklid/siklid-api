@@ -26,20 +26,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete', 'box:create'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create'])]
     private string $name;
 
     #[MongoDB\Field(type: 'specific')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create'])]
     private RepetitionAlgorithm $repetitionAlgorithm = RepetitionAlgorithm::Leitner;
 
     #[MongoDB\Field(type: 'string', nullable: true)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create'])]
     private ?string $description = null;
 
     #[MongoDB\ReferenceMany(targetDocument: Flashcard::class)]
@@ -47,14 +47,15 @@ class Box implements BoxInterface
     private Collection $flashcards;
 
     #[MongoDB\Field(type: 'collection')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create'])]
     private array $hashtags = [];
 
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
+    #[Groups(['box:read'])]
     private UserInterface $user;
 
     #[MongoDB\Field(type: 'date_immutable')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create'])]
     private DateTimeImmutable $createdAt;
 
     #[MongoDB\Field(type: 'date_immutable')]
@@ -62,7 +63,7 @@ class Box implements BoxInterface
     private DateTimeImmutable $updatedAt;
 
     #[MongoDB\Field(type: 'date_immutable', nullable: true)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete'])]
     private ?DateTimeImmutable $deletedAt = null;
 
     private Clock $clock;
@@ -217,5 +218,11 @@ class Box implements BoxInterface
     public function isDeleted(): bool
     {
         return null !== $this->deletedAt;
+    }
+
+    #[MongoDB\PostLoad]
+    public function setClock(): void
+    {
+        $this->clock = SystemClock::fromSystemTimezone();
     }
 }
