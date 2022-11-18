@@ -24,6 +24,6 @@ class BoxController extends ApiController
     #[IsGranted('delete', subject: 'box')]
     public function delete(DeleteBox $action, Box $box): Response
     {
-        return $this->ok($action->setBox($box)->execute());
+        return $this->ok($action->setBox($box)->execute(), ['box:delete']);
     }
 }

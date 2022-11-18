@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
@@ -62,7 +62,7 @@ class Box implements BoxInterface
     private DateTimeImmutable $updatedAt;
 
     #[MongoDB\Field(type: 'date_immutable', nullable: true)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete'])]
     private ?DateTimeImmutable $deletedAt = null;
 
     private Clock $clock;
