@@ -15,6 +15,10 @@ class EmailType extends Type
 
     public function convertToDatabaseValue($value): string
     {
+        if (is_string($value)) {
+            return $value;
+        }
+
         if (! $value instanceof Email) {
             throw InvalidArgumentException::create(Email::class, get_debug_type($value));
         }
