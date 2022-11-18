@@ -8,6 +8,8 @@ use App\Foundation\Http\ApiController;
 use App\Siklid\Application\Auth\RegisterByEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class RegisterController extends ApiController
 {
@@ -24,5 +26,13 @@ class RegisterController extends ApiController
         $groups = ['user:read', 'token:read'];
 
         return $this->created($data, $groups);
+    }
+
+    #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
+    public function logout(TokenStorageInterface $tokenStorage): Response
+    {
+        $tokenStorage->setToken();
+
+        return $this->json('done logout successfully.');
     }
 }
