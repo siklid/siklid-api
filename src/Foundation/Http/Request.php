@@ -62,4 +62,23 @@ class Request implements ValidatableInterface
     {
         return $this->all();
     }
+
+    /**
+     * Retrieves $_GET and $_POST variables respectively.
+     */
+    public function get(string $key, string $default = ''): string|int|float|bool|null
+    {
+        $getVariables = $this->request()->query;
+        $postVariables = $this->request()->request;
+
+        if ($getVariables->has($key)) {
+            return $getVariables->get($key, $default);
+        }
+
+        if ($postVariables->has($key)) {
+            return $postVariables->get($key, $default);
+        }
+
+        return $default;
+    }
 }
