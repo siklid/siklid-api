@@ -138,11 +138,11 @@ class FeatureTestCase extends WebTestCase
     protected function assertStructure(array $content, array $structure): void
     {
         foreach ($structure as $key => $value) {
-            if (is_int($key)) {
-                $this->assertArrayHasKey($value, $content);
-            } else {
+            if (is_array($value)) {
                 $this->assertArrayHasKey($key, $content);
                 $this->assertStructure($content[$key], $value);
+            } else {
+                $this->assertArrayHasKey($value, $content);
             }
         }
     }
