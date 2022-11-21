@@ -60,7 +60,7 @@ class ApiControllerTest extends TestCase
         return [
             'null' => [null, ['data' => null]],
             'array' => [['foo' => 'bar'], ['data' => ['foo' => 'bar']]],
-            'page' => [Page::init()->data(['foo' => 'bar']), ['data' => ['foo' => 'bar'], 'links' => [], 'meta' => []]],
+            'page' => [Page::init()->data(['foo' => 'bar']), ['data' => ['foo' => 'bar'], 'meta' => [], 'links' => []]],
         ];
     }
 }
