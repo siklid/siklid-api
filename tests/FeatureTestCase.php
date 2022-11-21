@@ -90,6 +90,14 @@ class FeatureTestCase extends WebTestCase
     }
 
     /**
+     * Asserts that the response status code is 403.
+     */
+    protected function assertResponseIsForbidden(string $message = ''): void
+    {
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN, $message);
+    }
+
+    /**
      * Assert that the response has validation errors.
      */
     protected function assertResponseHasValidationError(string $message = ''): void
@@ -167,5 +175,13 @@ class FeatureTestCase extends WebTestCase
     protected function container(): ContainerInterface
     {
         return self::getContainer();
+    }
+
+    /**
+     * Returns the faker instance.
+     */
+    protected function faker(): Faker
+    {
+        return $this->faker;
     }
 }

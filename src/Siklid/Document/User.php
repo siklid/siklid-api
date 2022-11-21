@@ -73,9 +73,9 @@ class User implements SiklidUserInterface, Authenticable, UserInterface, HasAcce
     /**
      * @return $this
      */
-    public function setEmail(string|Email $email): User
+    public function setEmail(Email $email): User
     {
-        $this->email = Email::fromString((string)$email);
+        $this->email = $email;
 
         return $this;
     }
@@ -103,9 +103,9 @@ class User implements SiklidUserInterface, Authenticable, UserInterface, HasAcce
     /**
      * @return $this
      */
-    public function setUsername(string|Username $username): User
+    public function setUsername(Username $username): User
     {
-        $this->username = Username::fromString((string)$username);
+        $this->username = $username;
 
         return $this;
     }
