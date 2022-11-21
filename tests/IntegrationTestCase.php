@@ -70,4 +70,9 @@ class IntegrationTestCase extends KernelTestCase
 
         return new CommandTester($command);
     }
+
+    protected function faker(): Faker
+    {
+        return $this->faker;
+    }
 }
