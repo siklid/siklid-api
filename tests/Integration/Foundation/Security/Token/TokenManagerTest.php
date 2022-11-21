@@ -24,16 +24,16 @@ class TokenManagerTest extends IntegrationTestCase
     public function create_access_token(): void
     {
         $container = $this->container();
-
         $user = new User();
-
         $email = $this->faker->email();
         $user->setEmail(Email::fromString($email));
-
         $sut = $container->get(TokenManagerInterface::class);
 
         $accessToken = $sut->createAccessToken($user);
+
         $this->assertNotNull($accessToken->getToken());
-        $this->assertExists(RefreshToken::class, ['username' => $user->getEmail()]);
+        $this->assertExists(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
+
+        $this->deleteDocument(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
     }
 }

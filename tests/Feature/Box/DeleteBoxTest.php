@@ -68,5 +68,8 @@ class DeleteBoxTest extends FeatureTestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsForbidden();
+
+        $this->deleteDocument($user);
+        $this->deleteDocument($box);
     }
 }
