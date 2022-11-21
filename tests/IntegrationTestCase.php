@@ -61,8 +61,8 @@ class IntegrationTestCase extends KernelTestCase
     /**
      * Creates a command tester.
      *
-     * @param Application $application The console application
-     * @param string|Command $command  The command to test
+     * @param Application    $application The console application
+     * @param string|Command $command     The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {
