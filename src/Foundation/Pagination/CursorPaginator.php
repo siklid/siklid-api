@@ -31,8 +31,8 @@ final class CursorPaginator implements PaginatorInterface
      * Paginates a query builder.
      *
      * @param builder $builder - The query builder to paginate
-     * @param string $offset   - Used as the cursor
-     * @param int $limit       - The number of items to return per page
+     * @param string  $offset  - Used as the cursor
+     * @param int     $limit   - The number of items to return per page
      *
      * @return pageInterface - The paginated page
      */
