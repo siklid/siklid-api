@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Foundation\Pagination;
 
 use App\Foundation\Pagination\CursorPaginator;
 use App\Siklid\Document\User;
-use App\Tests\Concerns\UserFactoryTrait;
+use App\Tests\Concern\UserFactoryTrait;
 use App\Tests\IntegrationTestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;

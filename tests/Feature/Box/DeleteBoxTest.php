@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Tests\Concerns\BoxFactoryTrait;
+use App\Tests\Concern\BoxFactoryTrait;
 use App\Tests\FeatureTestCase;
 
 /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concerns;
+namespace App\Tests\Concern;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;

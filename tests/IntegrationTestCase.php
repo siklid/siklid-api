@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Foundation\Util\Json;
-use App\Tests\Concerns\DBTrait;
+use App\Tests\Concern\DBTrait;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Command\Command;
@@ -61,8 +61,8 @@ class IntegrationTestCase extends KernelTestCase
     /**
      * Creates a command tester.
      *
-     * @param Application    $application The console application
-     * @param string|Command $command     The command to test
+     * @param Application $application The console application
+     * @param string|Command $command  The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {
