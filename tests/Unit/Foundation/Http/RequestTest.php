@@ -112,4 +112,43 @@ class RequestTest extends TestCase
 
         $this->assertSame($sut->all(), $sut->formInput());
     }
+
+    /**
+     * @test
+     */
+    public function get_returns_get_variables(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request(['foo' => 'bar']));
+
+        $actual = $sut->get('foo');
+
+        $this->assertSame('bar', $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function get_returns_post_variables(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request([], ['foo' => 'bar']));
+
+        $actual = $sut->get('foo');
+
+        $this->assertSame('bar', $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function get_can_return_a_default_value(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request());
+
+        $actual = $sut->get('foo', 'bar');
+
+        $this->assertSame('bar', $actual);
+    }
 }

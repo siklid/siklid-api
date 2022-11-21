@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Foundation\Http;
 
 use App\Foundation\Http\ApiController;
+use App\Foundation\Pagination\Page;
 use App\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +27,15 @@ class ApiControllerTest extends TestCase
 
     /**
      * @test
+     *
+     * @dataProvider provideResponsesForOk
      */
-    public function ok(): void
+    public function ok(mixed $data, array $expected): void
     {
-        $data = ['foo' => 'bar'];
-
         $actual = $this->sut->ok($data);
-
         $this->assertSame(Response::HTTP_OK, $actual->getStatusCode());
         $content = $this->json->jsonToArray((string)$actual->getContent());
-        $this->assertSame($data, $content['data']);
+        $this->assertSame($content, $expected);
     }
 
     /**
@@ -50,5 +50,17 @@ class ApiControllerTest extends TestCase
         $this->assertSame(Response::HTTP_CREATED, $actual->getStatusCode());
         $content = $this->json->jsonToArray((string)$actual->getContent());
         $this->assertSame($data, $content['data']);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideResponsesForOk(): array
+    {
+        return [
+            'null' => [null, ['data' => null]],
+            'array' => [['foo' => 'bar'], ['data' => ['foo' => 'bar']]],
+            'page' => [Page::init()->data(['foo' => 'bar']), ['data' => ['foo' => 'bar'], 'meta' => [], 'links' => []]],
+        ];
     }
 }

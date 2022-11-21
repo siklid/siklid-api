@@ -36,4 +36,28 @@ abstract class AbstractAction extends AbstractController implements ActionInterf
             throw $validationException;
         }
     }
+
+    /**
+     * Returns the value of the given parameter.
+     *
+     * @return mixed The value of the parameter
+     *
+     * @psalm-suppress PossiblyUndefinedMethod - The user should know about the config values
+     * @psalm-suppress MixedAssignment - Expected to be mixed
+     */
+    public function getConfig(string $key, mixed $default = null): mixed
+    {
+        $keyParts = explode('.', $key);
+        $config = $this->getParameter($keyParts[0]);
+
+        foreach ($keyParts as $keyPart) {
+            if (! isset($config[$keyPart])) {
+                return $default;
+            }
+
+            $config = $config[$keyPart];
+        }
+
+        return $config ?? $default;
+    }
 }

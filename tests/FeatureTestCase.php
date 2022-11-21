@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Foundation\Util\Json;
-use App\Tests\Concerns\DBTrait;
-use App\Tests\Concerns\UserFactoryTrait;
+use App\Tests\Concern\DBTrait;
+use App\Tests\Concern\UserFactoryTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -138,11 +138,11 @@ class FeatureTestCase extends WebTestCase
     protected function assertStructure(array $content, array $structure): void
     {
         foreach ($structure as $key => $value) {
-            if (is_int($key)) {
-                $this->assertArrayHasKey($value, $content);
-            } else {
+            if (is_array($value)) {
                 $this->assertArrayHasKey($key, $content);
                 $this->assertStructure($content[$key], $value);
+            } else {
+                $this->assertArrayHasKey($value, $content);
             }
         }
     }

@@ -6,6 +6,7 @@ namespace App\Tests\Feature\Auth;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
 use App\Tests\FeatureTestCase;
 
@@ -48,6 +49,8 @@ class EmailAuthTest extends FeatureTestCase
             'email' => $email,
             'username' => $username,
         ]);
+
+        $this->deleteDocument(RefreshToken::class, ['username' => $email]);
     }
 
     /**
@@ -83,5 +86,6 @@ class EmailAuthTest extends FeatureTestCase
         ]);
 
         $this->deleteDocument(User::class, ['email' => $email]);
+        $this->deleteDocument(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
     }
 }
