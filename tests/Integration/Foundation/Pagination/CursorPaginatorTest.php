@@ -47,7 +47,6 @@ class CursorPaginatorTest extends IntegrationTestCase
 
         $actual = $sut->paginate($builder, '', 1);
 
-        /** @var User[] $data */
         $data = $actual->getData();
         $this->assertCount(1, $data);
         $this->assertSame($this->users[0], $data[0]);
@@ -64,7 +63,6 @@ class CursorPaginatorTest extends IntegrationTestCase
         $builder->sort('id', 'desc');
         $actual = $sut->paginate($builder, $this->users[2]->getId(), 1);
 
-        /** @var User[] $data */
         $data = $actual->getData();
         $this->assertCount(1, $data);
         $this->assertSame($this->users[1], $data[0]);
@@ -80,8 +78,7 @@ class CursorPaginatorTest extends IntegrationTestCase
         $builder = $documentManager->createQueryBuilder(User::class);
         $builder->sort('id', 'desc');
         $actual = $sut->paginate($builder, '', 1);
-
-        /** @var User[] $data */
+        
         $data = $actual->getData();
         $this->assertCount(1, $data);
         $this->assertSame($this->users[1], $data[0]);

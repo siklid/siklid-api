@@ -7,8 +7,14 @@ namespace App\Foundation\Pagination;
 use App\Foundation\Pagination\Contract\PageInterface;
 use JsonSerializable;
 
+/**
+ * @template T The type of the elements of the page.
+ */
 final class Page implements PageInterface, JsonSerializable
 {
+    /**
+     * @var array|T[] the elements of the page
+     */
     private array $data = [];
 
     private array $links = [];
@@ -35,6 +41,11 @@ final class Page implements PageInterface, JsonSerializable
         return new self();
     }
 
+    /**
+     * @param array|T[] $data
+     *
+     * @return $this
+     */
     public function data(array $data): self
     {
         $this->data = $data;
