@@ -33,10 +33,12 @@ final class ListBoxes extends AbstractAction
         assert($boxRepository instanceof BoxRepository);
 
         $after = (string)$this->request->get('after');
+
         $hashtag = $this->request->get('hashtag');
         if (null !== $hashtag) {
             $hashtag = empty($hashtag) ? null : (string)$hashtag;
         }
+
         $limit = (int)$this->getConfig('pagination.limit', 25);
         if ($this->request->has('size')) {
             $limit = (int)$this->request->get('size');
