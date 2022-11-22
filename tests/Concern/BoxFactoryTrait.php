@@ -21,6 +21,7 @@ trait BoxFactoryTrait
         $box->setName($attributes['name'] ?? $this->faker()->word());
         $box->setDescription($attributes['description'] ?? $this->faker()->sentence());
         $box->setUser($attributes['user'] ?? new User());
+        $box->setHashtags($attributes['hashtags'] ?? []);
 
         return $box;
     }

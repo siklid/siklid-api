@@ -59,6 +59,7 @@ class ListBoxTest extends FeatureTestCase
 
     /**
      * @test
+     *
      * @psalm-suppress MixedArrayAccess
      */
     public function after_cursor_paginates_boxes(): void
@@ -81,6 +82,32 @@ class ListBoxTest extends FeatureTestCase
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($boxes[0]->getId(), $data[0]['id'], 'Last box returned first');
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
+
+    /**
+     * @test
+     *
+     * @psalm-suppress MixedArrayAccess
+     */
+    public function guest_can_paginate_boxes_by_hashtag(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $box = $this->makeBox(['user' => $user, 'hashtags' => ['#foo', '#not_bar']]);
+        $this->persistDocument($box);
+        $this->persistDocument($this->makeBox(['user' => $user, 'hashtags' => ['#bar']]));
+
+        $client->request('GET', '/api/v1/boxes?hashtag=foo');
+
+        $this->assertResponseIsOk();
+        $data = $this->getFromResponse($client, 'data');
+        $this->assertIsArray($data);
+        $this->assertCount(1, $data);
+        $this->assertSame($box->getId(), $data[0]['id']);
 
         $this->deleteDocument($user);
         $this->deleteAllDocuments(Box::class);

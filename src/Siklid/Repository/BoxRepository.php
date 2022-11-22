@@ -10,11 +10,15 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class BoxRepository extends DocumentRepository
 {
-    public function PaginateAfter(string $after = '', int $perPage = 25): PageInterface
+    public function PaginateAfter(string $after = '', ?string $hashtag = null, int $perPage = 25): PageInterface
     {
         $qb = $this->createQueryBuilder();
         $qb->sort('id', 'DESC')
             ->field('user')->prime();
+
+        if (null !== $hashtag) {
+            $qb->field('hashtags')->equals('#'.$hashtag);
+        }
 
         return CursorPaginator::create()->paginate($qb, $after, $perPage);
     }
