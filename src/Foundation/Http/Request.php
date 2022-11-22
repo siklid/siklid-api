@@ -85,4 +85,12 @@ class Request implements ValidatableInterface
 
         return $default;
     }
+
+    /**
+     * Checks if request has a given parameter.
+     */
+    public function has(string $key): bool
+    {
+        return $this->request()->query->has($key) || $this->request()->request->has($key);
+    }
 }
