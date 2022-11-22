@@ -116,6 +116,28 @@ class ListBoxTest extends FeatureTestCase
     /**
      * @test
      */
+    public function empty_hashtag_filter_returns_all_boxes(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $this->persistDocument($this->makeBox(['user' => $user, 'hashtags' => ['#foo', '#not_bar']]));
+        $this->persistDocument($this->makeBox(['user' => $user, 'hashtags' => ['#bar']]));
+
+        $client->request('GET', '/api/v1/boxes?hashtag=');
+
+        $this->assertResponseIsOk();
+        $data = $this->getFromResponse($client, 'data');
+        $this->assertIsArray($data);
+        $this->assertCount(2, $data);
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
+
+    /**
+     * @test
+     */
     public function pagination_size_can_be_specified_with_a_query_param(): void
     {
         $client = $this->createCrawler();
