@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Box;
 
 use App\Foundation\Action\AbstractAction;
+use App\Foundation\Exception\ValidationException;
 use App\Foundation\Http\Request;
 use App\Foundation\Pagination\Contract\PageInterface;
 use App\Siklid\Document\Box;
@@ -39,8 +40,21 @@ final class ListBoxes extends AbstractAction
         $limit = (int)$this->getConfig('pagination.limit', 25);
         if ($this->request->has('size')) {
             $limit = (int)$this->request->get('size');
+            $this->validateSize($limit);
         }
 
         return $boxRepository->PaginateAfter($after, $hashtag, $limit);
+    }
+
+    private function validateSize(int $limit): void
+    {
+        if ($limit < 1) {
+            throw new ValidationException('Size must be 1 or greater.');
+        }
+
+        $maxSize = (int)$this->getConfig('pagination.max_limit', 100);
+        if ($limit > $maxSize) {
+            throw new ValidationException("Size must be less than or equal to $maxSize.");
+        }
     }
 }

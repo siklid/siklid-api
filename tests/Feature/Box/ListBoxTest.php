@@ -136,4 +136,52 @@ class ListBoxTest extends FeatureTestCase
         $this->deleteDocument($user);
         $this->deleteAllDocuments(Box::class);
     }
+
+    /**
+     * @test
+     */
+    public function pagination_size_min_size_is_one(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        for ($i = 0; $i < 5; ++$i) {
+            $box = $this->makeBox(['user' => $user]);
+            $this->persistDocument($box);
+        }
+
+        $client->request('GET', '/api/v1/boxes?size=0');
+
+        $this->assertResponseHasValidationError();
+        $this->assertResponseIsJson();
+        $content = (string)$client->getResponse()->getContent();
+        $this->assertStringContainsString('Size must be 1 or greater.', $content);
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
+
+    /**
+     * @test
+     */
+    public function max_pagination_size_is_100(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        for ($i = 0; $i < 5; ++$i) {
+            $box = $this->makeBox(['user' => $user]);
+            $this->persistDocument($box);
+        }
+
+        $client->request('GET', '/api/v1/boxes?size=101');
+
+        $this->assertResponseHasValidationError();
+        $this->assertResponseIsJson();
+        $content = (string)$client->getResponse()->getContent();
+        $this->assertStringContainsString('Size must be less than or equal to 100.', $content);
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
 }
