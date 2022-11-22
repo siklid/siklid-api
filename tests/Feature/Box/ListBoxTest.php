@@ -56,4 +56,33 @@ class ListBoxTest extends FeatureTestCase
         $this->deleteDocument($user);
         $this->deleteAllDocuments(Box::class);
     }
+
+    /**
+     * @test
+     * @psalm-suppress MixedArrayAccess
+     */
+    public function after_cursor_paginates_boxes(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $boxes = [];
+        for ($i = 0; $i < 26; ++$i) {
+            $box = $this->makeBox(['user' => $user]);
+            $this->persistDocument($box);
+            $boxes[] = $box;
+        }
+        $cursor = $boxes[1]->getId();
+
+        $client->request('GET', "/api/v1/boxes?after=$cursor");
+
+        $this->assertResponseIsOk();
+        $data = $this->getFromResponse($client, 'data');
+        $this->assertIsArray($data);
+        $this->assertCount(1, $data);
+        $this->assertSame($boxes[0]->getId(), $data[0]['id'], 'Last box returned first');
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
 }
