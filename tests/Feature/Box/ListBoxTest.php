@@ -112,4 +112,28 @@ class ListBoxTest extends FeatureTestCase
         $this->deleteDocument($user);
         $this->deleteAllDocuments(Box::class);
     }
+
+    /**
+     * @test
+     */
+    public function pagination_size_can_be_specified_with_a_query_param(): void
+    {
+        $client = $this->createCrawler();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        for ($i = 0; $i < 5; ++$i) {
+            $box = $this->makeBox(['user' => $user]);
+            $this->persistDocument($box);
+        }
+
+        $client->request('GET', '/api/v1/boxes?size=3');
+
+        $this->assertResponseIsOk();
+        $data = $this->getFromResponse($client, 'data');
+        $this->assertIsArray($data);
+        $this->assertCount(3, $data);
+
+        $this->deleteDocument($user);
+        $this->deleteAllDocuments(Box::class);
+    }
 }

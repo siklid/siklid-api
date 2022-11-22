@@ -37,6 +37,9 @@ final class ListBoxes extends AbstractAction
             $hashtag = (string)$hashtag;
         }
         $limit = (int)$this->getConfig('pagination.limit', 25);
+        if ($this->request->has('size')) {
+            $limit = (int)$this->request->get('size');
+        }
 
         return $boxRepository->PaginateAfter($after, $hashtag, $limit);
     }
