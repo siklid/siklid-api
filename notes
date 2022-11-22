@@ -1,1 +1,3 @@
 docker exec -it siklid_php php bin/console lexik:jwt:generate-keypair
+
+docker exec -it siklid_php sh
