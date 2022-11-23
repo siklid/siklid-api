@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Foundation\Util\Json;
 use App\Tests\Concern\DBTrait;
+use App\Tests\Concern\SetupTraits;
 use App\Tests\Concern\UserFactoryTrait;
+use App\Tests\Concern\WithFaker;
+use App\Tests\Concern\WithJson;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,22 +22,20 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FeatureTestCase extends WebTestCase
 {
+    use SetupTraits;
     use DBTrait;
+    use WithJson;
+    use WithFaker;
     use UserFactoryTrait;
 
-    protected Faker $faker;
-
-    protected Json $json;
-
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->faker = Faker::create();
-        $this->json = new Json();
+        $this->setUpFaker();
+        $this->setUpUtils();
+
+        $this->setUpTraits();
     }
 
     /**

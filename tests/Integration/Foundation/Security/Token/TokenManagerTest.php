@@ -8,6 +8,7 @@ use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
+use App\Tests\Concern\WithFaker;
 use App\Tests\IntegrationTestCase;
 
 /**
@@ -15,6 +16,8 @@ use App\Tests\IntegrationTestCase;
  */
 class TokenManagerTest extends IntegrationTestCase
 {
+    use WithFaker;
+
     /**
      * @test
      *

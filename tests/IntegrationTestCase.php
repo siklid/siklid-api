@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Foundation\Util\Json;
 use App\Tests\Concern\DBTrait;
+use App\Tests\Concern\SetupTraits;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Command\Command;
@@ -21,10 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class IntegrationTestCase extends KernelTestCase
 {
     use DBTrait;
-
-    protected Faker $faker;
-
-    protected Json $json;
+    use SetupTraits;
 
     /**
      * {@inheritDoc}
@@ -33,8 +30,7 @@ class IntegrationTestCase extends KernelTestCase
     {
         parent::setUp();
 
-        $this->faker = Faker::create();
-        $this->json = new Json();
+        $this->setUpTraits();
     }
 
     /**
@@ -69,10 +65,5 @@ class IntegrationTestCase extends KernelTestCase
         $command = $command instanceof Command ? $command : $application->find($command);
 
         return new CommandTester($command);
-    }
-
-    protected function faker(): Faker
-    {
-        return $this->faker;
     }
 }
