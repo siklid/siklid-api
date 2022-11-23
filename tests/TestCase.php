@@ -62,14 +62,21 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Creates an instance of the given mongo-odm custom type.
      *
-     * @param class-string<T|Type> $type the type to create
+     * @psalm-template T of Type
      *
-     * @return T
+     * @psalm-param class-string<T> $type
      *
-     * @template T|Type
+     * @psalm-return T
+     *
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress PossiblyInvalidArgument
+     * @psalm-suppress PossibleInvalidStringClass
+     * @psalm-suppress InvalidStringClass
+     * @psalm-suppress InvalidReturnStatement
      */
     protected function createMongoType(string $type): Type
     {
+        /* @var Type|string $type */
         $type::registerType($type, $type);
 
         return $type::getType($type);
