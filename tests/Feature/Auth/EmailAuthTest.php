@@ -44,13 +44,6 @@ class EmailAuthTest extends FeatureTestCase
             ],
         ]);
         $this->assertExists(User::class, ['email' => $email]);
-
-        $this->deleteDocument(User::class, [
-            'email' => $email,
-            'username' => $username,
-        ]);
-
-        $this->deleteDocument(RefreshToken::class, ['username' => $email]);
     }
 
     /**
@@ -84,8 +77,13 @@ class EmailAuthTest extends FeatureTestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
+    }
 
-        $this->deleteDocument(User::class, ['email' => $email]);
-        $this->deleteDocument(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
+    protected function tearDown(): void
+    {
+        $this->dropCollection(User::class);
+        $this->dropCollection(RefreshToken::class);
+
+        parent::tearDown();
     }
 }

@@ -23,7 +23,7 @@ trait DBTrait
     protected function getDocumentManager(): DocumentManager
     {
         /** @var DocumentManager $dm */
-        $dm = self::getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $dm = self::getContainer()->get(DocumentManager::class);
 
         return $dm;
     }
@@ -92,18 +92,13 @@ trait DBTrait
     }
 
     /**
-     * Deletes all documents from the given collection.
+     * Drops the collection of the given class.
      */
-    protected function deleteAllDocuments(string $class): void
+    protected function dropCollection(string $class): void
     {
-        $repository = $this->getRepository($class);
-        $objects = $repository->findAll();
-
-        foreach ($objects as $object) {
-            $this->getDocumentManager()->remove($object);
-        }
-
-        $this->getDocumentManager()->flush();
+        $collection = $this->getDocumentManager()->getDocumentCollection($class);
+        $collection->drop();
+        $this->getDocumentManager()->clear();
     }
 
     /**

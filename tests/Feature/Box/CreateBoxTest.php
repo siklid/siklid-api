@@ -46,9 +46,6 @@ class CreateBoxTest extends FeatureTestCase
             'description' => $description,
             'user' => $user,
         ]);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
     }
 
     /**
@@ -75,8 +72,6 @@ class CreateBoxTest extends FeatureTestCase
             'description' => $description,
             'user' => $user,
         ]);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
     }
 
     /**
@@ -101,9 +96,6 @@ class CreateBoxTest extends FeatureTestCase
         ]);
         $actual = $this->getFromResponse($client, 'data.description');
         $this->assertNull($actual);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
     }
 
     /**
@@ -133,8 +125,13 @@ class CreateBoxTest extends FeatureTestCase
 
         $actual = (array)$this->getFromResponse($client, 'data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
+    }
 
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
+    protected function tearDown(): void
+    {
+        $this->dropCollection(User::class);
+        $this->dropCollection(Box::class);
+
+        parent::tearDown();
     }
 }
