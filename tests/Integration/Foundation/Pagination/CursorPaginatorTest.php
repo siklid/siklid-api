@@ -6,16 +6,18 @@ namespace App\Tests\Integration\Foundation\Pagination;
 
 use App\Foundation\Pagination\CursorPaginator;
 use App\Siklid\Document\User;
+use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\Factory\UserFactoryTrait;
-use App\Tests\IntegrationTestCase;
+use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class CursorPaginatorTest extends IntegrationTestCase
+class CursorPaginatorTest extends TestCase
 {
+    use CreatesKernel;
     use UserFactoryTrait;
 
     /**

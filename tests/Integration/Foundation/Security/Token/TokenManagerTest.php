@@ -8,14 +8,16 @@ use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
+use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\WithFaker;
-use App\Tests\IntegrationTestCase;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class TokenManagerTest extends IntegrationTestCase
+class TokenManagerTest extends TestCase
 {
+    use CreatesKernel;
     use WithFaker;
 
     /**

@@ -7,7 +7,8 @@ namespace App\Tests\Integration\Foundation\Exception;
 use App\Foundation\Exception\ExceptionListener;
 use App\Foundation\Exception\RenderableInterface;
 use App\Foundation\Exception\SiklidException;
-use App\Tests\IntegrationTestCase;
+use App\Tests\Concern\CreatesKernel;
+use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -16,8 +17,10 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 /**
  * @psalm-suppress MissingConstructor
  */
-class ExceptionListenerTest extends IntegrationTestCase
+class ExceptionListenerTest extends TestCase
 {
+    use CreatesKernel;
+
     /**
      * @test
      *

@@ -7,15 +7,17 @@ namespace App\Tests\Integration\Siklid\Repository;
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
 use App\Siklid\Repository\BoxRepository;
+use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
 use App\Tests\Concern\Factory\UserFactoryTrait;
-use App\Tests\IntegrationTestCase;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class BoxRepositoryTest extends IntegrationTestCase
+class BoxRepositoryTest extends TestCase
 {
+    use CreatesKernel;
     use UserFactoryTrait;
     use BoxFactoryTrait;
 

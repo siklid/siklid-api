@@ -6,13 +6,16 @@ namespace App\Tests\Integration\Siklid\Command;
 
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
-use App\Tests\IntegrationTestCase;
+use App\Tests\Concern\CreatesKernel;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class SetupCommandTest extends IntegrationTestCase
+class SetupCommandTest extends TestCase
 {
+    use CreatesKernel;
+
     /**
      * @test
      */
