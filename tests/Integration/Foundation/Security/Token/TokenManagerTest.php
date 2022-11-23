@@ -37,7 +37,7 @@ class TokenManagerTest extends IntegrationTestCase
 
     protected function tearDown(): void
     {
-        $this->deleteAllDocuments(RefreshToken::class);
+        $this->dropCollection(RefreshToken::class);
         parent::tearDown();
     }
 }

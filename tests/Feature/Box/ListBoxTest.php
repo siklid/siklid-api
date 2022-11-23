@@ -189,8 +189,8 @@ class ListBoxTest extends FeatureTestCase
 
     protected function tearDown(): void
     {
-        $this->deleteAllDocuments(User::class);
-        $this->deleteAllDocuments(Box::class);
+        $this->dropCollection(User::class);
+        $this->dropCollection(Box::class);
 
         parent::tearDown();
     }

@@ -81,8 +81,8 @@ class EmailAuthTest extends FeatureTestCase
 
     protected function tearDown(): void
     {
-        $this->deleteAllDocuments(User::class);
-        $this->deleteAllDocuments(RefreshToken::class);
+        $this->dropCollection(User::class);
+        $this->dropCollection(RefreshToken::class);
 
         parent::tearDown();
     }

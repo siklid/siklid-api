@@ -28,7 +28,7 @@ class SetupCommandTest extends IntegrationTestCase
 
     protected function tearDown(): void
     {
-        $this->deleteAllDocuments(User::class);
+        $this->dropCollection(User::class);
         parent::tearDown();
     }
 }
