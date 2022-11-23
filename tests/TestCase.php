@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Foundation\Util\Json;
 use Doctrine\ODM\MongoDB\Types\Type;
+use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * Class TestCase
@@ -15,17 +16,47 @@ use Doctrine\ODM\MongoDB\Types\Type;
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected Faker $faker;
-
-    protected Json $json;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->faker = Faker::create();
+        $this->setUpTraits();
+    }
 
-        $this->json = new Json();
+    protected function setUpTraits(): void
+    {
+        $traits = array_keys($this->classUsesDeep(static::class));
+
+        foreach ($traits as $trait) {
+            $reflection = new ReflectionClass($trait);
+            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
+
+            foreach ($methods as $method) {
+                if (str_starts_with($method->name, 'setUp')) {
+                    $this->{$method->name}();
+                }
+            }
+        }
+    }
+
+    /**
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
+     *
+     * @return array<class-string, class-string>
+     */
+    protected function classUsesDeep(string $class): array
+    {
+        $traits = (array)class_uses($class);
+
+        $parents = (array)class_parents($class);
+
+        foreach ($parents as $parent) {
+            assert(is_string($parent));
+            $traits += $this->classUsesDeep($parent);
+        }
+
+        return array_unique($traits);
     }
 
     /**
