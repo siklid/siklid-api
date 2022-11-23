@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Tests\Concern\DBTrait;
+use App\Tests\Concern\Factory\UserFactoryTrait;
 use App\Tests\Concern\SetupTraits;
-use App\Tests\Concern\UserFactoryTrait;
 use App\Tests\Concern\WithFaker;
 use App\Tests\Concern\WithJson;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

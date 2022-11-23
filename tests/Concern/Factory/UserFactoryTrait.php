@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concern;
+namespace App\Tests\Concern\Factory;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;

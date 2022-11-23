@@ -6,7 +6,7 @@ namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
-use App\Tests\Concern\BoxFactoryTrait;
+use App\Tests\Concern\Factory\BoxFactoryTrait;
 use App\Tests\FeatureTestCase;
 
 /**

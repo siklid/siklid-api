@@ -7,8 +7,8 @@ namespace App\Tests\Integration\Siklid\Repository;
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
 use App\Siklid\Repository\BoxRepository;
-use App\Tests\Concern\BoxFactoryTrait;
-use App\Tests\Concern\UserFactoryTrait;
+use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\Factory\UserFactoryTrait;
 use App\Tests\IntegrationTestCase;
 
 /**
