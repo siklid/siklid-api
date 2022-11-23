@@ -24,7 +24,11 @@ class SetupCommandTest extends IntegrationTestCase
 
         $console->assertCommandIsSuccessful();
         $this->assertExists(User::class, ['username' => Username::fromString('admin')]);
+    }
 
-        $this->deleteDocument(User::class, ['username' => Username::fromString('admin')]);
+    protected function tearDown(): void
+    {
+        $this->deleteAllDocuments(User::class);
+        parent::tearDown();
     }
 }

@@ -118,11 +118,8 @@ class CursorPaginatorTest extends IntegrationTestCase
 
     protected function tearDown(): void
     {
-        $documentManager = $this->getDocumentManager();
-        foreach ($this->users as $user) {
-            $documentManager->remove($user);
-        }
-        $documentManager->flush();
+        $this->deleteAllDocuments(User::class);
+        
         parent::tearDown();
     }
 

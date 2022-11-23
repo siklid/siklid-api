@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
+use App\Siklid\Document\User;
 use App\Tests\Concern\BoxFactoryTrait;
 use App\Tests\FeatureTestCase;
 
@@ -52,9 +53,6 @@ class ListBoxTest extends FeatureTestCase
         $data = $this->getFromResponse($client, 'data');
         $this->assertIsArray($data);
         $this->assertCount(25, $data);
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -82,9 +80,6 @@ class ListBoxTest extends FeatureTestCase
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($boxes[0]->getId(), $data[0]['id'], 'Last box returned first');
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -108,9 +103,6 @@ class ListBoxTest extends FeatureTestCase
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($box->getId(), $data[0]['id']);
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -130,9 +122,6 @@ class ListBoxTest extends FeatureTestCase
         $data = $this->getFromResponse($client, 'data');
         $this->assertIsArray($data);
         $this->assertCount(2, $data);
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -154,9 +143,6 @@ class ListBoxTest extends FeatureTestCase
         $data = $this->getFromResponse($client, 'data');
         $this->assertIsArray($data);
         $this->assertCount(3, $data);
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -178,9 +164,6 @@ class ListBoxTest extends FeatureTestCase
         $this->assertResponseIsJson();
         $content = (string)$client->getResponse()->getContent();
         $this->assertStringContainsString('Size must be 1 or greater.', $content);
-
-        $this->deleteDocument($user);
-        $this->deleteAllDocuments(Box::class);
     }
 
     /**
@@ -202,8 +185,13 @@ class ListBoxTest extends FeatureTestCase
         $this->assertResponseIsJson();
         $content = (string)$client->getResponse()->getContent();
         $this->assertStringContainsString('Size must be less than or equal to 100.', $content);
+    }
 
-        $this->deleteDocument($user);
+    protected function tearDown(): void
+    {
+        $this->deleteAllDocuments(User::class);
         $this->deleteAllDocuments(Box::class);
+
+        parent::tearDown();
     }
 }

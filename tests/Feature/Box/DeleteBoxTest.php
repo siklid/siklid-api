@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
+use App\Siklid\Document\User;
 use App\Tests\Concern\BoxFactoryTrait;
 use App\Tests\FeatureTestCase;
 
@@ -18,7 +19,7 @@ class DeleteBoxTest extends FeatureTestCase
     /**
      * @test
      */
-    public function user_can_delete_a_box(): Box
+    public function user_can_delete_a_box(): void
     {
         $client = $this->createCrawler();
         $user = $this->makeUser();
@@ -31,24 +32,8 @@ class DeleteBoxTest extends FeatureTestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsOk();
-
-        $this->deleteDocument($user);
-
-        return $box;
-    }
-
-    /**
-     * @test
-     *
-     * @depends user_can_delete_a_box
-     */
-    public function it_should_be_a_soft_delete(Box $box): void
-    {
         $this->assertNotNull($box->getDeletedAt());
         $this->assertExists(Box::class, ['id' => $box->getId()]);
-        $this->assertNotExists(Box::class, ['id' => $box->getId(), 'deletedAt' => null]);
-
-        $this->deleteDocument(Box::class, ['id' => $box->getId()]);
     }
 
     /**
@@ -68,8 +53,13 @@ class DeleteBoxTest extends FeatureTestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsForbidden();
+    }
 
-        $this->deleteDocument($user);
-        $this->deleteDocument($box);
+    protected function tearDown(): void
+    {
+        $this->deleteAllDocuments(User::class);
+        $this->deleteAllDocuments(Box::class);
+
+        parent::tearDown();
     }
 }

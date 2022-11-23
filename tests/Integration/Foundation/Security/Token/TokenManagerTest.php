@@ -33,7 +33,11 @@ class TokenManagerTest extends IntegrationTestCase
 
         $this->assertNotNull($accessToken->getToken());
         $this->assertExists(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
+    }
 
-        $this->deleteDocument(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
+    protected function tearDown(): void
+    {
+        $this->deleteAllDocuments(RefreshToken::class);
+        parent::tearDown();
     }
 }
