@@ -29,21 +29,12 @@ final class ListBoxes extends AbstractAction
 
     public function execute(): PageInterface
     {
+        $after = $this->getAfterCursor();
+        $hashtag = $this->getHashtag();
+        $limit = $this->getLimit();
+
         $boxRepository = $this->dm->getRepository(Box::class);
         assert($boxRepository instanceof BoxRepository);
-
-        $after = (string)$this->request->get('after');
-
-        $hashtag = $this->request->get('hashtag');
-        if (null !== $hashtag) {
-            $hashtag = empty($hashtag) ? null : (string)$hashtag;
-        }
-
-        $limit = (int)$this->getConfig('pagination.limit', 25);
-        if ($this->request->has('size')) {
-            $limit = (int)$this->request->get('size');
-            $this->validateSize($limit);
-        }
 
         return $boxRepository->PaginateAfter($after, $hashtag, $limit);
     }
@@ -58,5 +49,32 @@ final class ListBoxes extends AbstractAction
         if ($limit > $maxSize) {
             throw new ValidationException("Size must be less than or equal to $maxSize.");
         }
+    }
+
+    public function getAfterCursor(): string
+    {
+        return (string)$this->request->get('after');
+    }
+
+    public function getHashtag(): ?string
+    {
+        $hashtag = $this->request->get('hashtag');
+        if (null !== $hashtag) {
+            $hashtag = empty($hashtag) ? null : (string)$hashtag;
+        }
+
+        return $hashtag;
+    }
+
+    public function getLimit(): int
+    {
+        $limit = (int)$this->getConfig('pagination.limit', 25);
+
+        if ($this->request->has('size')) {
+            $limit = (int)$this->request->get('size');
+            $this->validateSize($limit);
+        }
+
+        return $limit;
     }
 }
