@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
-use App\Tests\Faker;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 trait FactoryConcern
 {
-    abstract protected function container(): ContainerInterface;
+    use WithFaker;
 
-    abstract protected function faker(): Faker;
+    abstract protected function container(): ContainerInterface;
 }
