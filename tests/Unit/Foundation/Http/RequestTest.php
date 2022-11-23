@@ -151,4 +151,43 @@ class RequestTest extends TestCase
 
         $this->assertSame('bar', $actual);
     }
+
+    /**
+     * @test
+     */
+    public function has_checks_existence_on_query(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request(['foo' => 'bar']));
+
+        $actual = $sut->has('foo');
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * @test
+     */
+    public function has_checks_existence_on_post_params(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request([], ['foo' => 'bar']));
+
+        $actual = $sut->has('foo');
+
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * @test
+     */
+    public function has(): void
+    {
+        $sut = new Sut($this->requestStack, $this->util);
+        $this->requestStack->push(new Request());
+
+        $actual = $sut->has('foo');
+
+        $this->assertFalse($actual);
+    }
 }

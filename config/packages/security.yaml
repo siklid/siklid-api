@@ -46,6 +46,7 @@ security:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
     - { path: ^/api/v1/auth/(register|login|token), roles: PUBLIC_ACCESS }
+    - { path: ^/api/v1/boxes, roles: PUBLIC_ACCESS, methods: [ GET ] }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
