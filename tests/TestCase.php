@@ -29,8 +29,12 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         foreach ($traits as $trait) {
             $reflection = new ReflectionClass($trait);
-            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
 
+            if (! str_starts_with($reflection->getShortName(), 'With')) {
+                continue;
+            }
+
+            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
             foreach ($methods as $method) {
                 if (str_starts_with($method->name, 'setUp')) {
                     $this->{$method->name}();
