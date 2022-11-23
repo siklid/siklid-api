@@ -17,7 +17,7 @@ class BoxRepository extends DocumentRepository
             ->field('user')->prime();
 
         if (null !== $hashtag) {
-            $qb->field('hashtags')->equals('#'.$hashtag);
+            $qb->field('hashtags')->equals($hashtag);
         }
 
         return CursorPaginator::create()->paginate($qb, $after, $perPage);

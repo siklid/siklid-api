@@ -51,22 +51,23 @@ final class ListBoxes extends AbstractAction
         }
     }
 
-    public function getAfterCursor(): string
+    private function getAfterCursor(): string
     {
         return (string)$this->request->get('after');
     }
 
-    public function getHashtag(): ?string
+    private function getHashtag(): ?string
     {
         $hashtag = $this->request->get('hashtag');
-        if (null !== $hashtag) {
-            $hashtag = empty($hashtag) ? null : (string)$hashtag;
+
+        if (empty($hashtag)) {
+            return null;
         }
 
-        return $hashtag;
+        return '#'.$hashtag;
     }
 
-    public function getLimit(): int
+    private function getLimit(): int
     {
         $limit = (int)$this->getConfig('pagination.limit', 25);
 

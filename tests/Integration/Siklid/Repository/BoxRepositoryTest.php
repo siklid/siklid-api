@@ -51,7 +51,7 @@ class BoxRepositoryTest extends IntegrationTestCase
      *
      * @psalm-suppress MixedMethodCall
      */
-    public function paginate_after_filters_by_hash_tag(): void
+    public function paginate_after_filters_by_hashtag(): void
     {
         $user = $this->makeUser();
         $box1 = $this->makeBox(['user' => $user, 'hashtags' => ['#foo']]);
@@ -65,7 +65,7 @@ class BoxRepositoryTest extends IntegrationTestCase
         /** @var BoxRepository $sut */
         $sut = $this->getRepository(Box::class);
 
-        $page = $sut->paginateAfter('', 'foo', 1);
+        $page = $sut->paginateAfter('', '#foo', 1);
 
         $this->assertCount(1, $page->getData());
         $this->assertSame($box3->getId(), $page->getData()[0]->getId());
