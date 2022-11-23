@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Foundation\Http;
 
 use App\Foundation\Http\ApiController;
 use App\Foundation\Pagination\Page;
+use App\Tests\Concern\WithUtils;
 use App\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiControllerTest extends TestCase
 {
+    use withUtils;
+
     private ApiController $sut;
 
     protected function setUp(): void

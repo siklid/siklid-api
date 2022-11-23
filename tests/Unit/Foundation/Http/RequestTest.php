@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Foundation\Http;
 
 use App\Foundation\Http\Request as Sut;
 use App\Foundation\Util\RequestUtil;
+use App\Tests\Concern\WithUtils;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RequestTest extends TestCase
 {
+    use WithUtils;
+
     private RequestStack $requestStack;
 
     private RequestUtil $util;
