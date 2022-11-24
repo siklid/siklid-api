@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Siklid\Repository;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
 use App\Siklid\Repository\BoxRepository;
 use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
@@ -94,12 +93,5 @@ class BoxRepositoryTest extends TestCase
 
         $this->assertCount(1, $page->getData());
         $this->assertSame($box3->getId(), $page->getData()[0]->getId());
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-        parent::tearDown();
     }
 }

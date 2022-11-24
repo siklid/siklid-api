@@ -118,13 +118,6 @@ class CursorPaginatorTest extends TestCase
         $this->assertSame(7, $meta['perPage']);
     }
 
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-
-        parent::tearDown();
-    }
-
     /**
      * @param array<string, string> $params
      *

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
 use App\Tests\Concern\CreatesClient;
 use App\Tests\TestCase;
 
@@ -128,13 +127,5 @@ class CreateBoxTest extends TestCase
 
         $actual = (array)$this->getFromResponse($client, 'data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-
-        parent::tearDown();
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
 use App\Tests\Concern\CreatesClient;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
 use App\Tests\TestCase;
@@ -55,13 +54,5 @@ class DeleteBoxTest extends TestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsForbidden();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-
-        parent::tearDown();
     }
 }

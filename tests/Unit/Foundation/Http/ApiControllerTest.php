@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Foundation\Http;
 
 use App\Foundation\Http\ApiController;
 use App\Foundation\Pagination\Page;
-use App\Tests\Concern\WithJson;
+use App\Tests\Concern\Util\WithJson;
 use App\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;

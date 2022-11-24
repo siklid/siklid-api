@@ -37,6 +37,8 @@ trait CreatesKernel
 
     protected static bool $booted = false;
 
+    protected array $touchedCollections = [];
+
     /**
      * Custom template method to tear down the test case.
      *
@@ -44,6 +46,7 @@ trait CreatesKernel
      */
     protected function tearDownKernel(): void
     {
+        $this->dropTouchedCollections();
         static::ensureKernelShutdown();
         static::$class = null;
         static::$kernel = null;
@@ -286,5 +289,28 @@ trait CreatesKernel
     {
         $this->getDocumentManager()->persist($document);
         $this->getDocumentManager()->flush();
+    }
+
+    /**
+     * Adds the given document to the touched collections.
+     *
+     * @param class-string $class The document class
+     */
+    protected function touchCollection(string $class): void
+    {
+        if (! in_array($class, $this->touchedCollections, true)) {
+            $this->touchedCollections[] = $class;
+        }
+    }
+
+    /**
+     * drops all touched collections.
+     * This is useful to avoid side effects between tests.
+     */
+    protected function dropTouchedCollections(): void
+    {
+        foreach ($this->touchedCollections as $class) {
+            $this->dropCollection($class);
+        }
     }
 }

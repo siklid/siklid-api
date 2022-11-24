@@ -30,6 +30,8 @@ trait UserFactoryTrait
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
         }
 
+        $this->touchCollection(User::class);
+
         return $user;
     }
 }

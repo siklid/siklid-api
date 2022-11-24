@@ -28,10 +28,4 @@ class SetupCommandTest extends TestCase
         $console->assertCommandIsSuccessful();
         $this->assertExists(User::class, ['username' => Username::fromString('admin')]);
     }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        parent::tearDown();
-    }
 }

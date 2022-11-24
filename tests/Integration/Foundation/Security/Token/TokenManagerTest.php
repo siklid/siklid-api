@@ -9,7 +9,7 @@ use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
 use App\Tests\Concern\CreatesKernel;
-use App\Tests\Concern\WithFaker;
+use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 
 /**
@@ -19,6 +19,13 @@ class TokenManagerTest extends TestCase
 {
     use CreatesKernel;
     use WithFaker;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->touchCollection(RefreshToken::class);
+    }
 
     /**
      * @test
@@ -38,11 +45,5 @@ class TokenManagerTest extends TestCase
 
         $this->assertNotNull($accessToken->getToken());
         $this->assertExists(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(RefreshToken::class);
-        parent::tearDown();
     }
 }

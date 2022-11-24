@@ -22,6 +22,13 @@ class EmailAuthTest extends TestCase
 {
     use CreatesClient;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->touchCollection(RefreshToken::class);
+    }
+
     /**
      * @test
      */
@@ -80,13 +87,5 @@ class EmailAuthTest extends TestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(RefreshToken::class);
-
-        parent::tearDown();
     }
 }
