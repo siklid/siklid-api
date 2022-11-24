@@ -6,8 +6,8 @@ namespace App\Tests\Integration\Foundation\Pagination;
 
 use App\Foundation\Pagination\CursorPaginator;
 use App\Siklid\Document\User;
-use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CursorPaginatorTest extends TestCase
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
     use UserFactoryTrait;
 
     /**

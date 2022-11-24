@@ -8,7 +8,7 @@ use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
-use App\Tests\Concern\CreatesClient;
+use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
 /**
@@ -20,7 +20,7 @@ use App\Tests\TestCase;
  */
 class EmailAuthTest extends TestCase
 {
-    use CreatesClient;
+    use WebTestCaseTrait;
 
     protected function setUp(): void
     {

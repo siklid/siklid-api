@@ -6,9 +6,9 @@ namespace App\Tests\Integration\Siklid\Repository;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Repository\BoxRepository;
-use App\Tests\Concern\CreatesKernel;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 
 /**
@@ -16,7 +16,7 @@ use App\Tests\TestCase;
  */
 class BoxRepositoryTest extends TestCase
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
     use UserFactoryTrait;
     use BoxFactoryTrait;
 

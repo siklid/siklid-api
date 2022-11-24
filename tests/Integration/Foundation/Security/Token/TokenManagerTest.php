@@ -8,7 +8,7 @@ use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
-use App\Tests\Concern\CreatesKernel;
+use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 
@@ -17,7 +17,7 @@ use App\Tests\TestCase;
  */
 class TokenManagerTest extends TestCase
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
     use WithFaker;
 
     protected function setUp(): void

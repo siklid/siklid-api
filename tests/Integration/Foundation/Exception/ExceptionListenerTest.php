@@ -7,7 +7,7 @@ namespace App\Tests\Integration\Foundation\Exception;
 use App\Foundation\Exception\ExceptionListener;
 use App\Foundation\Exception\RenderableInterface;
 use App\Foundation\Exception\SiklidException;
-use App\Tests\Concern\CreatesKernel;
+use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class ExceptionListenerTest extends TestCase
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
 
     /**
      * @test

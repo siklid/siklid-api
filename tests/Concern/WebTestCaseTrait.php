@@ -21,9 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @mixin KernelTestCase
  */
-trait CreatesClient
+trait WebTestCaseTrait
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
     use WebTestAssertionsTrait;
     use WithFaker;
     use WithJson;

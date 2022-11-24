@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Siklid\Command;
 
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
-use App\Tests\Concern\CreatesKernel;
+use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 
 /**
@@ -14,7 +14,7 @@ use App\Tests\TestCase;
  */
 class SetupCommandTest extends TestCase
 {
-    use CreatesKernel;
+    use KernelTestCaseTrait;
 
     /**
      * @test

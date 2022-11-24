@@ -27,7 +27,7 @@ use Symfony\Contracts\Service\ResetInterface;
  *
  * @mixin TestCase
  */
-trait CreatesKernel
+trait KernelTestCaseTrait
 {
     use MailerAssertionsTrait;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Box;
 
-use App\Tests\Concern\CreatesClient;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
 /**
@@ -13,7 +13,7 @@ use App\Tests\TestCase;
  */
 class ListBoxTest extends TestCase
 {
-    use CreatesClient;
+    use WebTestCaseTrait;
     use BoxFactoryTrait;
 
     /**
