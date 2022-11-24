@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\Concern;
 
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\TestCase;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestAssertionsTrait;
 use Symfony\Component\BrowserKit\AbstractBrowser;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,6 +28,11 @@ trait CreatesClient
     use WithJson;
     use UserFactoryTrait;
 
+    /**
+     * Custom template method to tear down the test case.
+     *
+     * @used-by TestCase::tearDown()
+     */
     protected function tearDownClient(): void
     {
         self::getClient(null);
@@ -190,13 +195,5 @@ trait CreatesClient
         }
 
         return $content;
-    }
-
-    /**
-     * Returns the container instance.
-     */
-    protected function container(): ContainerInterface
-    {
-        return self::getContainer();
     }
 }
