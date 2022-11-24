@@ -6,13 +6,16 @@ namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\CreatesClient;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class CreateBoxTest extends FeatureTestCase
+class CreateBoxTest extends TestCase
 {
+    use CreatesClient;
+
     /**
      * @test
      */

@@ -6,14 +6,16 @@ namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
+use App\Tests\Concern\CreatesClient;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
-use App\Tests\FeatureTestCase;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class ListBoxTest extends FeatureTestCase
+class ListBoxTest extends TestCase
 {
+    use CreatesClient;
     use BoxFactoryTrait;
 
     /**

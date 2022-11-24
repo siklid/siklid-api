@@ -24,7 +24,7 @@ trait TemplateHelper
 
             $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
             foreach ($methods as $method) {
-                if ($method->name === 'setUp') {
+                if ('setUp' === $method->name) {
                     continue;
                 }
                 if (str_starts_with($method->name, 'setUp')) {
@@ -47,7 +47,7 @@ trait TemplateHelper
 
             $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
             foreach ($methods as $method) {
-                if ($method->name === 'tearDown') {
+                if ('tearDown' === $method->name) {
                     continue;
                 }
                 if (str_starts_with($method->name, 'tearDown')) {

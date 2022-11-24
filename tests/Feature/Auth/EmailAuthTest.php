@@ -8,7 +8,8 @@ use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\CreatesClient;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -17,8 +18,10 @@ use App\Tests\FeatureTestCase;
  *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
-class EmailAuthTest extends FeatureTestCase
+class EmailAuthTest extends TestCase
 {
+    use CreatesClient;
+
     /**
      * @test
      */
