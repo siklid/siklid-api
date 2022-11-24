@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Foundation\Pagination;
+namespace App\Tests\Unit\Foundation\Pagination;
 
 use App\Foundation\Pagination\CursorPaginator;
 use App\Siklid\Document\User;
