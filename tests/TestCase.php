@@ -6,21 +6,24 @@ namespace App\Tests;
 
 use Doctrine\ODM\MongoDB\Types\Type;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 
 /**
- * Class TestCase
- * All Unit tests should extend this class.
+ * All Tests should extend this class, and use traits to add functionality.
  *
  * @psalm-suppress MissingConstructor
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setUpTraits();
+        $this->invokeTemplateMethods('setUp');
     }
 
     /**
@@ -46,54 +49,34 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $type::getType($type);
     }
 
-    protected function setUpTraits(): void
+    /**
+     * Invokes all methods that start with the given prefix.
+     *
+     * @throws ReflectionException
+     */
+    protected function invokeTemplateMethods(string $prefix): void
     {
         $traits = array_keys($this->classUsesRecursive(static::class));
 
         foreach ($traits as $trait) {
             $reflection = new ReflectionClass($trait);
 
-            if (! str_starts_with($reflection->getShortName(), 'With')) {
-                continue;
-            }
+            $methods = $this->filterTemplateMethods($reflection, $prefix);
 
-            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
             foreach ($methods as $method) {
-                if ('setUp' === $method->name) {
-                    continue;
-                }
-                if (str_starts_with($method->name, 'setUp')) {
-                    $this->{$method->name}();
-                }
+                $this->{$method->name}();
             }
         }
     }
 
-    protected function tearDownTraits(): void
-    {
-        $traits = array_keys($this->classUsesRecursive(static::class));
-
-        foreach ($traits as $trait) {
-            $reflection = new ReflectionClass($trait);
-
-            if (! str_starts_with($reflection->getShortName(), 'Creates')) {
-                continue;
-            }
-
-            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
-            foreach ($methods as $method) {
-                if ('tearDown' === $method->name) {
-                    continue;
-                }
-                if (str_starts_with($method->name, 'tearDown')) {
-                    $this->{$method->name}();
-                }
-            }
-        }
-    }
-
+    /**
+     * Finds all traits used by a trait and its traits.
+     *
+     * @return array<class-string, class-string>
+     */
     protected function classUsesRecursive(string $class): array
     {
+        /** @var array<class-string, class-string> $traits */
         $traits = class_uses($class);
 
         foreach ($traits as $trait) {
@@ -103,9 +86,25 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return array_unique($traits);
     }
 
+    /**
+     * @return ReflectionMethod[]
+     */
+    protected function filterTemplateMethods(ReflectionClass $trait, string $template): array
+    {
+        return array_filter(
+            $trait->getMethods(),
+            static fn (ReflectionMethod $method) => ! (
+                $template === $method->name ||
+                ! str_starts_with($method->name, $template))
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown(): void
     {
-        $this->tearDownTraits();
+        $this->invokeTemplateMethods('tearDown');
 
         parent::tearDown();
     }
