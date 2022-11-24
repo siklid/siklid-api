@@ -12,7 +12,6 @@ use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestAssertionsTrait;
-use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,7 +45,7 @@ trait CreatesClient
      * @param array $options An array of options to pass to the createKernel method
      * @param array $server  An array of server parameters
      */
-    protected static function createClient(array $options = [], array $server = []): AbstractBrowser
+    protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
         if (static::$booted) {
             throw new LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
@@ -65,7 +64,10 @@ trait CreatesClient
 
         $client->setServerParameters($server);
 
-        return self::getClient($client);
+        $kernelBrowser = self::getClient($client);
+        assert($kernelBrowser instanceof KernelBrowser);
+
+        return $kernelBrowser;
     }
 
     /**
@@ -74,7 +76,7 @@ trait CreatesClient
      * @param array $options An array of options to pass to the createKernel method
      * @param array $server  An array of server parameters
      */
-    protected function createCrawler(array $options = [], array $server = []): AbstractBrowser
+    protected function createCrawler(array $options = [], array $server = []): KernelBrowser
     {
         return self::createClient($options, $server);
     }
