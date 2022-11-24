@@ -2,40 +2,72 @@
 
 declare(strict_types=1);
 
-namespace App\Tests;
+namespace App\Tests\Concern;
 
-use App\Foundation\Util\Json;
-use App\Tests\Concern\DBTrait;
-use App\Tests\Concern\UserFactoryTrait;
+use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\Util\WithFaker;
+use App\Tests\Concern\Util\WithJson;
+use App\Tests\TestCase;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestAssertionsTrait;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * FeatureTestCase is the base class for functional tests.
+ * This trait is used to test features that require a client.
+ * It should replace the WebTestCase class.
  *
- * @psalm-suppress MissingConstructor
- * @psalm-suppress PropertyNotSetInConstructor
+ * @mixin KernelTestCase
  */
-class FeatureTestCase extends WebTestCase
+trait WebTestCaseTrait
 {
-    use DBTrait;
+    use KernelTestCaseTrait;
+    use WebTestAssertionsTrait;
+    use WithFaker;
+    use WithJson;
     use UserFactoryTrait;
 
-    protected Faker $faker;
-
-    protected Json $json;
+    /**
+     * Custom template method to tear down the test case.
+     *
+     * @used-by TestCase::tearDown()
+     */
+    protected function tearDownClient(): void
+    {
+        self::getClient(null);
+    }
 
     /**
-     * {@inheritDoc}
+     * Creates a KernelBrowser.
+     *
+     * @param array $options An array of options to pass to the createKernel method
+     * @param array $server  An array of server parameters
      */
-    protected function setUp(): void
+    protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
-        parent::setUp();
+        if (static::$booted) {
+            throw new LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
+        }
 
-        $this->faker = Faker::create();
-        $this->json = new Json();
+        $kernel = static::bootKernel($options);
+
+        try {
+            $client = $kernel->getContainer()->get('test.client');
+        } catch (ServiceNotFoundException) {
+            if (class_exists(KernelBrowser::class)) {
+                throw new LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
+            }
+            throw new LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
+        }
+
+        $client->setServerParameters($server);
+
+        $kernelBrowser = self::getClient($client);
+        assert($kernelBrowser instanceof KernelBrowser);
+
+        return $kernelBrowser;
     }
 
     /**
@@ -167,21 +199,5 @@ class FeatureTestCase extends WebTestCase
         }
 
         return $content;
-    }
-
-    /**
-     * Returns the container instance.
-     */
-    protected function container(): ContainerInterface
-    {
-        return self::getContainer();
-    }
-
-    /**
-     * Returns the faker instance.
-     */
-    protected function faker(): Faker
-    {
-        return $this->faker;
     }
 }

@@ -7,10 +7,13 @@ namespace App\Tests\Unit\Foundation\ValueType;
 use App\Foundation\Exception\InvalidArgumentException;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueType\EmailType;
+use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 
 class EmailTypeTest extends TestCase
 {
+    use WithFaker;
+
     /**
      * @test
      */

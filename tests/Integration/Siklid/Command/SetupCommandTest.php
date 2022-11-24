@@ -6,13 +6,16 @@ namespace App\Tests\Integration\Siklid\Command;
 
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
-use App\Tests\IntegrationTestCase;
+use App\Tests\Concern\KernelTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class SetupCommandTest extends IntegrationTestCase
+class SetupCommandTest extends TestCase
 {
+    use KernelTestCaseTrait;
+
     /**
      * @test
      */
@@ -24,11 +27,5 @@ class SetupCommandTest extends IntegrationTestCase
 
         $console->assertCommandIsSuccessful();
         $this->assertExists(User::class, ['username' => Username::fromString('admin')]);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        parent::tearDown();
     }
 }

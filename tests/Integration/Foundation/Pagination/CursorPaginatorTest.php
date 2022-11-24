@@ -6,16 +6,18 @@ namespace App\Tests\Integration\Foundation\Pagination;
 
 use App\Foundation\Pagination\CursorPaginator;
 use App\Siklid\Document\User;
-use App\Tests\Concern\UserFactoryTrait;
-use App\Tests\IntegrationTestCase;
+use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\KernelTestCaseTrait;
+use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class CursorPaginatorTest extends IntegrationTestCase
+class CursorPaginatorTest extends TestCase
 {
+    use KernelTestCaseTrait;
     use UserFactoryTrait;
 
     /**
@@ -114,13 +116,6 @@ class CursorPaginatorTest extends IntegrationTestCase
         $meta = $actual->getMeta();
         $this->assertSame(count($this->users), $meta['count']);
         $this->assertSame(7, $meta['perPage']);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-
-        parent::tearDown();
     }
 
     /**

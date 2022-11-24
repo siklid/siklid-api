@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
-use App\Tests\Concern\BoxFactoryTrait;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\WebTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class DeleteBoxTest extends FeatureTestCase
+class DeleteBoxTest extends TestCase
 {
+    use WebTestCaseTrait;
     use BoxFactoryTrait;
 
     /**
@@ -53,13 +54,5 @@ class DeleteBoxTest extends FeatureTestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsForbidden();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-
-        parent::tearDown();
     }
 }

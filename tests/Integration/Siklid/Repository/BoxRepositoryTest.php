@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Siklid\Repository;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
 use App\Siklid\Repository\BoxRepository;
-use App\Tests\Concern\BoxFactoryTrait;
-use App\Tests\Concern\UserFactoryTrait;
-use App\Tests\IntegrationTestCase;
+use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\KernelTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class BoxRepositoryTest extends IntegrationTestCase
+class BoxRepositoryTest extends TestCase
 {
+    use KernelTestCaseTrait;
     use UserFactoryTrait;
     use BoxFactoryTrait;
 
@@ -92,12 +93,5 @@ class BoxRepositoryTest extends IntegrationTestCase
 
         $this->assertCount(1, $page->getData());
         $this->assertSame($box3->getId(), $page->getData()[0]->getId());
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-        parent::tearDown();
     }
 }

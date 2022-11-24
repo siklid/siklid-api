@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\WebTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class CreateBoxTest extends FeatureTestCase
+class CreateBoxTest extends TestCase
 {
+    use WebTestCaseTrait;
+
     /**
      * @test
      */
@@ -125,13 +127,5 @@ class CreateBoxTest extends FeatureTestCase
 
         $actual = (array)$this->getFromResponse($client, 'data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->dropCollection(User::class);
-        $this->dropCollection(Box::class);
-
-        parent::tearDown();
     }
 }

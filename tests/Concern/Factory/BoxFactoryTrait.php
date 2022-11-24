@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Concern;
+namespace App\Tests\Concern\Factory;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
@@ -22,6 +22,8 @@ trait BoxFactoryTrait
         $box->setDescription($attributes['description'] ?? $this->faker()->sentence());
         $box->setUser($attributes['user'] ?? new User());
         $box->setHashtags($attributes['hashtags'] ?? []);
+
+        $this->touchCollection(Box::class);
 
         return $box;
     }

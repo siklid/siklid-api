@@ -10,6 +10,7 @@ use App\Foundation\ValueObject\Username;
 use App\Siklid\Application\Auth\LoginSuccessHandler;
 use App\Siklid\Document\AccessToken;
 use App\Siklid\Document\User;
+use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  */
 class LoginSuccessHandlerTest extends TestCase
 {
+    use WithFaker;
+
     /**
      * @test
      *

@@ -4,43 +4,108 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Foundation\Util\Json;
 use Doctrine\ODM\MongoDB\Types\Type;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 /**
- * Class TestCase
- * All Unit tests should extend this class.
+ * All Tests should extend this class, and use traits to add functionality.
  *
  * @psalm-suppress MissingConstructor
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected Faker $faker;
-
-    protected Json $json;
-
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->faker = Faker::create();
-
-        $this->json = new Json();
+        $this->invokeTemplateMethods('setUp');
     }
 
     /**
      * Creates an instance of the given mongo-odm custom type.
      *
-     * @param class-string<T|Type> $type the type to create
+     * @psalm-template T of Type
      *
-     * @return T
+     * @psalm-param class-string<T> $type
      *
-     * @template T|Type
+     * @psalm-return T
+     *
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress PossiblyInvalidArgument
+     * @psalm-suppress PossibleInvalidStringClass
+     * @psalm-suppress InvalidStringClass
+     * @psalm-suppress InvalidReturnStatement
      */
     protected function createMongoType(string $type): Type
     {
+        /* @var Type|string $type */
         $type::registerType($type, $type);
 
         return $type::getType($type);
+    }
+
+    /**
+     * Invokes all methods that start with the given prefix.
+     *
+     * @throws ReflectionException
+     */
+    protected function invokeTemplateMethods(string $prefix): void
+    {
+        $traits = array_keys($this->classUsesRecursive(static::class));
+
+        foreach ($traits as $trait) {
+            $reflection = new ReflectionClass($trait);
+
+            $methods = $this->filterTemplateMethods($reflection, $prefix);
+
+            foreach ($methods as $method) {
+                $this->{$method->name}();
+            }
+        }
+    }
+
+    /**
+     * Finds all traits used by a trait and its traits.
+     *
+     * @return array<class-string, class-string>
+     */
+    protected function classUsesRecursive(string $class): array
+    {
+        /** @var array<class-string, class-string> $traits */
+        $traits = class_uses($class);
+
+        foreach ($traits as $trait) {
+            $traits += $this->classUsesRecursive($trait);
+        }
+
+        return array_unique($traits);
+    }
+
+    /**
+     * @return ReflectionMethod[]
+     */
+    protected function filterTemplateMethods(ReflectionClass $trait, string $template): array
+    {
+        return array_filter(
+            $trait->getMethods(),
+            static fn (ReflectionMethod $method) => ! (
+                $template === $method->name ||
+                ! str_starts_with($method->name, $template))
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown(): void
+    {
+        $this->invokeTemplateMethods('tearDown');
+
+        parent::tearDown();
     }
 }
