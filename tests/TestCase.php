@@ -57,4 +57,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         return array_unique($traits);
     }
+
+    protected function tearDown(): void
+    {
+        $this->tearDownTraits();
+
+        parent::tearDown();
+    }
 }

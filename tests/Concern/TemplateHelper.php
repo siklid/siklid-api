@@ -24,7 +24,33 @@ trait TemplateHelper
 
             $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
             foreach ($methods as $method) {
+                if ($method->name === 'setUp') {
+                    continue;
+                }
                 if (str_starts_with($method->name, 'setUp')) {
+                    $this->{$method->name}();
+                }
+            }
+        }
+    }
+
+    protected function tearDownTraits(): void
+    {
+        $traits = array_keys($this->classUsesRecursive(static::class));
+
+        foreach ($traits as $trait) {
+            $reflection = new ReflectionClass($trait);
+
+            if (! str_starts_with($reflection->getShortName(), 'Creates')) {
+                continue;
+            }
+
+            $methods = $reflection->getMethods(ReflectionMethod::IS_PROTECTED);
+            foreach ($methods as $method) {
+                if ($method->name === 'tearDown') {
+                    continue;
+                }
+                if (str_starts_with($method->name, 'tearDown')) {
                     $this->{$method->name}();
                 }
             }
