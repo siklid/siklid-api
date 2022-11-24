@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
+use App\Tests\Concern\Assertion\AssertODMTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Doctrine\ODM\MongoDB\Repository\GridFSRepository;
@@ -30,6 +31,7 @@ use Symfony\Contracts\Service\ResetInterface;
 trait KernelTestCaseTrait
 {
     use MailerAssertionsTrait;
+    use AssertODMTrait;
 
     protected static ?string $class = null;
 
@@ -60,11 +62,22 @@ trait KernelTestCaseTrait
     protected static function getKernelClass(): string
     {
         if (! isset($_SERVER['KERNEL_CLASS']) && ! isset($_ENV['KERNEL_CLASS'])) {
-            throw new LogicException(sprintf('You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.', static::class));
+            throw new LogicException(
+                sprintf(
+                    'You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.',
+                    static::class
+                )
+            );
         }
 
         if (! class_exists($class = $_ENV['KERNEL_CLASS'] ?? $_SERVER['KERNEL_CLASS'])) {
-            throw new RuntimeException(sprintf('Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.', $class, static::class));
+            throw new RuntimeException(
+                sprintf(
+                    'Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.',
+                    $class,
+                    static::class
+                )
+            );
         }
 
         return $class;
@@ -104,7 +117,11 @@ trait KernelTestCaseTrait
         try {
             return self::$kernel->getContainer()->get('test.service_container');
         } catch (ServiceNotFoundException $e) {
-            throw new LogicException('Could not find service "test.service_container". Try updating the "framework.test" config to "true".', 0, $e);
+            throw new LogicException(
+                'Could not find service "test.service_container". Try updating the "framework.test" config to "true".',
+                0,
+                $e
+            );
         }
     }
 
@@ -188,8 +205,8 @@ trait KernelTestCaseTrait
     /**
      * Creates a command tester.
      *
-     * @param Application    $application The console application
-     * @param string|Command $command     The command to test
+     * @param Application $application The console application
+     * @param string|Command $command  The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {
@@ -221,36 +238,6 @@ trait KernelTestCaseTrait
     protected function getRepository(string $className): DocumentRepository|ViewRepository|GridFSRepository
     {
         return $this->getDocumentManager()->getRepository($className);
-    }
-
-    /**
-     * Asserts that the given document exists in the database.
-     */
-    protected function assertExists(string $class, array $criteria): void
-    {
-        $repository = $this->getRepository($class);
-        $object = $repository->findOneBy($criteria);
-        $this->assertNotNull($object, 'Failed asserting that the document exists.');
-    }
-
-    /**
-     * Asserts that the given document does not exist in the database.
-     */
-    protected function assertNotExists(string $class, array $criteria): void
-    {
-        $repository = $this->getRepository($class);
-        $object = $repository->findOneBy($criteria);
-        $this->assertNull($object, 'Failed asserting that the document does not exist.');
-    }
-
-    /**
-     * Asserts that the given collection is empty.
-     */
-    protected function assertEmptyCollection(string $class): void
-    {
-        $repository = $this->getRepository($class);
-        $objects = $repository->findAll();
-        $this->assertEmpty($objects);
     }
 
     /**
