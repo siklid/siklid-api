@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
+use Doctrine\ODM\MongoDB\Repository\GridFSRepository;
+use Doctrine\ODM\MongoDB\Repository\ViewRepository;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -25,17 +29,13 @@ use Symfony\Contracts\Service\ResetInterface;
  */
 trait CreatesKernel
 {
-    use DBTrait;
     use MailerAssertionsTrait;
 
-    protected static $class;
+    protected static ?string $class = null;
 
-    /**
-     * @var KernelInterface
-     */
-    protected static $kernel;
+    protected static ?KernelInterface $kernel = null;
 
-    protected static $booted = false;
+    protected static bool $booted = false;
 
     /**
      * Custom template method to tear down the test case.
@@ -193,5 +193,98 @@ trait CreatesKernel
         $command = $command instanceof Command ? $command : $application->find($command);
 
         return new CommandTester($command);
+    }
+
+    /**
+     * Get document manager instance.
+     */
+    protected function getDocumentManager(): DocumentManager
+    {
+        /** @var DocumentManager $dm */
+        $dm = self::getContainer()->get(DocumentManager::class);
+
+        return $dm;
+    }
+
+    /**
+     * Gets the repository for a document class.
+     *
+     * @param class-string $className the name of the Document
+     *
+     * @return DocumentRepository<T>|GridFSRepository<T>|ViewRepository<T> the repository
+     *
+     * @template T of object
+     */
+    protected function getRepository(string $className): DocumentRepository|ViewRepository|GridFSRepository
+    {
+        return $this->getDocumentManager()->getRepository($className);
+    }
+
+    /**
+     * Asserts that the given document exists in the database.
+     */
+    protected function assertExists(string $class, array $criteria): void
+    {
+        $repository = $this->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+        $this->assertNotNull($object, 'Failed asserting that the document exists.');
+    }
+
+    /**
+     * Asserts that the given document does not exist in the database.
+     */
+    protected function assertNotExists(string $class, array $criteria): void
+    {
+        $repository = $this->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+        $this->assertNull($object, 'Failed asserting that the document does not exist.');
+    }
+
+    /**
+     * Asserts that the given collection is empty.
+     */
+    protected function assertEmptyCollection(string $class): void
+    {
+        $repository = $this->getRepository($class);
+        $objects = $repository->findAll();
+        $this->assertEmpty($objects);
+    }
+
+    /**
+     * Deletes the given document from the database.
+     */
+    protected function deleteDocument(string|object $class, array $criteria = []): void
+    {
+        if (is_object($class)) {
+            $this->getDocumentManager()->remove($class);
+            $this->getDocumentManager()->flush();
+
+            return;
+        }
+
+        $repository = $this->getRepository($class);
+        $object = $repository->findOneBy($criteria);
+
+        $this->getDocumentManager()->remove($object);
+        $this->getDocumentManager()->flush();
+    }
+
+    /**
+     * Drops the collection of the given class.
+     */
+    protected function dropCollection(string $class): void
+    {
+        $collection = $this->getDocumentManager()->getDocumentCollection($class);
+        $collection->drop();
+        $this->getDocumentManager()->clear();
+    }
+
+    /**
+     * Persists the given document to the database.
+     */
+    protected function persistDocument(object $document): void
+    {
+        $this->getDocumentManager()->persist($document);
+        $this->getDocumentManager()->flush();
     }
 }
