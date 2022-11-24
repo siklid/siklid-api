@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Foundation\ValueObject;
 
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\ValueObject\Email;
-use App\Tests\Concern\WithFaker;
+use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 use Assert\AssertionFailedException;
 use JsonException;

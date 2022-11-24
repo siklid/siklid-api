@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Foundation\ValueObject;
 
 use App\Foundation\ValueObject\Username;
-use App\Tests\Concern\WithFaker;
+use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 use Error;
 use JsonException;

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Concern;
 
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\Util\WithFaker;
+use App\Tests\Concern\Util\WithJson;
 use App\Tests\TestCase;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

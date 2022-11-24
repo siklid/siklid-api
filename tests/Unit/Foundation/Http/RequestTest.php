@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Foundation\Http;
 
 use App\Foundation\Http\Request as Sut;
 use App\Foundation\Util\RequestUtil;
-use App\Tests\Concern\WithJson;
+use App\Tests\Concern\Util\WithJson;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
