@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
+use LogicException;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
 use Symfony\Component\Console\Command\Command;
@@ -14,6 +17,12 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
+/**
+ * This trait is used to test features that require a kernel.
+ * It should replace the KernelTestCase class.
+ *
+ * @mixin TestCase
+ */
 trait CreatesKernel
 {
     use DBTrait;
@@ -28,6 +37,11 @@ trait CreatesKernel
 
     protected static $booted = false;
 
+    /**
+     * Custom template method to tear down the test case.
+     *
+     * @used-by TestCase::tearDown()
+     */
     protected function tearDownKernel(): void
     {
         static::ensureKernelShutdown();
@@ -37,17 +51,17 @@ trait CreatesKernel
     }
 
     /**
-     * @throws \RuntimeException
-     * @throws \LogicException
+     * @throws RuntimeException
+     * @throws LogicException
      */
     protected static function getKernelClass(): string
     {
         if (! isset($_SERVER['KERNEL_CLASS']) && ! isset($_ENV['KERNEL_CLASS'])) {
-            throw new \LogicException(sprintf('You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.', static::class));
+            throw new LogicException(sprintf('You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.', static::class));
         }
 
         if (! class_exists($class = $_ENV['KERNEL_CLASS'] ?? $_SERVER['KERNEL_CLASS'])) {
-            throw new \RuntimeException(sprintf('Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.', $class, static::class));
+            throw new RuntimeException(sprintf('Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.', $class, static::class));
         }
 
         return $class;
@@ -87,7 +101,7 @@ trait CreatesKernel
         try {
             return self::$kernel->getContainer()->get('test.service_container');
         } catch (ServiceNotFoundException $e) {
-            throw new \LogicException('Could not find service "test.service_container". Try updating the "framework.test" config to "true".', 0, $e);
+            throw new LogicException('Could not find service "test.service_container". Try updating the "framework.test" config to "true".', 0, $e);
         }
     }
 
@@ -133,7 +147,7 @@ trait CreatesKernel
     /**
      * Shuts the kernel down if it was used in the test - called by the tearDown method by default.
      */
-    protected static function ensureKernelShutdown()
+    protected static function ensureKernelShutdown(): void
     {
         if (null !== static::$kernel) {
             static::$kernel->boot();
