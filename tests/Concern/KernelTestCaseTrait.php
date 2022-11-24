@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
+use App\Tests\Concern\Assertion\AssertODMTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Doctrine\ODM\MongoDB\Repository\GridFSRepository;
@@ -30,6 +31,7 @@ use Symfony\Contracts\Service\ResetInterface;
 trait KernelTestCaseTrait
 {
     use MailerAssertionsTrait;
+    use AssertODMTrait;
 
     protected static ?string $class = null;
 
@@ -221,36 +223,6 @@ trait KernelTestCaseTrait
     protected function getRepository(string $className): DocumentRepository|ViewRepository|GridFSRepository
     {
         return $this->getDocumentManager()->getRepository($className);
-    }
-
-    /**
-     * Asserts that the given document exists in the database.
-     */
-    protected function assertExists(string $class, array $criteria): void
-    {
-        $repository = $this->getRepository($class);
-        $object = $repository->findOneBy($criteria);
-        $this->assertNotNull($object, 'Failed asserting that the document exists.');
-    }
-
-    /**
-     * Asserts that the given document does not exist in the database.
-     */
-    protected function assertNotExists(string $class, array $criteria): void
-    {
-        $repository = $this->getRepository($class);
-        $object = $repository->findOneBy($criteria);
-        $this->assertNull($object, 'Failed asserting that the document does not exist.');
-    }
-
-    /**
-     * Asserts that the given collection is empty.
-     */
-    protected function assertEmptyCollection(string $class): void
-    {
-        $repository = $this->getRepository($class);
-        $objects = $repository->findAll();
-        $this->assertEmpty($objects);
     }
 
     /**
