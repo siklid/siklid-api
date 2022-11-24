@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Siklid\Command;
+namespace App\Tests\Siklid\Command;
 
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;

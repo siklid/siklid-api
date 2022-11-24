@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Siklid\Document;
+namespace App\Tests\Siklid\Document;
 
 use App\Foundation\Exception\LogicException;
 use App\Siklid\Document\Box;
