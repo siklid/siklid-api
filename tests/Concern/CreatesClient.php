@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace App\Tests\Concern;
 
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestAssertionsTrait;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+ * This trait is used to test features that require a client.
+ * It should replace the WebTestCase class.
+ *
  * @mixin KernelTestCase
  */
 trait CreatesClient
@@ -34,10 +39,10 @@ trait CreatesClient
      * @param array $options An array of options to pass to the createKernel method
      * @param array $server  An array of server parameters
      */
-    protected static function createClient(array $options = [], array $server = []): KernelBrowser
+    protected static function createClient(array $options = [], array $server = []): AbstractBrowser
     {
         if (static::$booted) {
-            throw new \LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
+            throw new LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
         }
 
         $kernel = static::bootKernel($options);
@@ -46,9 +51,9 @@ trait CreatesClient
             $client = $kernel->getContainer()->get('test.client');
         } catch (ServiceNotFoundException) {
             if (class_exists(KernelBrowser::class)) {
-                throw new \LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
+                throw new LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
             }
-            throw new \LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
+            throw new LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
         }
 
         $client->setServerParameters($server);
@@ -62,7 +67,7 @@ trait CreatesClient
      * @param array $options An array of options to pass to the createKernel method
      * @param array $server  An array of server parameters
      */
-    protected function createCrawler(array $options = [], array $server = []): KernelBrowser
+    protected function createCrawler(array $options = [], array $server = []): AbstractBrowser
     {
         return self::createClient($options, $server);
     }
@@ -193,16 +198,5 @@ trait CreatesClient
     protected function container(): ContainerInterface
     {
         return self::getContainer();
-    }
-
-    protected function classUsesRecursive(string $class): array
-    {
-        $traits = class_uses($class);
-
-        foreach ($traits as $trait) {
-            $traits += $this->classUsesRecursive($trait);
-        }
-
-        return array_unique($traits);
     }
 }
