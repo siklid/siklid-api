@@ -28,7 +28,7 @@ trait CreatesKernel
 
     protected static $booted = false;
 
-    protected function tearDown(): void
+    protected function tearDownKernel(): void
     {
         static::ensureKernelShutdown();
         static::$class = null;
