@@ -14,7 +14,7 @@ use ReflectionMethod;
  *
  * @psalm-suppress MissingConstructor
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * {@inheritdoc}
