@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Foundation\Security\Token;
+namespace App\Tests\Unit\Foundation\Security\Token;
 
 use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
