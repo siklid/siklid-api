@@ -6,7 +6,7 @@ namespace App\Tests;
 
 use App\Tests\Concern\DBTrait;
 use App\Tests\Concern\Factory\UserFactoryTrait;
-use App\Tests\Concern\SetupTraits;
+use App\Tests\Concern\TemplateHelper;
 use App\Tests\Concern\WithFaker;
 use App\Tests\Concern\WithJson;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FeatureTestCase extends WebTestCase
 {
-    use SetupTraits;
+    use TemplateHelper;
     use DBTrait;
     use WithJson;
     use WithFaker;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Tests\Concern\SetupTraits;
+use App\Tests\Concern\TemplateHelper;
 use Doctrine\ODM\MongoDB\Types\Type;
 
 /**
@@ -15,7 +15,7 @@ use Doctrine\ODM\MongoDB\Types\Type;
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    use SetupTraits;
+    use TemplateHelper;
 
     protected function setUp(): void
     {

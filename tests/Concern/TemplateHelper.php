@@ -7,7 +7,7 @@ namespace App\Tests\Concern;
 use ReflectionClass;
 use ReflectionMethod;
 
-trait SetupTraits
+trait TemplateHelper
 {
     abstract protected function classUsesRecursive(string $class): array;
 
