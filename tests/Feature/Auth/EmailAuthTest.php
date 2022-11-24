@@ -53,6 +53,8 @@ class EmailAuthTest extends TestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
+        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
+        $this->assertEquals($username, $this->getFromResponse($client, 'data.user.username'));
         $this->assertExists(User::class, ['email' => $email]);
     }
 
@@ -87,5 +89,7 @@ class EmailAuthTest extends TestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
+        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
+        $this->assertEquals($user->getId(), $this->getFromResponse($client, 'data.user.id'));
     }
 }

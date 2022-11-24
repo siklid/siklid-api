@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Box;
 
+use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use App\Siklid\Document\Box;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
@@ -48,6 +49,12 @@ class CreateBoxTest extends TestCase
             'description' => $description,
             'user' => $user,
         ]);
+        $this->assertSame($name, $this->getFromResponse($client, 'data.name'));
+        $this->assertSame($description, $this->getFromResponse($client, 'data.description'));
+        $this->assertEquals(
+            RepetitionAlgorithm::Leitner,
+            RepetitionAlgorithm::coerce($this->getFromResponse($client, 'data.repetitionAlgorithm'))
+        );
     }
 
     /**
