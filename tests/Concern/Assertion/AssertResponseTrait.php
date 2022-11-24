@@ -68,13 +68,13 @@ trait AssertResponseTrait
      */
     protected function assertResponseHasValidationError(string $message = ''): void
     {
-        $this->assertResponseIsunprocessableEntity($message);
+        $this->assertResponseIsUnprocessableEntity($message);
     }
 
     /**
      * Asserts that the response status code is 422.
      */
-    protected function assertResponseIsunprocessableEntity(string $message = ''): void
+    protected function assertResponseIsUnprocessableEntity(string $message = ''): void
     {
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY, $message);
     }
