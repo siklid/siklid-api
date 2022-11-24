@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Siklid\Repository;
+namespace App\Tests\Unit\Siklid\Repository;
 
 use App\Siklid\Document\Box;
 use App\Siklid\Repository\BoxRepository;
