@@ -62,22 +62,11 @@ trait KernelTestCaseTrait
     protected static function getKernelClass(): string
     {
         if (! isset($_SERVER['KERNEL_CLASS']) && ! isset($_ENV['KERNEL_CLASS'])) {
-            throw new LogicException(
-                sprintf(
-                    'You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.',
-                    static::class
-                )
-            );
+            throw new LogicException(sprintf('You must set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel in phpunit.xml / phpunit.xml.dist or override the "%1$s::createKernel()" or "%1$s::getKernelClass()" method.', static::class));
         }
 
         if (! class_exists($class = $_ENV['KERNEL_CLASS'] ?? $_SERVER['KERNEL_CLASS'])) {
-            throw new RuntimeException(
-                sprintf(
-                    'Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.',
-                    $class,
-                    static::class
-                )
-            );
+            throw new RuntimeException(sprintf('Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the "%s::createKernel()" method.', $class, static::class));
         }
 
         return $class;
@@ -117,11 +106,7 @@ trait KernelTestCaseTrait
         try {
             return self::$kernel->getContainer()->get('test.service_container');
         } catch (ServiceNotFoundException $e) {
-            throw new LogicException(
-                'Could not find service "test.service_container". Try updating the "framework.test" config to "true".',
-                0,
-                $e
-            );
+            throw new LogicException('Could not find service "test.service_container". Try updating the "framework.test" config to "true".', 0, $e);
         }
     }
 
@@ -205,8 +190,8 @@ trait KernelTestCaseTrait
     /**
      * Creates a command tester.
      *
-     * @param Application $application The console application
-     * @param string|Command $command  The command to test
+     * @param Application    $application The console application
+     * @param string|Command $command     The command to test
      */
     protected function cmdTester(Application $application, string|Command $command): CommandTester
     {
