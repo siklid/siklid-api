@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
-use App\Tests\Concern\Assertion\ResponseAssertion;
+use App\Tests\Concern\Assertion\AssertResponseTrait;
 use App\Tests\Concern\Factory\UserFactoryTrait;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\Concern\Util\WithJson;
@@ -28,7 +28,7 @@ trait WebTestCaseTrait
     use WithFaker;
     use WithJson;
     use UserFactoryTrait;
-    use ResponseAssertion;
+    use AssertResponseTrait;
 
     /**
      * Custom template method to tear down the test case.
@@ -49,7 +49,12 @@ trait WebTestCaseTrait
     protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
         if (static::$booted) {
-            throw new LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
+            throw new LogicException(
+                sprintf(
+                    'Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.',
+                    __METHOD__
+                )
+            );
         }
 
         $kernel = static::bootKernel($options);
@@ -58,9 +63,13 @@ trait WebTestCaseTrait
             $client = $kernel->getContainer()->get('test.client');
         } catch (ServiceNotFoundException) {
             if (class_exists(KernelBrowser::class)) {
-                throw new LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
+                throw new LogicException(
+                    'You cannot create the client used in functional tests if the "framework.test" config is not set to true.'
+                );
             }
-            throw new LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
+            throw new LogicException(
+                'You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".'
+            );
         }
 
         $client->setServerParameters($server);

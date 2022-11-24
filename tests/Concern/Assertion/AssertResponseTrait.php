@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @mixin KernelTestCase
  */
-trait ResponseAssertion
+trait AssertResponseTrait
 {
     /**
      * Asserts that the response status code is 200.
