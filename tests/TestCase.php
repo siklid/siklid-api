@@ -46,4 +46,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         return $type::getType($type);
     }
+
+    protected function classUsesRecursive(string $class): array
+    {
+        $traits = class_uses($class);
+
+        foreach ($traits as $trait) {
+            $traits += $this->classUsesRecursive($trait);
+        }
+
+        return array_unique($traits);
+    }
 }

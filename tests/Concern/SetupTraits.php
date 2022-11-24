@@ -9,6 +9,8 @@ use ReflectionMethod;
 
 trait SetupTraits
 {
+    abstract protected function classUsesRecursive(string $class): array;
+
     protected function setUpTraits(): void
     {
         $traits = array_keys($this->classUsesRecursive(static::class));
@@ -27,16 +29,5 @@ trait SetupTraits
                 }
             }
         }
-    }
-
-    protected function classUsesRecursive(string $class): array
-    {
-        $traits = class_uses($class);
-
-        foreach ($traits as $trait) {
-            $traits += $this->classUsesRecursive($trait);
-        }
-
-        return array_unique($traits);
     }
 }
