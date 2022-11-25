@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Contract\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 
 interface FlashcardInterface
 {
@@ -14,9 +14,9 @@ interface FlashcardInterface
 
     public function getBackSide(): string;
 
-    public function getCreatedAt(): DateTime;
+    public function getCreatedAt(): DateTimeImmutable;
 
-    public function getUpdatedAt(): DateTime;
+    public function getUpdatedAt(): DateTimeImmutable;
 
-    public function getDeletedAt(): ?DateTime;
+    public function getDeletedAt(): ?DateTimeImmutable;
 }
