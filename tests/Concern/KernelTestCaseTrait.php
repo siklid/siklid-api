@@ -261,6 +261,8 @@ trait KernelTestCaseTrait
     {
         $this->getDocumentManager()->persist($document);
         $this->getDocumentManager()->flush();
+
+        $this->touchCollection(get_class($document));
     }
 
     /**

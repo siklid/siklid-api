@@ -23,8 +23,6 @@ trait BoxFactoryTrait
         $box->setUser($attributes['user'] ?? new User());
         $box->setHashtags($attributes['hashtags'] ?? []);
 
-        $this->touchCollection(Box::class);
-
         return $box;
     }
 }
