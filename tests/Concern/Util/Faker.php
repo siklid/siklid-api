@@ -64,4 +64,21 @@ final class Faker
     {
         return $this->faker->$name;
     }
+
+    /**
+     * Returns a random markdown string.
+     */
+    public function markdown(): string
+    {
+        $text = $this->text();
+        $img = $this->imageUrl();
+        $link = $this->url();
+
+        $words = explode(' ', $text);
+        $randomIndex = array_rand($words);
+        $words[$randomIndex] = "[$words[$randomIndex]]($link)";
+        $text = implode(' ', $words);
+
+        return "![]($img)\n\n$text";
+    }
 }
