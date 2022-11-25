@@ -36,6 +36,8 @@ class CursorPaginatorTest extends TestCase
             $this->users[] = $user;
         }
         $documentManager->flush();
+
+        $this->touchCollection(User::class);
     }
 
     /**
