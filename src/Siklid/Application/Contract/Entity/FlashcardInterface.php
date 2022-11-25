@@ -10,9 +10,9 @@ interface FlashcardInterface
 {
     public function getId(): string;
 
-    public function getFrontSide(): string;
+    public function getFrontside(): string;
 
-    public function getBackSide(): string;
+    public function getBackside(): string;
 
     public function getCreatedAt(): DateTimeImmutable;
 

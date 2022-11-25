@@ -21,10 +21,10 @@ class Flashcard implements FlashcardInterface
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
-    private string $frontSide;
+    private string $frontside;
 
     #[MongoDB\Field(type: 'string')]
-    private string $backSide;
+    private string $backside;
 
     #[MongoDB\Field(type: 'date')]
     private DateTimeImmutable $createdAt;
@@ -57,26 +57,26 @@ class Flashcard implements FlashcardInterface
         return $this;
     }
 
-    public function getFrontSide(): string
+    public function getFrontside(): string
     {
-        return $this->frontSide;
+        return $this->frontside;
     }
 
-    public function setFrontSide(string $frontSide): Flashcard
+    public function setFrontside(string $frontside): Flashcard
     {
-        $this->frontSide = $frontSide;
+        $this->frontside = $frontside;
 
         return $this;
     }
 
-    public function getBackSide(): string
+    public function getBackside(): string
     {
-        return $this->backSide;
+        return $this->backside;
     }
 
-    public function setBackSide(string $backSide): Flashcard
+    public function setBackside(string $backside): Flashcard
     {
-        $this->backSide = $backSide;
+        $this->backside = $backside;
 
         return $this;
     }
