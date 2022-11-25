@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use App\Foundation\Exception\LogicException;
+use App\Foundation\Util\ClockFactory;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
@@ -13,8 +14,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Lcobucci\Clock\Clock;
-use Lcobucci\Clock\SystemClock;
+use StellaMaris\Clock\ClockInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,11 +67,11 @@ class Box implements BoxInterface
     #[Groups(['box:read', 'box:delete'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    private Clock $clock;
+    private ClockInterface $clock;
 
-    public function __construct(?Clock $clock = null)
+    public function __construct(?ClockInterface $clock = null)
     {
-        $this->clock = $clock ?? SystemClock::fromSystemTimezone();
+        $this->clock = $clock ?? ClockFactory::create();
 
         $this->createdAt = $this->clock->now();
         $this->updatedAt = $this->clock->now();
@@ -222,8 +222,8 @@ class Box implements BoxInterface
     }
 
     #[MongoDB\PostLoad]
-    public function setClock(): void
+    public function setClock(?ClockInterface $clock = null): void
     {
-        $this->clock = SystemClock::fromSystemTimezone();
+        $this->clock = $clock ?? ClockFactory::create();
     }
 }
