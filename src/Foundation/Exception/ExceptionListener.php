@@ -17,7 +17,6 @@ final class ExceptionListener
 {
     public function onKernelException(ExceptionEvent $event): void
     {
-
         $exception = $event->getThrowable();
 
         if ($exception instanceof RenderableInterface) {

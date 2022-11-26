@@ -6,11 +6,8 @@ namespace App\Controller\Auth;
 
 use App\Foundation\Http\ApiController;
 use App\Siklid\Application\Auth\RegisterByEmail;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\CacheInterface;
 
 class RegisterController extends ApiController
 {
@@ -28,5 +25,4 @@ class RegisterController extends ApiController
 
         return $this->created($data, $groups);
     }
-
 }
