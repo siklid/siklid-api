@@ -6,10 +6,11 @@ namespace App\Controller\Auth;
 
 use App\Foundation\Http\ApiController;
 use App\Siklid\Application\Auth\RegisterByEmail;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
+use Symfony\Contracts\Cache\CacheInterface;
 
 class RegisterController extends ApiController
 {
@@ -29,10 +30,37 @@ class RegisterController extends ApiController
     }
 
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
-    public function logout(TokenStorageInterface $tokenStorage): Response
+    public function logout(Request $request, CacheInterface $cache)
     {
-        $tokenStorage->setToken();
+        $tokenWithBearer = $request->headers->get('Authorization');
 
-        return $this->json('done logout successfully.');
+        $tokenWithoutBearer = str_replace("Bearer ","",$tokenWithBearer);
+
+        // TODO Remove this line
+        $cache = new FilesystemAdapter();
+
+        $cacheItem = $cache->getItem('users.invalidToken');
+
+//        dd($cacheItem);
+
+        if(!$cacheItem->isHit()){
+            $invalidTokens = [];
+            $invalidTokens[$tokenWithoutBearer] = time();
+        }else {
+            $invalidTokens = $cacheItem->get();
+            $invalidTokens[$tokenWithoutBearer] = time();
+        }
+
+        $cacheItem->set($invalidTokens);
+
+        $cache->save($cacheItem);
+
+        dd($cacheItem);
+
+        $data = [
+            'message' => 'Done logout successfully',
+        ];
+
+        return $this->json($data, Response::HTTP_OK);
     }
 }

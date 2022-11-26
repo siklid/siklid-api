@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Siklid\Application\Auth;
 
 use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\ValueObject\Email;
+use App\Foundation\ValueObject\Username;
 use App\Siklid\Application\Auth\LoginSuccessHandler;
 use App\Siklid\Document\AccessToken;
 use App\Siklid\Document\User;
@@ -34,8 +36,8 @@ class LoginSuccessHandlerTest extends TestCase
 
         $user = new User();
         $user->setId($this->faker->uuid());
-        $user->setUsername($this->faker->userName());
-        $user->setEmail($this->faker->email());
+        $user->setUsername(Username::fromString($this->faker->userName()));
+        $user->setEmail(Email::fromString($this->faker->email()));
         $user->setAccessToken(
             new AccessToken($this->faker->md5())
         );
@@ -68,8 +70,8 @@ class LoginSuccessHandlerTest extends TestCase
 
         $user = new User();
         $user->setId($this->faker->uuid());
-        $user->setUsername($this->faker->userName());
-        $user->setEmail($this->faker->email());
+        $user->setUsername(Username::fromString($this->faker->userName()));
+        $user->setEmail(Email::fromString($this->faker->email()));
         $user->setAccessToken(
             new AccessToken($this->faker->md5())
         );

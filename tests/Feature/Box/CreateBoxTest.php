@@ -37,11 +37,8 @@ class CreateBoxTest extends FeatureTestCase
                 'name',
                 'repetitionAlgorithm',
                 'description',
-                'flashcards',
                 'hashtags',
                 'createdAt',
-                'updatedAt',
-                'deletedAt',
             ],
         ]);
         $this->assertExists(Box::class, [

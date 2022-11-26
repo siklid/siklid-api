@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Siklid\Command;
 
+use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
 use App\Tests\IntegrationTestCase;
 
@@ -22,8 +23,8 @@ class SetupCommandTest extends IntegrationTestCase
         $console->execute([]);
 
         $console->assertCommandIsSuccessful();
-        $this->assertExists(User::class, ['username' => 'admin']);
+        $this->assertExists(User::class, ['username' => Username::fromString('admin')]);
 
-        $this->deleteDocument(User::class, ['username' => 'admin']);
+        $this->deleteDocument(User::class, ['username' => Username::fromString('admin')]);
     }
 }

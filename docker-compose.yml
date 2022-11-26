@@ -24,6 +24,7 @@ services:
       - siklid_network
     depends_on:
       - mongodb
+      - redis
 
   caddy:
     container_name: siklid_caddy
@@ -73,6 +74,21 @@ services:
     ports:
       - 27017:27017
 
+  redis:
+    container_name: siklid_redis
+    image: redis:7.0
+    restart: unless-stopped
+    volumes:
+      - siklid_redis_data:/data
+    networks:
+      - siklid_network
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      retries: 3
+      timeout: 5s
+
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
@@ -82,6 +98,7 @@ volumes:
   siklid_caddy_data:
   siklid_caddy_config:
   siklid_mongo_data:
+  siklid_redis_data:
 
 networks:
   siklid_network:
