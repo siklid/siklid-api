@@ -8,6 +8,7 @@ use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
+use App\Siklid\Repository\BoxRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,25 +22,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress MissingConstructor
  * @psalm-suppress PropertyNotSetInConstructor
  */
-#[MongoDB\Document(collection: 'boxes')]
+#[MongoDB\Document(collection: 'boxes', repositoryClass: BoxRepository::class)]
 #[MongoDB\HasLifecycleCallbacks]
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
-    #[Groups(['box:read', 'box:delete', 'box:create'])]
+    #[Groups(['box:read', 'box:delete', 'box:create', 'box:index'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['box:read', 'box:create'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private string $name;
 
     #[MongoDB\Field(type: 'specific')]
-    #[Groups(['box:read', 'box:create'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private RepetitionAlgorithm $repetitionAlgorithm = RepetitionAlgorithm::Leitner;
 
     #[MongoDB\Field(type: 'string', nullable: true)]
-    #[Groups(['box:read', 'box:create'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private ?string $description = null;
 
     #[MongoDB\ReferenceMany(targetDocument: Flashcard::class)]
@@ -47,15 +48,15 @@ class Box implements BoxInterface
     private Collection $flashcards;
 
     #[MongoDB\Field(type: 'collection')]
-    #[Groups(['box:read', 'box:create'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private array $hashtags = [];
 
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:index'])]
     private UserInterface $user;
 
     #[MongoDB\Field(type: 'date_immutable')]
-    #[Groups(['box:read', 'box:create'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private DateTimeImmutable $createdAt;
 
     #[MongoDB\Field(type: 'date_immutable')]

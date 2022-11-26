@@ -1,0 +1,4 @@
+parameters:
+  pagination:
+    limit: 25
+    max_limit: 100

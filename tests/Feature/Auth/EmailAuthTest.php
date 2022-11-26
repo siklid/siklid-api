@@ -6,8 +6,10 @@ namespace App\Tests\Feature\Auth;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\WebTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
@@ -16,8 +18,17 @@ use App\Tests\FeatureTestCase;
  *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
-class EmailAuthTest extends FeatureTestCase
+class EmailAuthTest extends TestCase
 {
+    use WebTestCaseTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->touchCollection(RefreshToken::class);
+    }
+
     /**
      * @test
      */
@@ -42,12 +53,9 @@ class EmailAuthTest extends FeatureTestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
+        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
+        $this->assertEquals($username, $this->getFromResponse($client, 'data.user.username'));
         $this->assertExists(User::class, ['email' => $email]);
-
-        $this->deleteDocument(User::class, [
-            'email' => $email,
-            'username' => $username,
-        ]);
     }
 
     /**
@@ -81,7 +89,7 @@ class EmailAuthTest extends FeatureTestCase
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-
-        $this->deleteDocument(User::class, ['email' => $email]);
+        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
+        $this->assertEquals($user->getId(), $this->getFromResponse($client, 'data.user.id'));
     }
 }

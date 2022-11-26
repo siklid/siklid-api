@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace App\Tests\Feature\Box;
 
 use App\Siklid\Document\Box;
-use App\Tests\Concerns\BoxFactoryTrait;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\WebTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class DeleteBoxTest extends FeatureTestCase
+class DeleteBoxTest extends TestCase
 {
+    use WebTestCaseTrait;
     use BoxFactoryTrait;
 
     /**
      * @test
      */
-    public function user_can_delete_a_box(): Box
+    public function user_can_delete_a_box(): void
     {
         $client = $this->createCrawler();
         $user = $this->makeUser();
@@ -31,24 +33,8 @@ class DeleteBoxTest extends FeatureTestCase
         $client->request('DELETE', 'api/v1/boxes/'.$box->getId());
 
         $this->assertResponseIsOk();
-
-        $this->deleteDocument($user);
-
-        return $box;
-    }
-
-    /**
-     * @test
-     *
-     * @depends user_can_delete_a_box
-     */
-    public function it_should_be_a_soft_delete(Box $box): void
-    {
         $this->assertNotNull($box->getDeletedAt());
         $this->assertExists(Box::class, ['id' => $box->getId()]);
-        $this->assertNotExists(Box::class, ['id' => $box->getId(), 'deletedAt' => null]);
-
-        $this->deleteDocument(Box::class, ['id' => $box->getId()]);
     }
 
     /**
