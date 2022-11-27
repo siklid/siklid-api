@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
 
 /**
@@ -17,6 +18,8 @@ use Throwable;
 class ValidationException extends SiklidException implements RenderableInterface
 {
     protected ?FormErrorIterator $errorIterator = null;
+
+    protected ?ConstraintViolationListInterface $violationList = null;
 
     public function __construct(string $message = 'Invalid request', int $code = 0, Throwable $previous = null)
     {
@@ -29,6 +32,13 @@ class ValidationException extends SiklidException implements RenderableInterface
     public function setErrorIterator(FormErrorIterator $errorIterator): void
     {
         $this->errorIterator = $errorIterator;
+    }
+
+    public function setViolationList(?ConstraintViolationListInterface $violationList = null): ValidationException
+    {
+        $this->violationList = $violationList;
+
+        return $this;
     }
 
     /**
