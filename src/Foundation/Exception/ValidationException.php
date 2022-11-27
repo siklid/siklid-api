@@ -62,6 +62,14 @@ class ValidationException extends SiklidException implements RenderableInterface
     {
         $errors = [];
 
+        if (null !== $this->violationList) {
+            foreach ($this->violationList as $violation) {
+                $errors[$violation->getPropertyPath()][] = $violation->getMessage();
+            }
+
+            return $errors;
+        }
+
         if (null === $this->errorIterator) {
             return $errors;
         }

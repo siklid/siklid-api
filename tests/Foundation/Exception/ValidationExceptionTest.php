@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 class ValidationExceptionTest extends TestCase
 {
@@ -34,6 +35,30 @@ class ValidationExceptionTest extends TestCase
             [$formError]
         );
         $sut->setErrorIterator($errorIterator);
+
+        $response = $sut->render();
+
+        $this->assertSame(422, $response->getStatusCode());
+        $expectedContent = '{"message":"Invalid request","errors":{"property_path":["Error message"]}}';
+        $this->assertSame($expectedContent, $response->getContent());
+    }
+
+    /**
+     * @test
+     */
+    public function render_with_violation_list(): void
+    {
+        $sut = new ValidationException();
+        $violation = new ConstraintViolation(
+            'Error message',
+            'Error message',
+            [],
+            'root',
+            'property_path',
+            'invalid_value'
+        );
+        $violationList = new ConstraintViolationList([$violation]);
+        $sut->setViolationList($violationList);
 
         $response = $sut->render();
 

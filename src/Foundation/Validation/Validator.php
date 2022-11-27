@@ -26,7 +26,7 @@ class Validator
     /**
      * Validates a value against a constraint or a list of constraints.
      *
-     * @param Constraint|Constraint[] $constraints                               The constraint(s) to validate against
+     * @param Constraint|Constraint[]                               $constraints The constraint(s) to validate against
      * @param string|GroupSequence|array<string|GroupSequence>|null $groups      The validation groups to validate. If
      *                                                                           none is given, "Default" is assumed
      */
