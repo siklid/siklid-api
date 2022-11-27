@@ -7,7 +7,7 @@ namespace App\Tests\Foundation\Action;
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Action\ValidatableInterface;
 use App\Foundation\Exception\ValidationException;
-use App\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Form\FormInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * @psalm-suppress MissingConstructor
  */
-class AbstractionActionTest extends TestCase
+class AbstractActionTest extends TestCase
 {
     private ValidatableInterface $request;
 
