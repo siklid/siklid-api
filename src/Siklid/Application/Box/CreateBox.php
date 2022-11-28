@@ -10,6 +10,7 @@ use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Document\Box;
 use App\Siklid\Form\BoxType;
 use Doctrine\ODM\MongoDB\DocumentManager;
+
 use function Symfony\Component\String\u;
 
 final class CreateBox extends AbstractAction
