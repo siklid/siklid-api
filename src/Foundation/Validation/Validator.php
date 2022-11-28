@@ -53,10 +53,9 @@ final class Validator
             $groups
         );
 
-        $validationException = new ValidationException();
-        $validationException->setViolationList($violations);
-
         if ($violations->count() > 0) {
+            $validationException = new ValidationException();
+            $validationException->setViolationList($violations);
             throw $validationException;
         }
 
