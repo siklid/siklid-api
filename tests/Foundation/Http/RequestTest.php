@@ -12,6 +12,7 @@ use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @psalm-suppress MissingConstructor - we don't need constructor
@@ -193,5 +194,20 @@ class RequestTest extends TestCase
         $actual = $sut->has('foo');
 
         $this->assertFalse($actual);
+    }
+
+    /**
+     * @test
+     */
+    public function validate(): void
+    {
+        $constraint = new Assert\Collection([], null, null, true);
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator->expects($this->once())
+            ->method('validate')
+            ->with([], $constraint);
+        $sut = new Sut($this->requestStack, new RequestUtil($this->json, $validator));
+        $this->requestStack->push(new Request());
+        $sut->validate();
     }
 }
