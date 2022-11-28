@@ -7,6 +7,7 @@ namespace App\Siklid\Application\Auth\Request;
 use App\Foundation\Http\Request;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use Symfony\Component\Validator\Constraints as Assert;
 
 final class RegisterRequest extends Request
 {
@@ -26,5 +27,16 @@ final class RegisterRequest extends Request
         }
 
         return $data;
+    }
+
+    protected function constraints(): array
+    {
+        $notBlank = new Assert\NotBlank();
+
+        return [
+            'email' => [$notBlank, new Assert\Email()],
+            'username' => [$notBlank],
+            'password' => [$notBlank],
+        ];
     }
 }

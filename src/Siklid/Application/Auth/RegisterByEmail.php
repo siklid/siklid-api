@@ -6,7 +6,6 @@ namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Security\Token\TokenManagerInterface;
-use App\Foundation\Validation\ValidatorInterface;
 use App\Siklid\Application\Auth\Request\RegisterRequest;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -22,20 +21,16 @@ final class RegisterByEmail extends AbstractAction
 
     private TokenManagerInterface $tokenManager;
 
-    private ValidatorInterface $validator;
-
     public function __construct(
         RegisterRequest $request,
         DocumentManager $dm,
         Hash $hash,
         TokenManagerInterface $tokenManager,
-        ValidatorInterface $validator
     ) {
         $this->request = $request;
         $this->dm = $dm;
         $this->hash = $hash;
         $this->tokenManager = $tokenManager;
-        $this->validator = $validator;
     }
 
     /**
@@ -45,8 +40,6 @@ final class RegisterByEmail extends AbstractAction
     {
         $user = $this->fill(User::class, $this->request->formInput());
         $user->setPassword($this->hash->hashPassword($user, $user->getPassword()));
-
-        $this->validator->validate($user);
 
         $this->dm->persist($user);
         $this->dm->flush();
