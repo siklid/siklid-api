@@ -59,13 +59,9 @@ class Request implements ValidatableInterface
     }
 
     /**
-     * Returns data required for form submission.
-     *
-     * @return array<string, mixed>|string|null
-     *
      * @psalm-suppress MixedReturnTypeCoercion
      */
-    public function formInput(): string|array|null
+    public function formInput(): array
     {
         return $this->all();
     }
