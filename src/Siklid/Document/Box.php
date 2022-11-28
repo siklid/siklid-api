@@ -53,6 +53,7 @@ class Box implements BoxInterface
 
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
     #[Groups(['box:read', 'box:index'])]
+    #[Assert\NotBlank]
     private UserInterface $user;
 
     #[MongoDB\Field(type: 'date_immutable')]
