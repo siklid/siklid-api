@@ -6,6 +6,7 @@ namespace App\Tests\Foundation\Http;
 
 use App\Foundation\Http\Request as Sut;
 use App\Foundation\Util\RequestUtil;
+use App\Foundation\Validation\ValidatorInterface;
 use App\Tests\Concern\Util\WithJson;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -28,7 +29,7 @@ class RequestTest extends TestCase
         parent::setUp();
 
         $this->requestStack = new RequestStack();
-        $this->util = new RequestUtil($this->json);
+        $this->util = new RequestUtil($this->json, $this->createMock(ValidatorInterface::class));
     }
 
     /**
