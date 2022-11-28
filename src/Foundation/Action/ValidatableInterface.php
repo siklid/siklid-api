@@ -9,7 +9,7 @@ interface ValidatableInterface
     /**
      * Returns data required for form submission.
      *
-     * @return array<string, mixed>|string|null
+     * @return array<string, mixed>
      */
-    public function formInput(): string|array|null;
+    public function formInput(): array;
 }
