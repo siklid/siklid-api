@@ -7,7 +7,7 @@ namespace App\Tests\Foundation\Validation;
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\Validation\Validator;
 use App\Tests\Concern\KernelTestCaseTrait;
-use PHPUnit\Framework\TestCase;
+use App\Tests\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
