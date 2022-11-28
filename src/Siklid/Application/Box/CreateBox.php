@@ -46,7 +46,7 @@ final class CreateBox extends AbstractAction
         }
 
         $hashtags = [];
-        preg_match_all('/#(\S+)/', $text, $matches);
+        preg_match('/(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,30})(\b|\r)/', $text, $matches);
         foreach ($matches[0] as $match) {
             $hashtags[] = u(mb_strtolower($match))->append(' ')->toString();
         }
