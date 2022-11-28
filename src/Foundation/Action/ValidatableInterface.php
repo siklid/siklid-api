@@ -8,6 +8,8 @@ interface ValidatableInterface
 {
     /**
      * Returns data required for form submission.
+     *
+     * @return array<string, mixed>|string|null
      */
     public function formInput(): string|array|null;
 }
