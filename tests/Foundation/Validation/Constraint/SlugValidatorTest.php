@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Validator;
+namespace App\Tests\Foundation\Validation\Constraint;
 
-use App\Foundation\Constraint\Slug as ConstraintSlug;
-use App\Foundation\Validator\SlugValidator;
+use App\Foundation\Validation\Constraint\Slug as ConstraintSlug;
+use App\Foundation\Validation\Constraint\SlugValidator;
 use App\Foundation\ValueObject\Slug;
 use App\Tests\TestCase;
 use stdClass;
@@ -35,7 +35,7 @@ class SlugValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->sut = new SlugValidator();
+        $this->sut = new \App\Foundation\Validation\Constraint\SlugValidator();
         $this->context = new ExecutionContext(
             $this->createMock(ValidatorInterface::class),
             'slug',
