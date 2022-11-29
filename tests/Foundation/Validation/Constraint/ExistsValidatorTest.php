@@ -72,7 +72,7 @@ class ExistsValidatorTest extends TestCase
 
         $sut = new ExistsValidator($this->getDocumentManager());
 
-        $sut->validate('foo', new Exists(['document' => 'foo', 'field' => '']));
+        $sut->validate('foo', new Exists('foo', ''));
     }
 
     /**
@@ -81,11 +81,11 @@ class ExistsValidatorTest extends TestCase
     public function document_class_should_exist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Document class "foo" does not exist.');
+        $this->expectErrorMessage('Document class "Foo" does not exist.');
 
         $sut = new ExistsValidator($this->getDocumentManager());
 
-        $sut->validate('foo', new Exists(['document' => 'foo', 'field' => 'bar']));
+        $sut->validate('foo', new Exists('Foo'));
     }
 
     /**
@@ -104,7 +104,7 @@ class ExistsValidatorTest extends TestCase
         );
         $sut->initialize($context);
 
-        $sut->validate('bar', new Exists(['document' => User::class, 'field' => 'foo']));
+        $sut->validate('bar', new Exists(User::class, 'email'));
 
         $this->assertCount(1, $context->getViolations());
     }
@@ -127,9 +127,32 @@ class ExistsValidatorTest extends TestCase
         );
         $sut->initialize($context);
 
-        $sut->validate($user->getId(), new Exists(['document' => User::class]));
-        $sut->validate($user->getId(), new Exists(['document' => User::class, 'field' => 'id']));
-        $sut->validate($user->getUsername(), new Exists(['document' => User::class, 'field' => 'username']));
+        $sut->validate($user->getId(), new Exists(User::class));
+        $sut->validate($user->getId(), new Exists(User::class, 'id'));
+        $sut->validate($user->getUsername(), new Exists(User::class, 'username'));
+
+        $this->assertCount(0, $context->getViolations());
+    }
+
+    /**
+     * @test
+     *
+     * @psalm-suppress InternalClass
+     * @psalm-suppress InternalMethod
+     */
+    public function it_passes_if_document_exists(): void
+    {
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $sut = new ExistsValidator($this->getDocumentManager());
+        $context = new ExecutionContext(
+            $this->createMock(ValidatorInterface::class),
+            'root',
+            $this->createMock(TranslatorInterface::class)
+        );
+        $sut->initialize($context);
+
+        $sut->validate($user, new Exists(User::class));
 
         $this->assertCount(0, $context->getViolations());
     }

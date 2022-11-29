@@ -21,6 +21,9 @@ class ExistsValidator extends ConstraintValidator
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MixedAssignment - User should know about the types.
+     * @psalm-suppress MixedMethodCall - It's a getter method.
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
@@ -42,6 +45,11 @@ class ExistsValidator extends ConstraintValidator
 
         if (! class_exists($constraint->document)) {
             throw new InvalidArgumentException(sprintf('Document class "%s" does not exist.', $constraint->document));
+        }
+
+        if ($value instanceof $constraint->document) {
+            $getter = 'get'.ucfirst($constraint->field);
+            $value = $value->$getter();
         }
 
         $document = $this->dm->getRepository($constraint->document)->findOneBy([
