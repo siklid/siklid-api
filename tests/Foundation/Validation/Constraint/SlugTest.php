@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Constraint;
+namespace App\Tests\Foundation\Validation\Constraint;
 
-use App\Foundation\Constraint\Slug;
-use App\Foundation\Validator\SlugValidator;
+use App\Foundation\Validation\Constraint\Slug;
+use App\Foundation\Validation\Constraint\SlugValidator;
 use App\Tests\TestCase;
 
 /**

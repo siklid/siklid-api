@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Validator;
+namespace App\Tests\Foundation\Validation\Constraint;
 
-use App\Foundation\Constraint\Username as ConstraintUsername;
-use App\Foundation\Validator\UsernameValidator;
+use App\Foundation\Validation\Constraint\Username as ConstraintUsername;
+use App\Foundation\Validation\Constraint\UsernameValidator;
 use App\Foundation\ValueObject\Username;
 use App\Tests\TestCase;
 use stdClass;
@@ -35,7 +35,7 @@ class UsernameValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->sut = new UsernameValidator();
+        $this->sut = new \App\Foundation\Validation\Constraint\UsernameValidator();
         $this->context = new ExecutionContext(
             $this->createMock(ValidatorInterface::class),
             'username',

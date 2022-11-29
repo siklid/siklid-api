@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Validator;
+namespace App\Foundation\Validation\Constraint;
 
-use App\Foundation\Constraint\Slug as ConstraintSlug;
-use App\Foundation\ValueObject\Slug;
+use App\Foundation\Validation\Constraint as AppAssert;
+use App\Foundation\ValueObject\Username;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class SlugValidator extends ConstraintValidator
+class UsernameValidator extends ConstraintValidator
 {
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (! $constraint instanceof ConstraintSlug) {
-            throw new UnexpectedTypeException($constraint, ConstraintSlug::class);
+        if (! $constraint instanceof AppAssert\Username) {
+            throw new UnexpectedTypeException($constraint, AppAssert\Username::class);
         }
 
         if (null === $value || '' === $value) {
@@ -24,12 +24,12 @@ class SlugValidator extends ConstraintValidator
         }
 
         if (! $this->isValidatable($value)) {
-            throw new UnexpectedValueException($value, sprintf('string or %s', Slug::class));
+            throw new UnexpectedValueException($value, sprintf('string or %s', Username::class));
         }
 
-        $value = $value instanceof Slug ? $value->original() : (string)$value;
+        $value = $value instanceof Username ? $value->original() : (string)$value;
 
-        if (! $this->isSlug($value)) {
+        if (! $this->isUsername($value)) {
             $this->context->buildViolation($constraint->message())
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
@@ -38,11 +38,11 @@ class SlugValidator extends ConstraintValidator
 
     private function isValidatable(mixed $value): bool
     {
-        return is_string($value) || $value instanceof Slug;
+        return is_string($value) || $value instanceof Username;
     }
 
-    private function isSlug(string $value): bool
+    private function isUsername(string $value): bool
     {
-        return 1 === preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $value);
+        return (bool)preg_match('/^[a-zA-Z0-9_.-]+$/', $value);
     }
 }

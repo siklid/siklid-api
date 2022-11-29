@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use App\Foundation\Constraint as AppAssert;
-use App\Foundation\Constraint\UniqueDocument;
 use App\Foundation\Security\Token\AccessTokenInterface;
 use App\Foundation\Security\Token\HasAccessToken;
+use App\Foundation\Validation\Constraint as AppAssert;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
@@ -21,8 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress MissingConstructor
  */
 #[MongoDB\Document(collection: 'users')]
-#[UniqueDocument(fields: ['email'])]
-#[UniqueDocument(fields: ['username'])]
+#[AppAssert\UniqueDocument(fields: ['email'])]
+#[AppAssert\UniqueDocument(fields: ['username'])]
 class User implements SiklidUserInterface, Authenticable, UserInterface, HasAccessToken
 {
     #[MongoDB\Id]
