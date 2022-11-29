@@ -38,6 +38,6 @@ class ExistsTest extends TestCase
     {
         $sut = new Exists();
 
-        $this->assertSame('The value "{{ value }}" does not exist.', $sut->message());
+        $this->assertSame('The document {{ document }} with {{ field }}: {{ value }} does not exist.', $sut->message());
     }
 }

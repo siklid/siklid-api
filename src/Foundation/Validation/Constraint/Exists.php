@@ -10,6 +10,10 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute]
 class Exists extends Constraint
 {
+    public string $field = 'id';
+
+    public ?string $document = null;
+
     public function validatedBy(): string
     {
         return ExistsValidator::class;
@@ -17,6 +21,6 @@ class Exists extends Constraint
 
     public function message(): string
     {
-        return 'The value "{{ value }}" does not exist.';
+        return 'The document {{ document }} with {{ field }}: {{ value }} does not exist.';
     }
 }
