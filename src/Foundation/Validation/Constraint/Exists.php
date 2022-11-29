@@ -23,8 +23,8 @@ class Exists extends Constraint
      */
     #[HasNamedArguments]
     public function __construct(
-        string $field = 'id',
         ?string $document = null,
+        string $field = 'id',
         array $groups = null,
         mixed $payload = null
     ) {
