@@ -6,9 +6,9 @@ namespace App\Siklid\Application\Box;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Http\Request;
+use App\Foundation\Validation\ValidatorInterface;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Document\Box;
-use App\Siklid\Form\BoxType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 use function Symfony\Component\String\u;
@@ -16,23 +16,29 @@ use function Symfony\Component\String\u;
 final class CreateBox extends AbstractAction
 {
     private Request $request;
+
     private DocumentManager $dm;
 
-    public function __construct(Request $request, DocumentManager $dm)
+    private ValidatorInterface $validator;
+
+    public function __construct(Request $request, DocumentManager $dm, ValidatorInterface $validator)
     {
         $this->request = $request;
         $this->dm = $dm;
+        $this->validator = $validator;
     }
 
     public function execute(): BoxInterface
     {
-        $form = $this->createForm(BoxType::class);
-        $this->validate($form, $this->request);
-
-        /** @var Box $box */
-        $box = $form->getData();
+        $box = new Box();
+        $box->setName((string)$this->request->get('name'));
+        $description = $this->request->get('description');
+        assert(is_string($description) || is_null($description));
+        $box->setDescription($description);
         $box->setUser($this->getUser());
         $box->setHashtags($this->extractHashtags($box->getDescription()));
+
+        $this->validator->validate($box);
 
         $this->dm->persist($box);
         $this->dm->flush();

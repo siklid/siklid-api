@@ -7,8 +7,10 @@ namespace App\Siklid\Application\Auth;
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Http\Request;
 use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Validation\ValidatorInterface;
+use App\Foundation\ValueObject\Email;
+use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
-use App\Siklid\Form\UserType;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hash;
 
@@ -22,16 +24,20 @@ final class RegisterByEmail extends AbstractAction
 
     private TokenManagerInterface $tokenManager;
 
+    private ValidatorInterface $validator;
+
     public function __construct(
         Request $request,
         DocumentManager $dm,
         Hash $hash,
-        TokenManagerInterface $tokenManager
+        TokenManagerInterface $tokenManager,
+        ValidatorInterface $validator
     ) {
         $this->request = $request;
         $this->dm = $dm;
         $this->hash = $hash;
         $this->tokenManager = $tokenManager;
+        $this->validator = $validator;
     }
 
     /**
@@ -40,11 +46,11 @@ final class RegisterByEmail extends AbstractAction
     public function execute(): User
     {
         $user = new User();
+        $user->setEmail(Email::fromString((string)$this->request->get('email')));
+        $user->setUsername(Username::fromString((string)$this->request->get('username')));
+        $user->setPassword($this->hash->hashPassword($user, (string)$this->request->get('password')));
 
-        $form = $this->createForm(UserType::class, $user);
-        $this->validate($form, $this->request);
-
-        $user->setPassword($this->hash->hashPassword($user, $user->getPassword()));
+        $this->validator->validate($user);
 
         $this->dm->persist($user);
         $this->dm->flush();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Http;
 
+use App\Foundation\Pagination\Contract\PageInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,9 @@ abstract class ApiController extends AbstractController
             'groups' => $groups,
         ]);
 
-        return $this->json(compact('data'), Response::HTTP_OK, $headers, $context);
+        $body = $data instanceof PageInterface ? $data : compact('data');
+
+        return $this->json($body, Response::HTTP_OK, $headers, $context);
     }
 
     /**

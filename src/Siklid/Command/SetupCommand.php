@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Siklid\Command;
 
+use App\Foundation\ValueObject\Email;
+use App\Foundation\ValueObject\Username;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -48,7 +50,7 @@ class SetupCommand extends Console
     private function createAdminUser(): void
     {
         $usersRepository = $this->dm->getRepository(User::class);
-        $exists = $usersRepository->findOneBy(['username' => 'admin']);
+        $exists = $usersRepository->findOneBy(['username' => Username::fromString('admin')]);
 
         if ($exists) {
             $this->warning('- Admin user already exists.');
@@ -58,10 +60,10 @@ class SetupCommand extends Console
 
         $user = new User();
 
-        $user->setUsername('admin');
+        $user->setUsername(Username::fromString('admin'));
         // @todo: config admin password or ask for it
         $user->setPassword($this->hasher->hash('admin'));
-        $user->setEmail('admin@siklid.io');
+        $user->setEmail(Email::fromString('admin@siklid.io'));
 
         $this->dm->persist($user);
         $this->dm->flush();

@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements SiklidUserInterface, Authenticable, UserInterface, HasAccessToken
 {
     #[MongoDB\Id]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'resource:read'])]
     private string $id;
 
     #[MongoDB\Field(type: 'email')]
@@ -42,7 +42,7 @@ class User implements SiklidUserInterface, Authenticable, UserInterface, HasAcce
 
     #[MongoDB\Field(type: 'username')]
     #[Assert\NotBlank]
-    #[Groups(['user:read'])]
+    #[Groups(['user:read', 'resource:read'])]
     #[AppAssert\Username]
     private Username $username;
 
@@ -73,9 +73,9 @@ class User implements SiklidUserInterface, Authenticable, UserInterface, HasAcce
     /**
      * @return $this
      */
-    public function setEmail(string|Email $email): User
+    public function setEmail(Email $email): User
     {
-        $this->email = Email::fromString((string)$email);
+        $this->email = $email;
 
         return $this;
     }
@@ -103,9 +103,9 @@ class User implements SiklidUserInterface, Authenticable, UserInterface, HasAcce
     /**
      * @return $this
      */
-    public function setUsername(string|Username $username): User
+    public function setUsername(Username $username): User
     {
-        $this->username = Username::fromString((string)$username);
+        $this->username = $username;
 
         return $this;
     }

@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Box;
 
+use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
-use App\Tests\FeatureTestCase;
+use App\Tests\Concern\WebTestCaseTrait;
+use App\Tests\TestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  */
-class CreateBoxTest extends FeatureTestCase
+class CreateBoxTest extends TestCase
 {
+    use WebTestCaseTrait;
+
     /**
      * @test
      */
@@ -37,11 +40,8 @@ class CreateBoxTest extends FeatureTestCase
                 'name',
                 'repetitionAlgorithm',
                 'description',
-                'flashcards',
                 'hashtags',
                 'createdAt',
-                'updatedAt',
-                'deletedAt',
             ],
         ]);
         $this->assertExists(Box::class, [
@@ -49,9 +49,12 @@ class CreateBoxTest extends FeatureTestCase
             'description' => $description,
             'user' => $user,
         ]);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
+        $this->assertSame($name, $this->getFromResponse($client, 'data.name'));
+        $this->assertSame($description, $this->getFromResponse($client, 'data.description'));
+        $this->assertEquals(
+            RepetitionAlgorithm::Leitner,
+            RepetitionAlgorithm::coerce($this->getFromResponse($client, 'data.repetitionAlgorithm'))
+        );
     }
 
     /**
@@ -78,8 +81,6 @@ class CreateBoxTest extends FeatureTestCase
             'description' => $description,
             'user' => $user,
         ]);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
     }
 
     /**
@@ -104,9 +105,6 @@ class CreateBoxTest extends FeatureTestCase
         ]);
         $actual = $this->getFromResponse($client, 'data.description');
         $this->assertNull($actual);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
     }
 
     /**
@@ -136,8 +134,5 @@ class CreateBoxTest extends FeatureTestCase
 
         $actual = (array)$this->getFromResponse($client, 'data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
-
-        $this->deleteDocument(User::class, ['id' => $user->getId()]);
-        $this->deleteDocument(Box::class, ['id' => $this->getFromResponse($client, 'data.id')]);
     }
 }

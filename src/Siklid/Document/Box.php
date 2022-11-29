@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
+use App\Siklid\Repository\BoxRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Lcobucci\Clock\Clock;
+use Lcobucci\Clock\SystemClock;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,24 +22,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress MissingConstructor
  * @psalm-suppress PropertyNotSetInConstructor
  */
-#[MongoDB\Document(collection: 'boxes')]
+#[MongoDB\Document(collection: 'boxes', repositoryClass: BoxRepository::class)]
+#[MongoDB\HasLifecycleCallbacks]
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete', 'box:create', 'box:index'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private string $name;
 
     #[MongoDB\Field(type: 'specific')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private RepetitionAlgorithm $repetitionAlgorithm = RepetitionAlgorithm::Leitner;
 
     #[MongoDB\Field(type: 'string', nullable: true)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private ?string $description = null;
 
     #[MongoDB\ReferenceMany(targetDocument: Flashcard::class)]
@@ -43,14 +48,16 @@ class Box implements BoxInterface
     private Collection $flashcards;
 
     #[MongoDB\Field(type: 'collection')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private array $hashtags = [];
 
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
+    #[Groups(['box:read', 'box:index'])]
+    #[Assert\NotBlank]
     private UserInterface $user;
 
     #[MongoDB\Field(type: 'date_immutable')]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:create', 'box:index'])]
     private DateTimeImmutable $createdAt;
 
     #[MongoDB\Field(type: 'date_immutable')]
@@ -58,13 +65,17 @@ class Box implements BoxInterface
     private DateTimeImmutable $updatedAt;
 
     #[MongoDB\Field(type: 'date_immutable', nullable: true)]
-    #[Groups(['box:read'])]
+    #[Groups(['box:read', 'box:delete'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    public function __construct()
+    private Clock $clock;
+
+    public function __construct(?Clock $clock = null)
     {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
+        $this->clock = $clock ?? SystemClock::fromSystemTimezone();
+
+        $this->createdAt = $this->clock->now();
+        $this->updatedAt = $this->clock->now();
         $this->flashcards = new ArrayCollection();
     }
 
@@ -145,9 +156,9 @@ class Box implements BoxInterface
         return $this->repetitionAlgorithm;
     }
 
-    public function setRepetitionAlgorithm(RepetitionAlgorithm|string $repetitionAlgorithm): Box
+    public function setRepetitionAlgorithm(RepetitionAlgorithm $repetitionAlgorithm): Box
     {
-        $this->repetitionAlgorithm = RepetitionAlgorithm::coerce($repetitionAlgorithm);
+        $this->repetitionAlgorithm = $repetitionAlgorithm;
 
         return $this;
     }
@@ -186,5 +197,34 @@ class Box implements BoxInterface
         $this->hashtags = $hashtags instanceof Collection ? $hashtags->toArray() : $hashtags;
 
         return $this;
+    }
+
+    public function delete(): void
+    {
+        if (null === $this->deletedAt) {
+            $this->deletedAt = $this->clock->now();
+
+            return;
+        }
+
+        throw new LogicException('Box is already deleted');
+    }
+
+    #[MongoDB\PrePersist]
+    #[MongoDB\PreUpdate]
+    public function touch(): void
+    {
+        $this->updatedAt = $this->clock->now();
+    }
+
+    public function isDeleted(): bool
+    {
+        return null !== $this->deletedAt;
+    }
+
+    #[MongoDB\PostLoad]
+    public function setClock(): void
+    {
+        $this->clock = SystemClock::fromSystemTimezone();
     }
 }
