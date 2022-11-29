@@ -17,10 +17,34 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @psalm-suppress MissingConstructor
+ */
 class ExistsValidatorTest extends TestCase
 {
     use KernelTestCaseTrait;
     use UserFactoryTrait;
+
+    private ExecutionContext $context;
+
+    private ExistsValidator $sut;
+
+    /**
+     * @psalm-suppress InternalClass
+     * @psalm-suppress InternalMethod
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new ExistsValidator($this->getDocumentManager());
+        $this->context = new ExecutionContext(
+            $this->createMock(ValidatorInterface::class),
+            'root',
+            $this->createMock(TranslatorInterface::class)
+        );
+        $this->sut->initialize($this->context);
+    }
 
     /**
      * @test
@@ -29,11 +53,10 @@ class ExistsValidatorTest extends TestCase
     {
         $constraint = new class() extends Constraint {
         };
-        $sut = new ExistsValidator($this->getDocumentManager());
 
         $this->expectException(UnexpectedTypeException::class);
 
-        $sut->validate('foo', $constraint);
+        $this->sut->validate('foo', $constraint);
     }
 
     /**
@@ -43,10 +66,8 @@ class ExistsValidatorTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $sut = new ExistsValidator($this->getDocumentManager());
-
-        $sut->validate(null, new Exists());
-        $sut->validate('', new Exists());
+        $this->sut->validate(null, new Exists());
+        $this->sut->validate('', new Exists());
     }
 
     /**
@@ -57,9 +78,7 @@ class ExistsValidatorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Document class must be specified.');
 
-        $sut = new ExistsValidator($this->getDocumentManager());
-
-        $sut->validate('foo', new Exists());
+        $this->sut->validate('foo', new Exists());
     }
 
     /**
@@ -70,9 +89,7 @@ class ExistsValidatorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Field must be specified.');
 
-        $sut = new ExistsValidator($this->getDocumentManager());
-
-        $sut->validate('foo', new Exists('foo', ''));
+        $this->sut->validate('foo', new Exists('foo', ''));
     }
 
     /**
@@ -83,77 +100,52 @@ class ExistsValidatorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Document class "Foo" does not exist.');
 
-        $sut = new ExistsValidator($this->getDocumentManager());
-
-        $sut->validate('foo', new Exists('Foo'));
+        $this->sut->validate('foo', new Exists('Foo'));
     }
 
     /**
      * @test
      *
-     * @psalm-suppress InternalClass
      * @psalm-suppress InternalMethod
      */
     public function it_adds_violation_if_not_exists(): void
     {
-        $sut = new ExistsValidator($this->getDocumentManager());
-        $context = new ExecutionContext(
-            $this->createMock(ValidatorInterface::class),
-            'root',
-            $this->createMock(TranslatorInterface::class)
-        );
-        $sut->initialize($context);
+        $this->sut->validate('bar', new Exists(User::class, 'email'));
 
-        $sut->validate('bar', new Exists(User::class, 'email'));
-
-        $this->assertCount(1, $context->getViolations());
+        $this->assertCount(1, $this->context->getViolations());
     }
 
     /**
      * @test
      *
-     * @psalm-suppress InternalClass
      * @psalm-suppress InternalMethod
      */
     public function it_passes_if_data_exists(): void
     {
         $user = $this->makeUser();
         $this->persistDocument($user);
-        $sut = new ExistsValidator($this->getDocumentManager());
-        $context = new ExecutionContext(
-            $this->createMock(ValidatorInterface::class),
-            'root',
-            $this->createMock(TranslatorInterface::class)
-        );
-        $sut->initialize($context);
 
-        $sut->validate($user->getId(), new Exists(User::class));
-        $sut->validate($user->getId(), new Exists(User::class, 'id'));
-        $sut->validate($user->getUsername(), new Exists(User::class, 'username'));
+        // > Act start (different valid values)
+        $this->sut->validate($user->getId(), new Exists(User::class));
+        $this->sut->validate($user->getId(), new Exists(User::class, 'id'));
+        $this->sut->validate($user->getUsername(), new Exists(User::class, 'username'));
+        // < Act end
 
-        $this->assertCount(0, $context->getViolations());
+        $this->assertCount(0, $this->context->getViolations());
     }
 
     /**
      * @test
      *
-     * @psalm-suppress InternalClass
      * @psalm-suppress InternalMethod
      */
     public function it_passes_if_document_exists(): void
     {
         $user = $this->makeUser();
         $this->persistDocument($user);
-        $sut = new ExistsValidator($this->getDocumentManager());
-        $context = new ExecutionContext(
-            $this->createMock(ValidatorInterface::class),
-            'root',
-            $this->createMock(TranslatorInterface::class)
-        );
-        $sut->initialize($context);
 
-        $sut->validate($user, new Exists(User::class));
+        $this->sut->validate($user, new Exists(User::class));
 
-        $this->assertCount(0, $context->getViolations());
+        $this->assertCount(0, $this->context->getViolations());
     }
 }
