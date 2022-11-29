@@ -22,4 +22,20 @@ trait AssertAttributeTrait
         $attributeNames = array_map(static fn ($attribute) => $attribute->getName(), $classAttributes);
         $this->assertContains($attribute, $attributeNames, $message);
     }
+
+    /**
+     * Asserts a class method has an attribute.
+     */
+    protected function assertMethodHasAttribute(
+        object $sut,
+        string $method,
+        string $attribute,
+        string $message = ''
+    ): void {
+        $reflection = new ReflectionClass($sut);
+        $method = $reflection->getMethod($method);
+        $methodAttributes = $method->getAttributes();
+        $attributeNames = array_map(static fn ($attribute) => $attribute->getName(), $methodAttributes);
+        $this->assertContains($attribute, $attributeNames, $message);
+    }
 }
