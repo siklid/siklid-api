@@ -30,8 +30,8 @@ class Exists extends Constraint
     ) {
         parent::__construct([], $groups, $payload);
 
-        $this->field = $field;
         $this->document = $document;
+        $this->field = $field;
     }
 
     public function validatedBy(): string
