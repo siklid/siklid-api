@@ -17,7 +17,6 @@ class LogoutInterface extends ApiController implements TokenAuthenticatedInterfa
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(Request $request, CacheInterface $cache): Response
     {
-//        dd('logout method');
         $tokenWithBearer = $request->headers->get('Authorization');
 
         $tokenWithoutBearer = str_replace('Bearer ', '', $tokenWithBearer);
