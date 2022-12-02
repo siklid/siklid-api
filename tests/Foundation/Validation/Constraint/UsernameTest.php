@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Constraint;
+namespace App\Tests\Foundation\Validation\Constraint;
 
-use App\Foundation\Constraint\Username;
-use App\Foundation\Validator\UsernameValidator;
+use App\Foundation\Validation\Constraint\Username;
+use App\Foundation\Validation\Constraint\UsernameValidator;
 use App\Tests\TestCase;
 
 /**

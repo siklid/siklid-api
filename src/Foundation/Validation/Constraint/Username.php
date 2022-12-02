@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Constraint;
+namespace App\Foundation\Validation\Constraint;
 
-use App\Foundation\Validator\UsernameValidator;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
 
