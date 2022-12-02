@@ -18,8 +18,3 @@ framework:
         #pools:
             #my.dedicated.cache: null
 
-        #pools:
-        #   invalid_tokens_cache:
-        #        adapter: cache.adapter.redis
-        #        provider: 'redis://localhost:6379'
-            #my.dedicated.cache: null
