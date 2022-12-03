@@ -26,6 +26,12 @@ Start the docker containers:
 docker-compose up -d
 ```
 
+Generate keypair:
+
+```bash
+docker exec -it siklid_php php bin/console lexik:jwt:generate-keypair
+```
+
 ## Stopping the development environment
 
 ```bash
