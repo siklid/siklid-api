@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use App\Foundation\Exception\LogicException;
+use App\Foundation\Validation\Constraint as AppAssert;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Application\Contract\Type\RepetitionAlgorithm;
@@ -54,6 +55,7 @@ class Box implements BoxInterface
     #[MongoDB\ReferenceOne(targetDocument: User::class)]
     #[Groups(['box:read', 'box:index'])]
     #[Assert\NotBlank]
+    #[AppAssert\Exists(document: User::class)]
     private UserInterface $user;
 
     #[MongoDB\Field(type: 'date_immutable')]

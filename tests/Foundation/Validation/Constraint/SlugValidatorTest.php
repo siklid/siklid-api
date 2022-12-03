@@ -35,7 +35,7 @@ class SlugValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->sut = new \App\Foundation\Validation\Constraint\SlugValidator();
+        $this->sut = new SlugValidator();
         $this->context = new ExecutionContext(
             $this->createMock(ValidatorInterface::class),
             'slug',
