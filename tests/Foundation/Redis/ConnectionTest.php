@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Foundation\Redis;
 
 use App\Foundation\Redis\Connection;
+use App\Foundation\Redis\Contract\ConnectionInterface;
 use App\Tests\Concern\KernelTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 use Redis;
@@ -19,15 +20,15 @@ class ConnectionTest extends TestCase
 {
     use KernelTestCaseTrait;
 
-    private Connection $sut;
+    private ConnectionInterface $sut;
 
     private string $host;
 
     public function setUp(): void
     {
-        $this->sut = new Connection(new Redis());
-
         $this->host = (string)$this->getConfig('redis.host');
+
+        $this->sut = new Connection(new Redis());
     }
 
     /**
