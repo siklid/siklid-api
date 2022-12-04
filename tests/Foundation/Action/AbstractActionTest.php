@@ -65,14 +65,13 @@ class AbstractActionTest extends TestCase
         $container = $this->createMock(ContainerInterface::class);
         $container->method('has')->willReturn(true);
         $parameterBag = $this->createMock(ParameterBag::class);
-        $parameterBag->method('get')->willReturn(['foo' => ['bar' => 'baz']]);
+        $parameterBag->method('get')->willReturn(['bar' => 'baz']);
         $container->method('get')->willReturn($parameterBag);
-
         $sut->setContainer($container);
 
         $this->assertSame('baz', $sut->getConfig('foo.bar'));
         $this->assertSame(['bar' => 'baz'], $sut->getConfig('foo'));
-        $this->assertNull($sut->getConfig('missing'));
+        $this->assertNull($sut->getConfig('foo.missing'));
 
         return $sut;
     }

@@ -50,6 +50,8 @@ abstract class AbstractAction extends AbstractController implements ActionInterf
         $keyParts = explode('.', $key);
         $config = $this->getParameter($keyParts[0]);
 
+        array_shift($keyParts);
+
         foreach ($keyParts as $keyPart) {
             if (! isset($config[$keyPart])) {
                 return $default;
