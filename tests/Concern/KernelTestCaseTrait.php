@@ -299,14 +299,12 @@ trait KernelTestCaseTrait
         $keyParts = explode('.', $key);
         $config = $this->container()->getParameter($keyParts[0]);
 
-        array_shift($keyParts);
-
-        foreach ($keyParts as $keyPart) {
-            if (! isset($config[$keyPart])) {
+        for ($i = 1, $iMax = count($keyParts); $i < $iMax; ++$i) {
+            if (! isset($config[$keyParts[$i]])) {
                 return $default;
             }
-
-            $config = $config[$keyPart];
+            assert(is_array($config));
+            $config = $config[$keyParts[$i]];
         }
 
         return $config ?? $default;
