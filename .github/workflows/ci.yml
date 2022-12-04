@@ -31,7 +31,7 @@ jobs:
           coverage: "pcov"
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
-          extensions: sodium, fileinfo
+          extensions: sodium, fileinfo, redis
 
       - name: "Start MongoDB"
         uses: supercharge/mongodb-github-action@1.8.0
@@ -74,7 +74,7 @@ jobs:
           coverage: "none"
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
-          extensions: sodium, fileinfo
+          extensions: sodium, fileinfo, redis
 
       - name: "Install dependencies"
         uses: "ramsey/composer-install@v2"
@@ -108,7 +108,7 @@ jobs:
           coverage: "none"
           php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
-          extensions: sodium, fileinfo
+          extensions: sodium, fileinfo, redis
 
       - name: "Install dependencies"
         uses: "ramsey/composer-install@v2"
