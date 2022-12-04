@@ -15,7 +15,7 @@ use RedisException;
  * @psalm-suppress MixedArgument - Redis class is defined in the extension
  * @psalm-suppress UndefinedClass - Redis class is defined in the extension
  */
-class RedisConnectionTest extends TestCase
+class ConnectionTest extends TestCase
 {
     use KernelTestCaseTrait;
 
