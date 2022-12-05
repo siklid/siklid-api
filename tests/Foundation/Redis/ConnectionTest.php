@@ -80,4 +80,16 @@ class ConnectionTest extends TestCase
     {
         $this->assertIsBool($this->sut->close());
     }
+
+    /**
+     * @test
+     *
+     * @throws RedisException
+     */
+    public function command(): void
+    {
+        $this->sut->connect($this->host);
+
+        $this->assertTrue($this->sut->command('ping'));
+    }
 }

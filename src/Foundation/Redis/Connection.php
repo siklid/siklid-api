@@ -64,4 +64,12 @@ class Connection implements ConnectionInterface
     {
         return $this->redis->close();
     }
+
+    /**
+     * @throws RedisException
+     */
+    public function command(string $command, array $args = []): mixed
+    {
+        return $this->redis->rawCommand($command, ...$args);
+    }
 }

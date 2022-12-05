@@ -30,4 +30,9 @@ interface ConnectionInterface
      * Closes the connection to the Redis instance.
      */
     public function close(): bool;
+
+    /**
+     * Sends a command to the Redis instance.
+     */
+    public function command(string $command, array $args = []): mixed;
 }
