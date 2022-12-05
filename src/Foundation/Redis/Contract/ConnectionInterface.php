@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Foundation\Redis\Contract;
 
+/**
+ * Redis connection interface.
+ */
 interface ConnectionInterface
 {
+    /**
+     * Connects to the Redis instance.
+     */
     public function connect(
         string $host,
         int $port = 6379,
@@ -15,7 +21,13 @@ interface ConnectionInterface
         float $readTimeout = 0.0
     ): void;
 
+    /**
+     * Pings the Redis instance.
+     */
     public function ping(): string;
 
+    /**
+     * Closes the connection to the Redis instance.
+     */
     public function close(): bool;
 }
