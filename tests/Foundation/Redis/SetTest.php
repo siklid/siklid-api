@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Foundation\Redis;
 
-use App\Foundation\Redis\Connection;
-use App\Foundation\Redis\Contract\ConnectionInterface;
 use App\Foundation\Redis\Set;
 use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
@@ -20,7 +18,7 @@ class SetTest extends TestCase
 {
     use KernelTestCaseTrait;
 
-    private ConnectionInterface $connection;
+    private Redis $redis;
 
     private string $sutKey = 'test:redis:set';
 
@@ -33,26 +31,31 @@ class SetTest extends TestCase
     {
         parent::setUp();
 
-        $this->connection = new Connection(new Redis());
-        $this->connection->connect((string)$this->getConfig('redis.host'));
+        $this->redis = new Redis();
+        $host = (string)$this->getConfig('redis.host');
+        $this->redis->connect($host);
     }
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function size(): void
     {
-        $sut = new Set($this->connection);
+        $sut = new Set($this->redis);
 
         $this->assertSame(0, $sut->size($this->sutKey));
     }
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function add(): void
     {
-        $sut = new Set($this->connection);
+        $sut = new Set($this->redis);
         $added = $sut->add($this->sutKey, 'member1', 'member2', 'member3');
 
         $this->assertSame(3, $added);
@@ -62,10 +65,12 @@ class SetTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function contains(): void
     {
-        $sut = new Set($this->connection);
+        $sut = new Set($this->redis);
         $sut->add($this->sutKey, 'member1', 'member2', 'member3');
 
         $this->assertTrue($sut->contains($this->sutKey, 'member1'));
@@ -76,10 +81,12 @@ class SetTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function members(): void
     {
-        $sut = new Set($this->connection);
+        $sut = new Set($this->redis);
         $sut->add($this->sutKey, 'member1', 'member2', 'member3');
 
         $this->assertArrayEquals(['member1', 'member2', 'member3'], $sut->members($this->sutKey));
@@ -87,10 +94,12 @@ class SetTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function remove(): void
     {
-        $sut = new Set($this->connection);
+        $sut = new Set($this->redis);
         $sut->add($this->sutKey, 'member1', 'member2', 'member3');
 
         $removed = $sut->remove($this->sutKey, 'member1', 'member2');
@@ -107,7 +116,7 @@ class SetTest extends TestCase
      */
     protected function tearDown(): void
     {
-        $this->connection->command('del', [$this->sutKey]);
+        $this->redis->del($this->sutKey);
 
         parent::tearDown();
     }

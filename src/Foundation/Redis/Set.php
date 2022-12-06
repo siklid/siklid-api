@@ -4,24 +4,32 @@ declare(strict_types=1);
 
 namespace App\Foundation\Redis;
 
-use App\Foundation\Redis\Contract\ConnectionInterface;
 use App\Foundation\Redis\Contract\SetInterface;
+use Redis;
+use RedisException;
 
 /**
- * @psalm-suppress MissingParamType
+ * @psalm-suppress MissingParamType - Allows usage of splat operator EX. (...$members)
+ * @psalm-suppress MixedArgument - Allows usage of splat operator EX. (...$members)
  */
 class Set implements SetInterface
 {
-    private ConnectionInterface $connection;
+    private Redis $redis;
 
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(Redis $redis)
     {
-        $this->connection = $connection;
+        $this->redis = $redis;
     }
 
+    /**
+     * @throws RedisException
+     */
     public function size(string $key): int
     {
-        return (int)$this->connection->command('SCARD', [$key]);
+        $size = $this->redis->scard($key);
+        assert(! $size instanceof Redis);
+
+        return (int)$size;
     }
 
     public function add(string $key, ...$members): int
@@ -30,17 +38,32 @@ class Set implements SetInterface
             assert(is_string($member));
         }
 
-        return (int)$this->connection->command('SADD', array_merge([$key], $members));
+        $count = $this->redis->sadd($key, ...$members);
+        assert(! $count instanceof Redis);
+
+        return (int)$count;
     }
 
+    /**
+     * @throws RedisException
+     */
     public function contains(string $key, string $needle): bool
     {
-        return (bool)$this->connection->command('SISMEMBER', [$key, $needle]);
+        $contains = $this->redis->sismember($key, $needle);
+        assert(! $contains instanceof Redis);
+
+        return $contains;
     }
 
+    /**
+     * @throws RedisException
+     */
     public function members(string $key): array
     {
-        return (array)$this->connection->command('SMEMBERS', [$key]);
+        $members = $this->redis->smembers($key);
+        assert(! $members instanceof Redis);
+
+        return $members;
     }
 
     public function remove(string $sutKey, ...$members): int
@@ -49,6 +72,9 @@ class Set implements SetInterface
             assert(is_string($member));
         }
 
-        return (int)$this->connection->command('SREM', array_merge([$sutKey], $members));
+        $count = $this->redis->srem($sutKey, ...$members);
+        assert(! $count instanceof Redis);
+
+        return (int)$count;
     }
 }
