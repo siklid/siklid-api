@@ -111,6 +111,8 @@ class SetTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function get_ttl(): void
     {
@@ -122,6 +124,8 @@ class SetTest extends TestCase
 
     /**
      * @test
+     *
+     * @throws RedisException
      */
     public function set_ttl(): void
     {
