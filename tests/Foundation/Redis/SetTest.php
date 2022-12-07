@@ -110,6 +110,30 @@ class SetTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function get_ttl(): void
+    {
+        $sut = new Set($this->redis);
+        $sut->add($this->sutKey, 'member1', 'member2', 'member3');
+
+        $this->assertSame(-1, $sut->getTtl($this->sutKey));
+    }
+
+    /**
+     * @test
+     */
+    public function set_ttl(): void
+    {
+        $sut = new Set($this->redis);
+        $sut->add($this->sutKey, 'member1', 'member2', 'member3');
+
+        $sut->setTtl($this->sutKey, 10);
+
+        $this->assertSame(10, $sut->getTtl($this->sutKey));
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws RedisException

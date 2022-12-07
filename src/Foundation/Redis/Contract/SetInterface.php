@@ -33,4 +33,14 @@ interface SetInterface
      * Removes the specified members from the set stored at key.
      */
     public function remove(string $sutKey, ...$members): int;
+
+    /**
+     * Gets the number of seconds until the key will expire.
+     */
+    public function getTtl(string $key): int;
+
+    /**
+     * Sets the number of seconds until the key will expire.
+     */
+    public function setTtl(string $key, int $ttl): bool;
 }

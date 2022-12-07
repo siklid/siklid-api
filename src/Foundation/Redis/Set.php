@@ -77,4 +77,26 @@ class Set implements SetInterface
 
         return (int)$count;
     }
+
+    /**
+     * @throws RedisException
+     */
+    public function getTtl(string $key): int
+    {
+        $ttl = $this->redis->ttl($key);
+        assert(! $ttl instanceof Redis);
+
+        return (int)$ttl;
+    }
+
+    /**
+     * @throws RedisException
+     */
+    public function setTtl(string $key, int $ttl): bool
+    {
+        $response = $this->redis->expire($key, $ttl);
+        assert(! $response instanceof Redis);
+
+        return $response;
+    }
 }
