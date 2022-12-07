@@ -12,9 +12,6 @@ class Connection implements ConnectionInterface
 {
     private Redis $redis;
 
-    /**
-     * @psalm-suppress UndefinedClass - Redis class is defined in the extension
-     */
     public function __construct(Redis $redis)
     {
         $this->redis = $redis;
