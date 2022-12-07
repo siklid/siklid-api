@@ -8,9 +8,6 @@ use App\Foundation\Redis\Contract\ConnectionInterface;
 use Redis;
 use RedisException;
 
-/**
- * @psalm-suppress UndefinedClass - Redis class is defined in the extension
- */
 class Connection implements ConnectionInterface
 {
     private Redis $redis;
