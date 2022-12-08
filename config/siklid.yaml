@@ -2,3 +2,7 @@ parameters:
   pagination:
     limit: 25
     max_limit: 100
+
+  redis:
+    host: '%env(REDIS_HOST)%'
+    port: '%env(REDIS_PORT)%'

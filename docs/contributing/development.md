@@ -1,14 +1,17 @@
 # Development Environment
 
 For development, you will need to install Docker and Docker Composer. You can
-find the installation instructions for your operating system [here](https://docs.docker.com/install/).
+find the installation instructions for your operating
+system [here](https://docs.docker.com/install/).
 
 ## Starting the development environment
 
-[Fork](https://github.com/piscibus/siklid-api/fork) the latest version of this repository and start the docker
+[Fork](https://github.com/piscibus/siklid-api/fork) the latest version of this
+repository and start the docker
 containers:
 
-After cloning the repository, you can start the development environment by running:
+After cloning the repository, you can start the development environment by
+running:
 
 ```bash
 cd siklid-api
@@ -56,8 +59,14 @@ PANTHER_ERROR_SCREENSHOT_DIR=./var/error-screenshots
 
 ###> doctrine/mongodb-odm-bundle ###
 MONGODB_URL=mongodb://root:secret@mongodb:27017
-MONGODB_DB=siklid
+MONGODB_DB=test
 ###< doctrine/mongodb-odm-bundle ###
+
+###> Redis ###
+REDIS_HOST=redis
+REDIS_PORT=6379
+###< Redis ###
+
 
 ```
 
@@ -65,4 +74,5 @@ MONGODB_DB=siklid
 
 ## PHPStorm
 
-- Make sure Xdebug debugging port is set to `9003` not ~~`9000,9003`~~ in PHPStorm settings
+- Make sure Xdebug debugging port is set to `9003` not ~~`9000,9003`~~ in
+  PHPStorm settings

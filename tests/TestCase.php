@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Tests\Concern\Assertion\AssertArrayTrait;
 use App\Tests\Concern\Assertion\AssertAttributeTrait;
 use Doctrine\ODM\MongoDB\Types\Type;
 use ReflectionClass;
@@ -18,6 +19,7 @@ use ReflectionMethod;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     use AssertAttributeTrait;
+    use AssertArrayTrait;
 
     /**
      * {@inheritdoc}
