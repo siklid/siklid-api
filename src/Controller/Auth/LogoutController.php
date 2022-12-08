@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
 
-class LogoutInterface extends ApiController implements TokenAuthenticatedInterface
+class LogoutController extends ApiController implements TokenAuthenticatedInterface
 {
     protected array $invalidTokens = array();
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
