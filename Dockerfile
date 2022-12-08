@@ -42,6 +42,7 @@ RUN set -eux; \
     	apcu \
 		opcache \
         mongodb \
+        redis \
     ;
 
 ###> recipes ###
