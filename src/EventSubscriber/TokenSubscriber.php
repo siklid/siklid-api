@@ -26,17 +26,16 @@ class TokenSubscriber implements EventSubscriberInterface
             $values = $this->set->members('invalidTokens');
             $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
-            if(in_array($tokenWithBearer, $values)){
+            if (in_array($tokenWithBearer, $values)) {
                 $data = [
                     'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',
                 ];
 
-                $event->setController(function() use ($data){
+                $event->setController(function () use ($data) {
                     return new JsonResponse(json_encode($data), Response::HTTP_UNAUTHORIZED, [], true);
                 });
             }
-
         }
 
         return true;
