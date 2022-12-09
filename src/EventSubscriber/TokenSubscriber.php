@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Foundation\Redis\Contract\SetInterface;
@@ -23,9 +25,10 @@ class TokenSubscriber implements EventSubscriberInterface
         if ($event->getRequest()->headers->has('Authorization')) {
             $values = $this->set->members('invalidTokens');
             $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
+
             if(in_array($tokenWithBearer, $values)){
                 $data = [
-                    "code"=> Response::HTTP_UNAUTHORIZED,
+                    'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',
                 ];
 
@@ -35,6 +38,7 @@ class TokenSubscriber implements EventSubscriberInterface
             }
 
         }
+
         return true;
     }
 

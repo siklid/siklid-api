@@ -12,7 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LogoutController extends ApiController
 {
-    protected array $invalidTokens = array();
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(Request $request, SetInterface $set): Response
     {
