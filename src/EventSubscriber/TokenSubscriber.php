@@ -23,10 +23,10 @@ class TokenSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): bool|Response
     {
         if ($event->getRequest()->headers->has('Authorization')) {
-            $values = $this->set->members('invalidTokens');
+//            $values = $this->set->members('invalidTokens');
             $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
-            if (in_array($tokenWithBearer, $values)) {
+            if ($this->set->contains('invalidTokens', $tokenWithBearer)) {
                 $data = [
                     'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',

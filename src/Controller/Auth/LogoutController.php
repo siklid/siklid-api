@@ -16,12 +16,11 @@ class LogoutController extends ApiController
     public function logout(Request $request, SetInterface $set): Response
     {
         $tokenWithBearer = $request->headers->get('Authorization');
-
         $setKey = 'invalidTokens';
         $set->add($setKey, $tokenWithBearer);
 
         $data = [
-            'message' => 'Done logout successfully',
+            'message' => 'You have been logged out.',
         ];
 
         return $this->json($data, Response::HTTP_OK);
