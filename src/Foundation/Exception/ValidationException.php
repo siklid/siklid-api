@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Foundation\Exception;
 
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -17,21 +15,11 @@ use Throwable;
  */
 class ValidationException extends SiklidException implements RenderableInterface
 {
-    protected ?FormErrorIterator $errorIterator = null;
-
     protected ?ConstraintViolationListInterface $violationList = null;
 
     public function __construct(string $message = 'Invalid request', int $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
-    }
-
-    /**
-     * @param FormErrorIterator<FormError> $errorIterator
-     */
-    public function setErrorIterator(FormErrorIterator $errorIterator): void
-    {
-        $this->errorIterator = $errorIterator;
     }
 
     public function setViolationList(?ConstraintViolationListInterface $violationList = null): ValidationException
@@ -68,24 +56,6 @@ class ValidationException extends SiklidException implements RenderableInterface
                 $propertyPath = str_replace(['[', ']'], '', $propertyPath);
                 $errors[$propertyPath][] = $violation->getMessage();
             }
-
-            return $errors;
-        }
-
-        if (null === $this->errorIterator) {
-            return $errors;
-        }
-
-        foreach ($this->errorIterator as $error) {
-            $propertyPath = (string)$error->getCause()?->getPropertyPath();
-            $path = empty($propertyPath) ? 'global' : str_replace('data.', '', $propertyPath);
-            $errorMessage = $error->getMessage();
-
-            if (! isset($errors[$path])) {
-                $errors[$path] = [];
-            }
-
-            $errors[$path][] = $errorMessage;
         }
 
         return $errors;

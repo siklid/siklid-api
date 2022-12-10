@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Foundation\Http;
 
-use App\Foundation\Action\ValidatableInterface;
 use App\Foundation\Util\RequestUtil;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -15,7 +14,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 /**
  * Base request class.
  */
-class Request implements ValidatableInterface
+class Request
 {
     protected RequestStack $requestStack;
 
@@ -59,6 +58,8 @@ class Request implements ValidatableInterface
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @psalm-suppress MixedReturnTypeCoercion
      */
     public function formInput(): array
