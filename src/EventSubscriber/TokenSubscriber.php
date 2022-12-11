@@ -10,23 +10,28 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 
 class TokenSubscriber implements EventSubscriberInterface
 {
     private $set;
+    private $tokenStorage;
 
-    public function __construct(SetInterface $set)
+    public function __construct(SetInterface $set, TokenStorageInterface $tokenStorage)
     {
         $this->set = $set;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function onKernelController(ControllerEvent $event): bool|Response
     {
+        $userId = $this->tokenStorage->getToken()->getUser()->getId();
+
         if ($event->getRequest()->headers->has('Authorization')) {
-//            $values = $this->set->members('invalidTokens');
             $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
-            if ($this->set->contains('invalidTokens', $tokenWithBearer)) {
+            if ($this->set->contains('user.'.$userId.'.accessToken', $tokenWithBearer)) {
                 $data = [
                     'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',
