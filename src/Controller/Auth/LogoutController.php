@@ -15,8 +15,9 @@ class LogoutController extends ApiController
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(Request $request, SetInterface $set): Response
     {
+        dd($this->getUser());
         $tokenWithBearer = $request->headers->get('Authorization');
-        $setKey = 'invalidTokens';
+        $setKey = 'user.'.$userId.'.accessToken';
         $set->add($setKey, $tokenWithBearer);
 
         $data = [
