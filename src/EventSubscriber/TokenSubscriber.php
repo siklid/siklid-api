@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 class TokenSubscriber implements EventSubscriberInterface
 {
     private $set;
@@ -26,12 +25,12 @@ class TokenSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event): bool|Response
     {
-        $userId = $this->tokenStorage->getToken()->getUser()->getId();
+        $userId = (string)$this->tokenStorage->getToken()->getUser()->getId();
 
         if ($event->getRequest()->headers->has('Authorization')) {
-            $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
+            (string)$tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
-            if ($this->set->contains('user.'.$userId.'.accessToken', $tokenWithBearer)) {
+            if ($this->set->contains('user.'.$userId.'.accessToken', (string)$tokenWithBearer)) {
                 $data = [
                     'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',

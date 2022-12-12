@@ -8,13 +8,11 @@ use App\Foundation\Http\ApiController;
 use App\Foundation\Redis\Contract\SetInterface;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Document\RefreshToken;
-use \Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\HttpFoundation\Request;
+use Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use Symfony\Component\Routing\Annotation\Route;
 
 class LogoutController extends ApiController
 {
@@ -34,23 +32,22 @@ class LogoutController extends ApiController
     {
         $refreshTokenRepository = $this->documentManager->getRepository(RefreshToken::class);
         assert($refreshTokenRepository instanceof RefreshTokenRepository);
-        $refreshToken = $refreshTokenRepository->findOneBy(['refreshToken' => $request->all()['refreshToken']]);
+        $refreshTokenVal = (string) $request->all()['refreshToken'];
+        $refreshTokenObject = $refreshTokenRepository->findOneBy(['refreshToken' => $refreshTokenVal]);
 
-        if (!$refreshToken instanceof RefreshToken) {
-            throw new NotFoundHttpException(
-                sprintf('RefreshToken with value [%s] cannot be found.', $refreshToken)
-            );
+        if (! $refreshTokenObject instanceof RefreshToken) {
+            throw new NotFoundHttpException(sprintf('RefreshToken with value [%s] cannot be found.', $refreshTokenVal));
         }
 
-        $this->documentManager->remove($refreshToken);
+        $this->documentManager->remove($refreshTokenObject);
         $this->documentManager->flush();
 
         $tokenWithBearer = $request->request()->headers->get('Authorization');
-        $userId = $this->getUser()->getId();
+        $userId = (string)$this->getUser()->getId();
 
         $setKey = 'user.'.$userId.'.accessToken';
         $set->add($setKey, $tokenWithBearer);
-        $set->setTtl($setKey, time()+(60*60));
+        $set->setTtl($setKey, time() + (60 * 60));
 
         $data = [
             'message' => 'You have been logged out.',
