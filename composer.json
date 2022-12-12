@@ -34,7 +34,7 @@
     "fakerphp/faker": "^1.20",
     "friendsofphp/php-cs-fixer": "3.12",
     "phpunit/phpunit": "^9.5",
-    "psalm/plugin-phpunit": "^0.18.3",
+    "psalm/plugin-phpunit": "^0.18.4",
     "psalm/plugin-symfony": "^4.0",
     "roave/security-advisories": "dev-latest",
     "symfony/browser-kit": "6.1.*",
