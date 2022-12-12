@@ -10,7 +10,7 @@
     "ext-mongodb": "*",
     "ext-redis": "*",
     "beberlei/assert": "^3.3",
-    "doctrine/annotations": "^1.0",
+    "doctrine/annotations": "^1.14",
     "doctrine/mongodb-odm-bundle": "^4.5",
     "gesdinet/jwt-refresh-token-bundle": "^1.1",
     "lcobucci/clock": "^2.2",
