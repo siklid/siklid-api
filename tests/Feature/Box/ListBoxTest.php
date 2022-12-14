@@ -33,7 +33,7 @@ class ListBoxTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 [
                     'id',

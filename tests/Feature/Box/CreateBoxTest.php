@@ -34,7 +34,7 @@ class CreateBoxTest extends TestCase
         ]);
 
         $this->assertResponseIsCreated();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'id',
                 'name',
@@ -73,7 +73,7 @@ class CreateBoxTest extends TestCase
         ]);
 
         $this->assertResponseHasValidationError();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'message',
             'errors' => ['name' => []],
         ]);

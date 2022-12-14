@@ -47,7 +47,7 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsCreated();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
@@ -83,7 +83,7 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
