@@ -20,6 +20,7 @@ class CreateFlashcardRequest extends Request
             'boxes' => [
                 $notBlank,
                 new Assert\Type('array'),
+                new Assert\Count(['min' => 1]),
             ],
         ];
     }

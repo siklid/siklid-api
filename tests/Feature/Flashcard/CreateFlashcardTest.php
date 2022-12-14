@@ -49,4 +49,23 @@ class CreateFlashcardTest extends TestCase
 
         $this->assertResponseHasValidationError('boxes', 'This value should be of type array.');
     }
+
+    /**
+     * @test
+     */
+    public function boxes_field_should_contain_at_least_single_box_id(): void
+    {
+        $client = $this->makeClient();
+        $user = $this->makeUser();
+        $box = $this->makeBox(['user' => $user]);
+        $this->persistDocument($user);
+        $this->persistDocument($box);
+        $client->loginUser($user);
+
+        $client->request('POST', '/api/v1/flashcards', [
+            'boxes' => [],
+        ]);
+
+        $this->assertResponseHasValidationError('boxes', 'This collection should contain 1 element or more.');
+    }
 }
