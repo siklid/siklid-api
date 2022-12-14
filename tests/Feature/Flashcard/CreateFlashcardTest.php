@@ -16,7 +16,7 @@ class CreateFlashcardTest extends TestCase
     /**
      * @test
      */
-    public function flashcard_backside_is_required(): void
+    public function flashcard_backside_and_boxes_are_required(): void
     {
         $client = $this->makeClient();
         $user = $this->makeUser();
@@ -25,12 +25,9 @@ class CreateFlashcardTest extends TestCase
         $this->persistDocument($box);
         $client->loginUser($user);
 
-        $client->request('POST', '/api/v1/flashcards', [
-            'boxes' => [$box->getId()],
-            'frontside' => 'lorem ipsum dolor sit amet',
-            'backside' => '',
-        ]);
+        $client->request('POST', '/api/v1/flashcards', []);
 
-        $this->assertResponseHasValidationError('backside', 'This value should not be blank.');
+        $this->assertResponseHasValidationError('backside', 'This field is missing.');
+        $this->assertResponseHasValidationError('boxes', 'This field is missing.');
     }
 }

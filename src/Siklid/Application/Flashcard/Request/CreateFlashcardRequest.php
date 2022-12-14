@@ -17,6 +17,9 @@ class CreateFlashcardRequest extends Request
             'backside' => [
                 $notBlank,
             ],
+            'boxes' => [
+                $notBlank,
+            ],
         ];
     }
 }
