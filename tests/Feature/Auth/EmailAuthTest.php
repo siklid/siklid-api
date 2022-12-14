@@ -47,14 +47,14 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsCreated();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
-        $this->assertEquals($username, $this->getFromResponse($client, 'data.user.username'));
+        $this->assertEquals($email, $this->getFromResponse('data.user.email'));
+        $this->assertEquals($username, $this->getFromResponse('data.user.username'));
         $this->assertExists(User::class, ['email' => $email]);
     }
 
@@ -83,13 +83,13 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
-        $this->assertEquals($user->getId(), $this->getFromResponse($client, 'data.user.id'));
+        $this->assertEquals($email, $this->getFromResponse('data.user.email'));
+        $this->assertEquals($user->getId(), $this->getFromResponse('data.user.id'));
     }
 }

@@ -87,8 +87,9 @@ trait WebTestCaseTrait
      *
      * @psalm-suppress MixedReturnStatement
      */
-    protected function getFromResponse(KernelBrowser $client, ?string $key = null): mixed
+    protected function getFromResponse(?string $key = null): mixed
     {
+        $client = self::getClient();
         $json = (string)$client->getResponse()->getContent();
         $content = $this->json->jsonToArray($json);
 

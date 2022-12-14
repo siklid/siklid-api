@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern\Assertion;
 
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -89,8 +88,9 @@ trait AssertResponseTrait
         self::assertResponseFormatSame('json', $message);
     }
 
-    protected function assertResponseJsonStructure(KernelBrowser $client, array $structure): void
+    protected function assertResponseJsonStructure(array $structure): void
     {
+        $client = self::getClient();
         $json = (string)$client->getResponse()->getContent();
         $content = $this->json->jsonToArray($json);
 
