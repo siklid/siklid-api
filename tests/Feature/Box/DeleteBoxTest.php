@@ -22,7 +22,7 @@ class DeleteBoxTest extends TestCase
      */
     public function user_can_delete_a_box(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $box = $this->makeBox();
         $box->setUser($user);
@@ -42,7 +42,7 @@ class DeleteBoxTest extends TestCase
      */
     public function box_visitor_can_not_delete_it(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $visitor = $this->makeUser();
         $box = $this->makeBox();

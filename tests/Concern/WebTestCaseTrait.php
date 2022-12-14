@@ -44,12 +44,17 @@ trait WebTestCaseTrait
      * Creates a KernelBrowser.
      *
      * @param array $options An array of options to pass to the createKernel method
-     * @param array $server  An array of server parameters
+     * @param array $server An array of server parameters
      */
     protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
         if (static::$booted) {
-            throw new LogicException(sprintf('Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.', __METHOD__));
+            throw new LogicException(
+                sprintf(
+                    'Booting the kernel before calling "%s()" is not supported, the kernel should only be booted once.',
+                    __METHOD__
+                )
+            );
         }
 
         $kernel = static::bootKernel($options);
@@ -58,9 +63,13 @@ trait WebTestCaseTrait
             $client = $kernel->getContainer()->get('test.client');
         } catch (ServiceNotFoundException) {
             if (class_exists(KernelBrowser::class)) {
-                throw new LogicException('You cannot create the client used in functional tests if the "framework.test" config is not set to true.');
+                throw new LogicException(
+                    'You cannot create the client used in functional tests if the "framework.test" config is not set to true.'
+                );
             }
-            throw new LogicException('You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".');
+            throw new LogicException(
+                'You cannot create the client used in functional tests if the BrowserKit component is not available. Try running "composer require symfony/browser-kit".'
+            );
         }
 
         $client->setServerParameters($server);
@@ -75,9 +84,9 @@ trait WebTestCaseTrait
      * A wrapper for the static createClient() method.
      *
      * @param array $options An array of options to pass to the createKernel method
-     * @param array $server  An array of server parameters
+     * @param array $server An array of server parameters
      */
-    protected function createCrawler(array $options = [], array $server = []): KernelBrowser
+    protected function makeClient(array $options = [], array $server = []): KernelBrowser
     {
         return self::createClient($options, $server);
     }

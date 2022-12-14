@@ -34,7 +34,7 @@ class EmailAuthTest extends TestCase
      */
     public function guest_can_register_by_email(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
 
         $email = Email::fromString($this->faker->unique()->email());
         $username = Username::fromString($this->faker->unique()->userName());
@@ -63,7 +63,7 @@ class EmailAuthTest extends TestCase
      */
     public function guest_can_login_by_email(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $email = Email::fromString($this->faker->unique()->email());
         $password = $this->faker->password();
         $user = $this->makeUser(compact('email', 'password'));
