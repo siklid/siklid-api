@@ -19,6 +19,7 @@ class CreateFlashcardRequest extends Request
             ],
             'boxes' => [
                 $notBlank,
+                new Assert\Type('array'),
             ],
         ];
     }

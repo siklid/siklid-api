@@ -25,9 +25,28 @@ class CreateFlashcardTest extends TestCase
         $this->persistDocument($box);
         $client->loginUser($user);
 
-        $client->request('POST', '/api/v1/flashcards', []);
+        $client->request('POST', '/api/v1/flashcards');
 
         $this->assertResponseHasValidationError('backside', 'This field is missing.');
         $this->assertResponseHasValidationError('boxes', 'This field is missing.');
+    }
+
+    /**
+     * @test
+     */
+    public function boxes_field_should_be_an_array(): void
+    {
+        $client = $this->makeClient();
+        $user = $this->makeUser();
+        $box = $this->makeBox(['user' => $user]);
+        $this->persistDocument($user);
+        $this->persistDocument($box);
+        $client->loginUser($user);
+
+        $client->request('POST', '/api/v1/flashcards', [
+            'boxes' => 'not an array',
+        ]);
+
+        $this->assertResponseHasValidationError('boxes', 'This value should be of type array.');
     }
 }
