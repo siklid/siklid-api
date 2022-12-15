@@ -31,8 +31,6 @@ class LogoutController extends ApiController
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(LogoutRequest $request, SetInterface $set): Response
     {
-
-
         $refreshTokenRepository = $this->documentManager->getRepository(RefreshToken::class);
         assert($refreshTokenRepository instanceof RefreshTokenRepository);
         $refreshTokenVal = (string)$request->all()['refreshToken'];
