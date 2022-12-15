@@ -6,6 +6,7 @@ namespace App\Siklid\Repository;
 
 use App\Foundation\Pagination\Contract\PageInterface;
 use App\Foundation\Pagination\CursorPaginator;
+use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
@@ -24,6 +25,9 @@ class BoxRepository extends DocumentRepository
         return CursorPaginator::create()->paginate($qb, $after, $perPage);
     }
 
+    /**
+     * @return Box[]
+     */
     public function findByUserAndIds(User $getUser, array $ids): array
     {
         return $this->findBy([
