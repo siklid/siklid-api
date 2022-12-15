@@ -33,7 +33,7 @@ class ListBoxTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 [
                     'id',
@@ -50,7 +50,7 @@ class ListBoxTest extends TestCase
             'links' => ['self', 'next'],
             'meta' => ['count'],
         ]);
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getFromResponse('data');
         $this->assertIsArray($data);
         $this->assertCount(25, $data);
     }
@@ -76,7 +76,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', "/api/v1/boxes?after=$cursor");
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getFromResponse('data');
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($boxes[0]->getId(), $data[0]['id'], 'Last box returned first');
@@ -99,7 +99,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?hashtag=foo');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getFromResponse('data');
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($box->getId(), $data[0]['id']);
@@ -119,7 +119,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?hashtag=');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getFromResponse('data');
         $this->assertIsArray($data);
         $this->assertCount(2, $data);
     }
@@ -140,7 +140,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?size=3');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getFromResponse('data');
         $this->assertIsArray($data);
         $this->assertCount(3, $data);
     }
