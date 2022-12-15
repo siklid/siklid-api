@@ -69,7 +69,7 @@ trait AssertResponseTrait
     {
         $this->assertResponseIsUnprocessableEntity();
         if (null !== $key) {
-            $errors = $this->getFromResponse('errors');
+            $errors = $this->getResponseJsonData('errors');
             self::assertArrayHasKey($key, $errors);
 
             if (null !== $error) {
@@ -126,7 +126,7 @@ trait AssertResponseTrait
      *
      * @psalm-suppress MixedReturnStatement
      */
-    protected function getFromResponse(?string $key = null): mixed
+    protected function getResponseJsonData(?string $key = null): mixed
     {
         $client = self::getClient();
         $json = (string)$client->getResponse()->getContent();

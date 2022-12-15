@@ -49,11 +49,11 @@ class CreateBoxTest extends TestCase
             'description' => $description,
             'user' => $user,
         ]);
-        $this->assertSame($name, $this->getFromResponse('data.name'));
-        $this->assertSame($description, $this->getFromResponse('data.description'));
+        $this->assertSame($name, $this->getResponseJsonData('data.name'));
+        $this->assertSame($description, $this->getResponseJsonData('data.description'));
         $this->assertEquals(
             RepetitionAlgorithm::Leitner,
-            RepetitionAlgorithm::coerce($this->getFromResponse('data.repetitionAlgorithm'))
+            RepetitionAlgorithm::coerce($this->getResponseJsonData('data.repetitionAlgorithm'))
         );
     }
 
@@ -103,7 +103,7 @@ class CreateBoxTest extends TestCase
             'name' => $name,
             'user' => $user,
         ]);
-        $actual = $this->getFromResponse('data.description');
+        $actual = $this->getResponseJsonData('data.description');
         $this->assertNull($actual);
     }
 
@@ -132,7 +132,7 @@ class CreateBoxTest extends TestCase
             'hashtags' => ['#hashtag1', '#hashtag2'],
         ]);
 
-        $actual = (array)$this->getFromResponse('data.hashtags');
+        $actual = (array)$this->getResponseJsonData('data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
     }
 }
