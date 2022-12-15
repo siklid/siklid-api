@@ -25,9 +25,9 @@ class TokenSubscriber implements EventSubscriberInterface
 
     public function onKernelController(ControllerEvent $event): bool|Response
     {
-        $userId = (string)$this->tokenStorage->getToken()->getUser()->getId();
-
         if ($event->getRequest()->headers->has('Authorization')) {
+            $userId = (string)$this->tokenStorage->getToken()->getUser()->getId();
+
             (string)$tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
             if ($this->set->contains('user.'.$userId.'.accessToken', (string)$tokenWithBearer)) {
