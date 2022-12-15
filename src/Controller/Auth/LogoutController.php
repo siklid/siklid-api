@@ -32,7 +32,7 @@ class LogoutController extends ApiController
     {
         $refreshTokenRepository = $this->documentManager->getRepository(RefreshToken::class);
         assert($refreshTokenRepository instanceof RefreshTokenRepository);
-        $refreshTokenVal = (string) $request->all()['refreshToken'];
+        $refreshTokenVal = (string)$request->all()['refreshToken'];
         $refreshTokenObject = $refreshTokenRepository->findOneBy(['refreshToken' => $refreshTokenVal]);
 
         if (! $refreshTokenObject instanceof RefreshToken) {
