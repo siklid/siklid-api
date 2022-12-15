@@ -27,7 +27,6 @@ class TokenSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): bool|Response
     {
         if ($event->getRequest()->headers->has('Authorization')) {
-
             $user = $this->tokenStorage->getToken()->getUser();
 
             assert($user instanceof User);
