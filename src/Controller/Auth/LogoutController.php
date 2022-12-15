@@ -18,21 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class LogoutController extends ApiController
 {
     private DocumentManager $documentManager;
-//    private RefreshTokenRepository $refreshTokenRepository;
 
-    public function __construct(
-        DocumentManager $documentManager,
-//        RefreshTokenRepository $refreshTokenRepository
-    ) {
+    public function __construct(DocumentManager $documentManager)
+    {
         $this->documentManager = $documentManager;
-//        $this->refreshTokenRepository = $refreshTokenRepository;
     }
 
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(LogoutRequest $request, SetInterface $set): Response
     {
         $refreshTokenRepository = $this->documentManager->getRepository(RefreshToken::class);
+
         assert($refreshTokenRepository instanceof RefreshTokenRepository);
+
         $refreshTokenVal = (string)$request->all()['refreshToken'];
         $refreshTokenObject = $refreshTokenRepository->findOneBy(['refreshToken' => $refreshTokenVal]);
 
@@ -45,9 +43,10 @@ class LogoutController extends ApiController
 
         $tokenWithBearer = $request->request()->headers->get('Authorization');
 
-        assert($this->getUser() instanceof User);
+        $user = $this->getUser();
+        assert($user instanceof User);
 
-        $userId = (string)$this->getUser()->getId();
+        $userId = $user->getId();
 
         $setKey = 'user.'.$userId.'.accessToken';
         $set->add($setKey, $tokenWithBearer);
