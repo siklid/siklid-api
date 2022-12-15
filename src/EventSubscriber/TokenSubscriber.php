@@ -28,6 +28,7 @@ class TokenSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): bool|Response
     {
         if ($event->getRequest()->headers->has('Authorization')) {
+
             $userToken = $this->tokenStorage->getToken();
             assert($userToken instanceof JWTPostAuthenticationToken);
 
@@ -35,9 +36,11 @@ class TokenSubscriber implements EventSubscriberInterface
             assert($user instanceof User);
             $userId = $user->getId();
 
-            (string)$tokenWithBearer = $event->getRequest()->headers->get('Authorization');
+            $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 
-            if ($this->set->contains('user.'.$userId.'.accessToken', (string)$tokenWithBearer)) {
+            assert(! is_null($tokenWithBearer));
+
+            if ($this->set->contains('user.'.$userId.'.accessToken', $tokenWithBearer)) {
                 $data = [
                     'code' => Response::HTTP_UNAUTHORIZED,
                     'message' => 'Invalid JWT Token',
