@@ -14,7 +14,7 @@ class CreateFlashcardRequest extends Request
         $notBlank = new Assert\NotBlank();
 
         return [
-            'backside' => [
+            'back' => [
                 $notBlank,
             ],
             'boxes' => [
@@ -23,5 +23,23 @@ class CreateFlashcardRequest extends Request
                 new Assert\Count(['min' => 1]),
             ],
         ];
+    }
+
+    public function getBoxes(): array
+    {
+        return (array)$this->all()['boxes'];
+    }
+
+    public function front(): ?string
+    {
+        $front = $this->get('front');
+        assert(is_string($front) || is_null($front));
+
+        return $front;
+    }
+
+    public function back(): string
+    {
+        return (string)$this->get('back');
     }
 }
