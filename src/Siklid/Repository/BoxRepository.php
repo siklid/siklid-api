@@ -27,6 +27,7 @@ class BoxRepository extends DocumentRepository
 
     /**
      * @psalm-suppress MixedReturnTypeCoercion - We know that the result is an array of Box
+     *
      * @return Box[]
      */
     public function findByUserAndIds(User $getUser, array $ids): array
