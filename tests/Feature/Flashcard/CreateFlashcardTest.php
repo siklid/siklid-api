@@ -113,5 +113,12 @@ class CreateFlashcardTest extends TestCase
             'front' => $front,
             'user' => $user,
         ]);
+        $this->assertSame($back, $this->getResponseJsonData('data.back'));
+        $this->assertSame($front, $this->getResponseJsonData('data.front'));
+        $this->assertSame($user->getId(), $this->getResponseJsonData('data.user.id'));
+        $this->assertCount(3, $this->getResponseJsonData('data.boxes'));
+        $this->assertSame($boxes[0]->getId(), $this->getResponseJsonData('data.boxes.0.id'));
+        $this->assertSame($boxes[1]->getId(), $this->getResponseJsonData('data.boxes.1.id'));
+        $this->assertSame($boxes[2]->getId(), $this->getResponseJsonData('data.boxes.2.id'));
     }
 }
