@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Foundation\Redis\Contract\SetInterface;
+use App\Siklid\Document\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,12 @@ class TokenSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): bool|Response
     {
         if ($event->getRequest()->headers->has('Authorization')) {
-            $userId = (string)$this->tokenStorage->getToken()->getUser()->getId();
+
+            $user = $this->tokenStorage->getToken()->getUser();
+
+            assert($user instanceof User);
+
+            $userId = (string) $user->getId();
 
             (string)$tokenWithBearer = $event->getRequest()->headers->get('Authorization');
 

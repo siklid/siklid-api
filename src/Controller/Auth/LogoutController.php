@@ -8,6 +8,7 @@ use App\Foundation\Http\ApiController;
 use App\Foundation\Redis\Contract\SetInterface;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Document\RefreshToken;
+use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,8 @@ class LogoutController extends ApiController
     #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(LogoutRequest $request, SetInterface $set): Response
     {
+
+
         $refreshTokenRepository = $this->documentManager->getRepository(RefreshToken::class);
         assert($refreshTokenRepository instanceof RefreshTokenRepository);
         $refreshTokenVal = (string)$request->all()['refreshToken'];
@@ -43,6 +46,9 @@ class LogoutController extends ApiController
         $this->documentManager->flush();
 
         $tokenWithBearer = $request->request()->headers->get('Authorization');
+
+        assert($this->getUser() instanceof User);
+
         $userId = (string)$this->getUser()->getId();
 
         $setKey = 'user.'.$userId.'.accessToken';
