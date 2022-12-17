@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Foundation\Http;
 
-use App\Foundation\Action\ValidatableInterface;
 use App\Foundation\Util\RequestUtil;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * Base request class.
  */
-class Request implements ValidatableInterface
+class Request
 {
     protected RequestStack $requestStack;
 
@@ -56,9 +58,11 @@ class Request implements ValidatableInterface
     }
 
     /**
-     * Returns data required for form submission.
+     * @return array<string, mixed>
+     *
+     * @psalm-suppress MixedReturnTypeCoercion
      */
-    public function formInput(): string|array|null
+    public function formInput(): array
     {
         return $this->all();
     }
@@ -92,5 +96,39 @@ class Request implements ValidatableInterface
     public function has(string $key): bool
     {
         return $this->request()->query->has($key) || $this->request()->request->has($key);
+    }
+
+    /**
+     * Checks if request data is valid.
+     */
+    #[Required]
+    public function validate(): void
+    {
+        $validator = $this->util->validator();
+        $constraint = new Assert\Collection(
+            $this->constraints(),
+            null,
+            null,
+            $this->allowExtraFields()
+        );
+        $validator->validate($this->all(), $constraint);
+    }
+
+    /**
+     * Returns a list of constraints to validate the request data.
+     *
+     * @return array<string, array<Constraint>>
+     */
+    protected function constraints(): array
+    {
+        return [];
+    }
+
+    /**
+     * Determines if extra fields are allowed.
+     */
+    protected function allowExtraFields(): bool
+    {
+        return true;
     }
 }
