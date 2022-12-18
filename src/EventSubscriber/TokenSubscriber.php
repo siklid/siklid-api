@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Foundation\Redis\Contract\SetInterface;
-use App\Siklid\Document\User;
+use App\Siklid\Application\Contract\Entity\UserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,12 +28,11 @@ class TokenSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): bool|Response
     {
         if ($event->getRequest()->headers->has('Authorization')) {
-
             $userToken = $this->tokenStorage->getToken();
             assert($userToken instanceof JWTPostAuthenticationToken);
 
             $user = $userToken->getUser();
-            assert($user instanceof User);
+            assert($user instanceof UserInterface);
             $userId = $user->getId();
 
             $tokenWithBearer = $event->getRequest()->headers->get('Authorization');
