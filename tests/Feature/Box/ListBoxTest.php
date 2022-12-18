@@ -21,7 +21,7 @@ class ListBoxTest extends TestCase
      */
     public function guest_can_paginate_all_boxes(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         for ($i = 0; $i < 26; ++$i) {
@@ -33,7 +33,7 @@ class ListBoxTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 [
                     'id',
@@ -50,7 +50,7 @@ class ListBoxTest extends TestCase
             'links' => ['self', 'next'],
             'meta' => ['count'],
         ]);
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getResponseJsonData('data');
         $this->assertIsArray($data);
         $this->assertCount(25, $data);
     }
@@ -62,7 +62,7 @@ class ListBoxTest extends TestCase
      */
     public function after_cursor_paginates_boxes(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $boxes = [];
@@ -76,7 +76,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', "/api/v1/boxes?after=$cursor");
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getResponseJsonData('data');
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($boxes[0]->getId(), $data[0]['id'], 'Last box returned first');
@@ -89,7 +89,7 @@ class ListBoxTest extends TestCase
      */
     public function guest_can_paginate_boxes_by_hashtag(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $box = $this->makeBox(['user' => $user, 'hashtags' => ['#foo', '#not_bar']]);
@@ -99,7 +99,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?hashtag=foo');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getResponseJsonData('data');
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $this->assertSame($box->getId(), $data[0]['id']);
@@ -110,7 +110,7 @@ class ListBoxTest extends TestCase
      */
     public function empty_hashtag_filter_returns_all_boxes(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $this->persistDocument($this->makeBox(['user' => $user, 'hashtags' => ['#foo', '#not_bar']]));
@@ -119,7 +119,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?hashtag=');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getResponseJsonData('data');
         $this->assertIsArray($data);
         $this->assertCount(2, $data);
     }
@@ -129,7 +129,7 @@ class ListBoxTest extends TestCase
      */
     public function pagination_size_can_be_specified_with_a_query_param(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         for ($i = 0; $i < 5; ++$i) {
@@ -140,7 +140,7 @@ class ListBoxTest extends TestCase
         $client->request('GET', '/api/v1/boxes?size=3');
 
         $this->assertResponseIsOk();
-        $data = $this->getFromResponse($client, 'data');
+        $data = $this->getResponseJsonData('data');
         $this->assertIsArray($data);
         $this->assertCount(3, $data);
     }
@@ -150,7 +150,7 @@ class ListBoxTest extends TestCase
      */
     public function pagination_size_min_size_is_one(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         for ($i = 0; $i < 5; ++$i) {
@@ -171,7 +171,7 @@ class ListBoxTest extends TestCase
      */
     public function max_pagination_size_is_100(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         for ($i = 0; $i < 5; ++$i) {

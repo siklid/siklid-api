@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern\Assertion;
 
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -66,9 +65,17 @@ trait AssertResponseTrait
     /**
      * Assert that the response has validation errors.
      */
-    protected function assertResponseHasValidationError(string $message = ''): void
+    protected function assertResponseHasValidationError(?string $key = null, ?string $error = null): void
     {
-        $this->assertResponseIsUnprocessableEntity($message);
+        $this->assertResponseIsUnprocessableEntity();
+        if (null !== $key) {
+            $errors = $this->getResponseJsonData('errors');
+            self::assertArrayHasKey($key, $errors);
+
+            if (null !== $error) {
+                self::assertContains($error, $errors[$key]);
+            }
+        }
     }
 
     /**
@@ -89,8 +96,9 @@ trait AssertResponseTrait
         self::assertResponseFormatSame('json', $message);
     }
 
-    protected function assertResponseJsonStructure(KernelBrowser $client, array $structure): void
+    protected function assertResponseJsonStructure(array $structure): void
     {
+        $client = self::getClient();
         $json = (string)$client->getResponse()->getContent();
         $content = $this->json->jsonToArray($json);
 
@@ -111,5 +119,28 @@ trait AssertResponseTrait
                 $this->assertArrayHasKey($value, $content);
             }
         }
+    }
+
+    /**
+     * Get response or a part of it.
+     *
+     * @psalm-suppress MixedReturnStatement
+     */
+    protected function getResponseJsonData(?string $key = null): mixed
+    {
+        $client = self::getClient();
+        $json = (string)$client->getResponse()->getContent();
+        $content = $this->json->jsonToArray($json);
+
+        if (null === $key) {
+            return $content;
+        }
+
+        $keyParts = explode('.', $key);
+        foreach ($keyParts as $iValue) {
+            $content = $content[$iValue];
+        }
+
+        return $content;
     }
 }

@@ -34,7 +34,7 @@ class EmailAuthTest extends TestCase
      */
     public function guest_can_register_by_email(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
 
         $email = Email::fromString($this->faker->unique()->email());
         $username = Username::fromString($this->faker->unique()->userName());
@@ -47,14 +47,14 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsCreated();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
-        $this->assertEquals($username, $this->getFromResponse($client, 'data.user.username'));
+        $this->assertEquals($email, $this->getResponseJsonData('data.user.email'));
+        $this->assertEquals($username, $this->getResponseJsonData('data.user.username'));
         $this->assertExists(User::class, ['email' => $email]);
     }
 
@@ -63,7 +63,7 @@ class EmailAuthTest extends TestCase
      */
     public function guest_can_login_by_email(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $email = Email::fromString($this->faker->unique()->email());
         $password = $this->faker->password();
         $user = $this->makeUser(compact('email', 'password'));
@@ -83,13 +83,13 @@ class EmailAuthTest extends TestCase
 
         $this->assertResponseIsOk();
         $this->assertResponseIsJson();
-        $this->assertResponseJsonStructure($client, [
+        $this->assertResponseJsonStructure([
             'data' => [
                 'user' => ['id', 'email', 'username'],
                 'token' => ['accessToken', 'expiresAt', 'tokenType', 'refreshToken'],
             ],
         ]);
-        $this->assertEquals($email, $this->getFromResponse($client, 'data.user.email'));
-        $this->assertEquals($user->getId(), $this->getFromResponse($client, 'data.user.id'));
+        $this->assertEquals($email, $this->getResponseJsonData('data.user.email'));
+        $this->assertEquals($user->getId(), $this->getResponseJsonData('data.user.id'));
     }
 }

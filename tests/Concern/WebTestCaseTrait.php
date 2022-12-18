@@ -77,30 +77,8 @@ trait WebTestCaseTrait
      * @param array $options An array of options to pass to the createKernel method
      * @param array $server  An array of server parameters
      */
-    protected function createCrawler(array $options = [], array $server = []): KernelBrowser
+    protected function makeClient(array $options = [], array $server = []): KernelBrowser
     {
         return self::createClient($options, $server);
-    }
-
-    /**
-     * Get response or a part of it.
-     *
-     * @psalm-suppress MixedReturnStatement
-     */
-    protected function getFromResponse(KernelBrowser $client, ?string $key = null): mixed
-    {
-        $json = (string)$client->getResponse()->getContent();
-        $content = $this->json->jsonToArray($json);
-
-        if (null === $key) {
-            return $content;
-        }
-
-        $keyParts = explode('.', $key);
-        foreach ($keyParts as $iValue) {
-            $content = $content[$iValue];
-        }
-
-        return $content;
     }
 }
