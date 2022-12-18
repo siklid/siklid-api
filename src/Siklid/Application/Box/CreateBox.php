@@ -12,8 +12,6 @@ use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Document\Box;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-use function Symfony\Component\String\u;
-
 final class CreateBox extends AbstractAction
 {
     private CreateBoxRequest $request;
@@ -47,20 +45,5 @@ final class CreateBox extends AbstractAction
         $this->dm->flush();
 
         return $box;
-    }
-
-    private function extractHashtags(?string $text): array
-    {
-        if (null === $text) {
-            return [];
-        }
-
-        $hashtags = [];
-        preg_match_all('/(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]|\p{Arabic}){1,30}(\b|\r)/u', $text, $matches);
-        foreach ($matches[0] as $match) {
-            $hashtags[] = u(mb_strtolower($match))->toString();
-        }
-
-        return $hashtags;
     }
 }
