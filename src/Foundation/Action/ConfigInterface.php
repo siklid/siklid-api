@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Foundation\Action;
 
-use UnitEnum;
-
 interface ConfigInterface
 {
     /**
@@ -16,10 +14,7 @@ interface ConfigInterface
     /**
      * Finds a parameter by name.
      */
-    public function get(
-        string $key,
-        array|bool|string|int|float|UnitEnum|null $default = null
-    ): array|bool|string|int|float|UnitEnum|null;
+    public function get(string $key, mixed $default = null): mixed;
 
     /**
      * Returns true if the parameter exists.

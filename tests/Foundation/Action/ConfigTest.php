@@ -7,7 +7,7 @@ namespace App\Tests\Foundation\Action;
 use App\Foundation\Action\Config;
 use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ConfigTest extends TestCase
 {
@@ -18,9 +18,9 @@ class ConfigTest extends TestCase
      */
     public function all(): void
     {
-        $containerBag = $this->createMock(ContainerBag::class);
-        $containerBag->expects($this->once())->method('all')->willReturn(['foo' => 'bar']);
-        $sut = new Config($containerBag);
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag->expects($this->once())->method('all')->willReturn(['foo' => 'bar']);
+        $sut = new Config($parameterBag);
 
         $actual = $sut->all();
 
@@ -32,13 +32,13 @@ class ConfigTest extends TestCase
      */
     public function has(): void
     {
-        $containerBag = $this->createMock(ContainerBag::class);
-        $containerBag->expects($this->exactly(2))->method('has')->willReturnMap([
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag->expects($this->exactly(2))->method('has')->willReturnMap([
             ['foo', true],
             ['bar', false],
         ]);
-        $containerBag->expects($this->never())->method('get');
-        $sut = new Config($containerBag);
+        $parameterBag->expects($this->never())->method('get');
+        $sut = new Config($parameterBag);
 
         $this->assertTrue($sut->has('foo'));
         $this->assertFalse($sut->has('bar'));
@@ -49,9 +49,9 @@ class ConfigTest extends TestCase
      */
     public function get(): void
     {
-        $containerBag = $this->createMock(ContainerBag::class);
-        $containerBag->expects($this->once())->method('get')->with('foo')->willReturn('bar');
-        $sut = new Config($containerBag);
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag->expects($this->once())->method('get')->with('foo')->willReturn('bar');
+        $sut = new Config($parameterBag);
 
         $actual = $sut->get('foo');
 
@@ -63,9 +63,9 @@ class ConfigTest extends TestCase
      */
     public function access_parameters_by_period_separator(): void
     {
-        $containerBag = $this->createMock(ContainerBag::class);
-        $containerBag->expects($this->once())->method('get')->with('foo')->willReturn(['bar' => 'baz']);
-        $sut = new Config($containerBag);
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag->expects($this->once())->method('get')->with('foo')->willReturn(['bar' => 'baz']);
+        $sut = new Config($parameterBag);
 
         $actual = $sut->get('foo.bar');
 
@@ -77,7 +77,7 @@ class ConfigTest extends TestCase
      */
     public function get_returns_default_value_if_value_is_missed(): void
     {
-        /** @var ContainerBag $parameterBag */
+        /** @var ParameterBagInterface $parameterBag */
         $parameterBag = $this->container()->get('parameter_bag');
         $sut = new Config($parameterBag);
 
@@ -91,7 +91,7 @@ class ConfigTest extends TestCase
      */
     public function get_returns_default_value_if_nested_parameter_is_missed(): void
     {
-        $parameterBag = $this->createMock(ContainerBag::class);
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
         $parameterBag->expects($this->once())->method('get')->with('foo')->willReturn(['bar' => 'baz']);
         $sut = new Config($parameterBag);
 

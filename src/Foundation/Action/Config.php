@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Foundation\Action;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use UnitEnum;
 
 class Config implements ConfigInterface
 {
-    private ContainerBag $config;
+    private ParameterBagInterface $config;
 
-    public function __construct(ContainerBag $config)
+    public function __construct(ParameterBagInterface $config)
     {
         $this->config = $config;
     }
@@ -28,7 +27,7 @@ class Config implements ConfigInterface
      * @psalm-suppress MixedAssignment
      * @psalm-suppress MixedReturnStatement
      */
-    public function get(string $key, mixed $default = null): array|bool|string|int|float|UnitEnum|null
+    public function get(string $key, mixed $default = null): mixed
     {
         assert(
             is_array($default) ||
@@ -40,7 +39,7 @@ class Config implements ConfigInterface
         $keyParts = explode('.', $key);
         try {
             $config = $this->config->get($keyParts[0]);
-        } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
+        } catch (InvalidArgumentException) {
             return $default;
         }
 
