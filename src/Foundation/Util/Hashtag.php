@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Foundation\Util;
 
-use function Symfony\Component\String\u;
-
 /**
  * This class is used to extract hashtags from a text.
  * Current implementation is temporary and should be replaced with a more

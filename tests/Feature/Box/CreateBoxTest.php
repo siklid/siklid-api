@@ -117,8 +117,7 @@ class CreateBoxTest extends TestCase
         $this->persistDocument($user);
         $client->loginUser($user);
         $name = $this->faker->word();
-        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2 #hash-tag #123hashtag
-         #هاشتاج '. $this->faker->sentence(). '#1234 #hash_tag';
+        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
 
         $client->request('POST', '/api/v1/boxes', [
             'name' => $name,
