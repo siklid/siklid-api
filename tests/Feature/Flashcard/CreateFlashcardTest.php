@@ -147,16 +147,4 @@ class CreateFlashcardTest extends TestCase
 
         $this->assertResponseHasValidationError('boxes', 'This collection should contain 1 element or more.');
     }
-
-    public function user_can_show_single_flashcard(): void
-    {
-        $client = $this->makeClient();
-        $user = $this->makeUser();
-        $flashcard = $this->makeFlashcard(['front' => 'front', 'back' => 'back', 'user' => $user]);
-        $client->loginUser($user);
-
-        $client->request('GET', '/api/v1/flashcard/'.$flashcard->getId());
-
-        $this->assertExists(Flashcard::class, ['id' => $flashcard->getId()]);
-    }
 }
