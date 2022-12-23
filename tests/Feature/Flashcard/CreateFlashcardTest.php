@@ -6,6 +6,7 @@ namespace App\Tests\Feature\Flashcard;
 
 use App\Siklid\Document\Flashcard;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
+use App\Tests\Concern\Factory\FlashcardFactoryTrait;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
@@ -13,6 +14,7 @@ class CreateFlashcardTest extends TestCase
 {
     use WebTestCaseTrait;
     use BoxFactoryTrait;
+    use FlashcardFactoryTrait;
 
     /**
      * @test
@@ -144,5 +146,17 @@ class CreateFlashcardTest extends TestCase
         ]);
 
         $this->assertResponseHasValidationError('boxes', 'This collection should contain 1 element or more.');
+    }
+
+    public function user_can_show_single_flashcard(): void
+    {
+        $client = $this->makeClient();
+        $user = $this->makeUser();
+        $flashcard = $this->makeFlashcard(['front' => 'front', 'back' => 'back', 'user' => $user]);
+        $client->loginUser($user);
+
+        $client->request('GET', '/api/v1/flashcard/'.$flashcard->getId());
+
+        $this->assertExists(Flashcard::class, ['id' => $flashcard->getId()]);
     }
 }
