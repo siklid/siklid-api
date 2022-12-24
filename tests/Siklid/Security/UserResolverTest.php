@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Siklid\Security;
 
+use App\Foundation\Exception\LogicException;
 use App\Siklid\Document\User;
 use App\Siklid\Security\UserResolver;
 use App\Tests\Concern\KernelTestCaseTrait;
@@ -18,15 +19,15 @@ class UserResolverTest extends TestCase
     /**
      * @test
      */
-    public function get_user_returns_null_with_no_active_user(): void
+    public function get_user_throws_exception_with_no_active_user(): void
     {
+        $this->expectException(LogicException::class);
+
         /** @var TokenStorageInterface $tokenStorage */
         $tokenStorage = $this->container()->get('security.token_storage');
         $sut = new UserResolver($tokenStorage);
 
-        $actual = $sut->getUser();
-
-        self::assertNull($actual);
+        $sut->getUser();
     }
 
     /**

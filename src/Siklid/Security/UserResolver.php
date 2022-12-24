@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Security;
 
+use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -19,10 +20,15 @@ class UserResolver implements UserResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function getUser(): ?UserInterface
+    public function getUser(): UserInterface
     {
         $user = $this->tokenStorage->getToken()?->getUser();
-        assert($user instanceof UserInterface || null === $user);
+
+        if (null === $user) {
+            throw new LogicException('No active user.');
+        }
+
+        assert($user instanceof UserInterface);
 
         return $user;
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Foundation\Action;
 
 use App\Siklid\Document\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Base action class.
@@ -15,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * @method User getUser() - Returns the current user.
  */
-abstract class AbstractAction extends AbstractController implements ActionInterface
+abstract class AbstractAction implements ActionInterface
 {
     /**
      * Creates a new form instance from the given type.
