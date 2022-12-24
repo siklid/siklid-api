@@ -28,12 +28,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Box implements BoxInterface
 {
     #[MongoDB\Id]
-    #[Groups(['box:read', 'box:delete', 'box:create', 'box:index'])]
+    #[Groups(['box:read', 'box:delete', 'box:create', 'box:index', 'resource:read'])]
     private string $id;
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['box:read', 'box:create', 'box:index'])]
+    #[Groups(['box:read', 'box:create', 'box:index', 'resource:read'])]
     private string $name;
 
     #[MongoDB\Field(type: 'specific')]

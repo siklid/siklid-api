@@ -35,7 +35,6 @@ class BoxRepositoryTest extends TestCase
         $this->persistDocument($box1);
         $this->persistDocument($box2);
         $this->persistDocument($box3);
-
         /** @var BoxRepository $sut */
         $sut = $this->getRepository(Box::class);
 
@@ -60,7 +59,6 @@ class BoxRepositoryTest extends TestCase
         $this->persistDocument($box1);
         $this->persistDocument($box2);
         $this->persistDocument($box3);
-
         /** @var BoxRepository $sut */
         $sut = $this->getRepository(Box::class);
 
@@ -85,7 +83,6 @@ class BoxRepositoryTest extends TestCase
         $this->persistDocument($box1);
         $this->persistDocument($box2);
         $this->persistDocument($box3);
-
         /** @var BoxRepository $sut */
         $sut = $this->getRepository(Box::class);
 
@@ -93,5 +90,30 @@ class BoxRepositoryTest extends TestCase
 
         $this->assertCount(1, $page->getData());
         $this->assertSame($box3->getId(), $page->getData()[0]->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function find_by_user_and_ids(): void
+    {
+        $user1 = $this->makeUser();
+        $user2 = $this->makeUser();
+        $box1 = $this->makeBox(['user' => $user1]);
+        $box2 = $this->makeBox(['user' => $user1]);
+        $box3 = $this->makeBox(['user' => $user2]);
+        $this->persistDocument($user1);
+        $this->persistDocument($user2);
+        $this->persistDocument($box1);
+        $this->persistDocument($box2);
+        $this->persistDocument($box3);
+        /** @var BoxRepository $sut */
+        $sut = $this->getRepository(Box::class);
+
+        $boxes = $sut->findByUserAndIds($user1, [$box1->getId(), $box2->getId(), $box3->getId()]);
+
+        $this->assertCount(2, $boxes);
+        $this->assertSame($box1->getId(), $boxes[0]->getId());
+        $this->assertSame($box2->getId(), $boxes[1]->getId());
     }
 }

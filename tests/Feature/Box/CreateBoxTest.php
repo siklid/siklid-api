@@ -21,7 +21,7 @@ class CreateBoxTest extends TestCase
      */
     public function user_can_create_a_box(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $client->loginUser($user);
@@ -49,11 +49,11 @@ class CreateBoxTest extends TestCase
             'description' => $description,
             'user' => $user,
         ]);
-        $this->assertSame($name, $this->getFromResponse('data.name'));
-        $this->assertSame($description, $this->getFromResponse('data.description'));
+        $this->assertSame($name, $this->getResponseJsonData('data.name'));
+        $this->assertSame($description, $this->getResponseJsonData('data.description'));
         $this->assertEquals(
             RepetitionAlgorithm::Leitner,
-            RepetitionAlgorithm::coerce($this->getFromResponse('data.repetitionAlgorithm'))
+            RepetitionAlgorithm::coerce($this->getResponseJsonData('data.repetitionAlgorithm'))
         );
     }
 
@@ -62,7 +62,7 @@ class CreateBoxTest extends TestCase
      */
     public function box_name_is_required(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $client->loginUser($user);
@@ -88,7 +88,7 @@ class CreateBoxTest extends TestCase
      */
     public function box_description_is_optional(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $client->loginUser($user);
@@ -103,7 +103,7 @@ class CreateBoxTest extends TestCase
             'name' => $name,
             'user' => $user,
         ]);
-        $actual = $this->getFromResponse('data.description');
+        $actual = $this->getResponseJsonData('data.description');
         $this->assertNull($actual);
     }
 
@@ -112,7 +112,7 @@ class CreateBoxTest extends TestCase
      */
     public function box_hashtags_are_extracted_from_the_box_description(): void
     {
-        $client = $this->createCrawler();
+        $client = $this->makeClient();
         $user = $this->makeUser();
         $this->persistDocument($user);
         $client->loginUser($user);
@@ -132,7 +132,7 @@ class CreateBoxTest extends TestCase
             'hashtags' => ['#hashtag1', '#hashtag2'],
         ]);
 
-        $actual = (array)$this->getFromResponse('data.hashtags');
+        $actual = (array)$this->getResponseJsonData('data.hashtags');
         $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
     }
 }

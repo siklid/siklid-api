@@ -18,30 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 abstract class AbstractAction extends AbstractController implements ActionInterface
 {
     /**
-     * Returns the value of the given parameter.
-     *
-     * @return mixed The value of the parameter
-     *
-     * @psalm-suppress PossiblyUndefinedMethod - The user should know about the config values
-     * @psalm-suppress MixedAssignment - Expected to be mixed
-     */
-    public function getConfig(string $key, mixed $default = null): mixed
-    {
-        $keyParts = explode('.', $key);
-        $config = $this->getParameter($keyParts[0]);
-
-        for ($i = 1, $iMax = count($keyParts); $i < $iMax; ++$i) {
-            if (! isset($config[$keyParts[$i]])) {
-                return $default;
-            }
-            assert(is_array($config));
-            $config = $config[$keyParts[$i]];
-        }
-
-        return $config ?? $default;
-    }
-
-    /**
      * Creates a new form instance from the given type.
      *
      * @template       T
