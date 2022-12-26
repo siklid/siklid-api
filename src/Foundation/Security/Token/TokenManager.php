@@ -14,7 +14,9 @@ use Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+
 use function PHPUnit\Framework\assertNotNull;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
