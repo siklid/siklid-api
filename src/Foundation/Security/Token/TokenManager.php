@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
-use App\Foundation\Http\Request;
 use App\Foundation\Redis\Contract\SetInterface;
 use App\Siklid\Application\Auth\Request\DeleteRefreshTokenRequest;
 use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
@@ -15,10 +14,7 @@ use Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-
 use function PHPUnit\Framework\assertNotNull;
-
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -32,12 +28,6 @@ class TokenManager implements TokenManagerInterface
 
     private RefreshTokenManagerInterface $refreshTokenManager;
 
-//    private Request $request;
-
-//    private TokenInterface $token;
-
-//    private DeleteRefreshTokenRequest $deleteRefreshTokenRequest;
-
     private DocumentManager $dm;
 
     private SetInterface $set;
@@ -46,19 +36,13 @@ class TokenManager implements TokenManagerInterface
         JWTTokenManagerInterface $JWTTokenManager,
         RefreshTokenGeneratorInterface $refreshTokenGenerator,
         RefreshTokenManagerInterface $refreshTokenManager,
-//        DeleteRefreshTokenRequest $deleteRefreshTokenRequest,
-//        Request $request,
         DocumentManager $dm,
         SetInterface $set,
-//        TokenInterface $token
     ) {
         $this->JWTTokenManager = $JWTTokenManager;
         $this->refreshTokenGenerator = $refreshTokenGenerator;
         $this->refreshTokenManager = $refreshTokenManager;
-//        $this->deleteRefreshTokenRequest = $deleteRefreshTokenRequest;
-//        $this->request = $request;
         $this->dm = $dm;
-//        $this->token = $token;
         $this->set = $set;
     }
 
