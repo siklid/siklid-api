@@ -75,7 +75,7 @@ class TokenManager implements TokenManagerInterface
         return $accessToken;
     }
 
-    public function revokeAccessToken(SiklidUserInterface $user,string $token): bool
+    public function revokeAccessToken(SiklidUserInterface $user, string $token): bool
     {
         $userId = $user->getId();
 

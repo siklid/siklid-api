@@ -8,11 +8,9 @@ use App\Foundation\Action\AbstractAction;
 use App\Foundation\Http\Request;
 use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Siklid\Application\Auth\Request\DeleteRefreshTokenRequest;
+use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
-use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
-
 
 final class Logout extends AbstractAction
 {
