@@ -9,7 +9,7 @@ final class Hashtag
     public function extract(string $text): array
     {
         $hashtags = [];
-        preg_match_all('/(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]|\p{Arabic}){1,30}(\b|\r)/u', $text, $matches);
+        preg_match_all('/(#[\p{L}\d_]+)/u', $text, $matches);
 
         foreach ($matches[0] as $match) {
             $hashtags[] = $match;
