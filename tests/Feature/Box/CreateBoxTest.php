@@ -129,10 +129,10 @@ class CreateBoxTest extends TestCase
             'name' => $name,
             'description' => $description,
             'user' => $user,
-            'hashtags' => ['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#hash_tag'],
+            'hashtags' => ['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'],
         ]);
 
         $actual = (array)$this->getResponseJsonData('data.hashtags');
-        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#hash_tag'], $actual);
+        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234','#hash_tag'], $actual);
     }
 }
