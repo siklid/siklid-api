@@ -16,10 +16,12 @@ class HashtagTest extends TestCase
     {
         $sut = new Hashtag();
 
-        $actual = $sut->extract('This is a #test and another #test2 and #foo_bar and #FooBar and #foo@bar');
+        $actual = $sut->extract(
+            'This is a #test and another #test2 and #foo_bar and #FooBar and #foo@bar #__ #foo__bar #2023 #👋 #foo_👋'
+        );
 
         $this->assertEquals(
-            ['#test', '#test2', '#foo_bar', '#FooBar', '#foo'],
+            ['#test', '#test2', '#foo_bar', '#FooBar', '#foo', '#__', '#foo__bar', '#2023', '#foo_'],
             $actual
         );
     }
