@@ -9,7 +9,8 @@ final class Hashtag
     public function extract(string $text): array
     {
         $hashtags = [];
-        preg_match_all('/(#[\p{L}\d_]+)/u', $text, $matches);
+        $pattern = '/(#[\p{L}\d_]+)/u';
+        preg_match_all($pattern, $text, $matches);
 
         foreach ($matches[0] as $match) {
             $hashtags[] = $match;
