@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Box;
 
 use App\Foundation\Action\AbstractAction;
+use App\Foundation\Action\ConfigInterface;
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\Http\Request;
 use App\Foundation\Pagination\Contract\PageInterface;
@@ -20,11 +21,13 @@ final class ListBoxes extends AbstractAction
     private DocumentManager $dm;
 
     private Request $request;
+    private ConfigInterface $config;
 
-    public function __construct(DocumentManager $dm, Request $request)
+    public function __construct(DocumentManager $dm, Request $request, ConfigInterface $config)
     {
         $this->dm = $dm;
         $this->request = $request;
+        $this->config = $config;
     }
 
     public function execute(): PageInterface
@@ -45,7 +48,7 @@ final class ListBoxes extends AbstractAction
             throw new ValidationException('Size must be 1 or greater.');
         }
 
-        $maxSize = (int)$this->getConfig('pagination.max_limit', 100);
+        $maxSize = (int)$this->config->get('pagination.max_limit', 100);
         if ($limit > $maxSize) {
             throw new ValidationException("Size must be less than or equal to $maxSize.");
         }
@@ -69,7 +72,7 @@ final class ListBoxes extends AbstractAction
 
     private function getLimit(): int
     {
-        $limit = (int)$this->getConfig('pagination.limit', 25);
+        $limit = (int)$this->config->get('pagination.limit', 25);
 
         if ($this->request->has('size')) {
             $limit = (int)$this->request->get('size');
