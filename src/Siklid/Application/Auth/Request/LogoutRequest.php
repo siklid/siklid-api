@@ -9,7 +9,7 @@ use App\Foundation\Validation\Constraint\Exists;
 use App\Siklid\Document\RefreshToken;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class DeleteRefreshTokenRequest extends Request
+final class LogoutRequest extends Request
 {
     protected function constraints(): array
     {

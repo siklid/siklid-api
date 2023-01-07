@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
-use App\Siklid\Application\Auth\Request\DeleteRefreshTokenRequest;
+use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,5 +23,5 @@ interface TokenManagerInterface
 
     public function revokeAccessToken(SiklidUserInterface $user, string $token): bool;
 
-    public function deleteRefreshToken(DeleteRefreshTokenRequest $request): bool;
+    public function deleteRefreshToken(LogoutRequest $request): bool;
 }

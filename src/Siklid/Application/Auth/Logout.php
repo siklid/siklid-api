@@ -5,32 +5,24 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Action\AbstractAction;
-use App\Foundation\Http\Request;
-use App\Foundation\Security\Token\TokenManagerInterface;
-use App\Siklid\Application\Auth\Request\DeleteRefreshTokenRequest;
+use App\Foundation\Security\Token\TokenManagerInterface as TokenManager;
+use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface as TokenStorage;
 
 final class Logout extends AbstractAction
 {
-    private TokenManagerInterface $tokenManager;
+    private TokenManager $tokenManager;
 
-    private TokenStorageInterface $token;
+    private TokenStorage $token;
 
-    private DeleteRefreshTokenRequest $deleteRefreshTokenRequest;
+    private LogoutRequest $request;
 
-    private Request $request;
-
-    public function __construct(
-        TokenManagerInterface $tokenManager,
-        TokenStorageInterface $token,
-        DeleteRefreshTokenRequest $deleteRefreshTokenRequest,
-        Request $request,
-    ) {
+    public function __construct(TokenManager $tokenManager, TokenStorage $token, LogoutRequest $request)
+    {
         $this->tokenManager = $tokenManager;
         $this->token = $token;
-        $this->deleteRefreshTokenRequest = $deleteRefreshTokenRequest;
         $this->request = $request;
     }
 
@@ -39,7 +31,7 @@ final class Logout extends AbstractAction
      */
     public function execute(): bool
     {
-        $this->tokenManager->deleteRefreshToken($this->deleteRefreshTokenRequest);
+        $this->tokenManager->deleteRefreshToken($this->request);
 
         $tokenWithBearer = (string)$this->request->request()->headers->get('Authorization');
 

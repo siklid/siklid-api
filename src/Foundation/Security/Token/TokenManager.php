@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Foundation\Security\Token;
 
 use App\Foundation\Redis\Contract\SetInterface;
-use App\Siklid\Application\Auth\Request\DeleteRefreshTokenRequest;
+use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
 use App\Siklid\Document\AccessToken;
 use App\Siklid\Document\RefreshToken;
@@ -72,7 +72,7 @@ class TokenManager implements TokenManagerInterface
         return true;
     }
 
-    public function deleteRefreshToken(DeleteRefreshTokenRequest $request): bool
+    public function deleteRefreshToken(LogoutRequest $request): bool
     {
         $refreshTokenRepository = $this->dm->getRepository(RefreshToken::class);
 
