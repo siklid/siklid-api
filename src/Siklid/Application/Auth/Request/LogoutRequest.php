@@ -11,6 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class LogoutRequest extends Request
 {
+    public function refreshToken(): string
+    {
+        return (string)$this->get('refreshToken');
+    }
+
     protected function constraints(): array
     {
         $notBlank = new Assert\NotBlank();
