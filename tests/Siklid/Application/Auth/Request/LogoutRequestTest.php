@@ -34,4 +34,22 @@ class LogoutRequestTest extends TestCase
 
         $this->assertSame($refreshToken, $sut->refreshToken());
     }
+
+    /**
+     * @test
+     */
+    public function get_access_token(): void
+    {
+        $accessToken = $this->faker()->md5();
+        $internalRequest = new Request([], [], [], [], [], ['HTTP_AUTHORIZATION' => $accessToken]);
+        $requestStack = new RequestStack();
+        $requestStack->push($internalRequest);
+
+        $sut = new LogoutRequest(
+            $requestStack,
+            new RequestUtil(new Json(), $this->createMock(ValidatorInterface::class))
+        );
+
+        $this->assertSame($accessToken, $sut->getAccessToken());
+    }
 }

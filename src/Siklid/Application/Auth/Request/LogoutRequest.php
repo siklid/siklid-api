@@ -16,6 +16,11 @@ final class LogoutRequest extends Request
         return (string)$this->get('refreshToken');
     }
 
+    public function getAccessToken(): string
+    {
+        return (string)$this->getHeader('Authorization');
+    }
+
     protected function constraints(): array
     {
         $notBlank = new Assert\NotBlank();
