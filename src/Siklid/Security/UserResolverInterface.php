@@ -11,5 +11,5 @@ interface UserResolverInterface
     /**
      * Returns current user.
      */
-    public function getUser(): ?UserInterface;
+    public function getUser(): UserInterface;
 }
