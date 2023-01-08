@@ -6,3 +6,8 @@ parameters:
   redis:
     host: '%env(REDIS_HOST)%'
     port: '%env(REDIS_PORT)%'
+
+  security:
+    tokens:
+      refresh_token_ttl: 2592000 # 30 days
+      access_token_ttl: 3600 # 1 hour
