@@ -117,7 +117,7 @@ class CreateBoxTest extends TestCase
         $this->persistDocument($user);
         $client->loginUser($user);
         $name = $this->faker->word();
-        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2';
+        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
 
         $client->request('POST', '/api/v1/boxes', [
             'name' => $name,
@@ -129,10 +129,10 @@ class CreateBoxTest extends TestCase
             'name' => $name,
             'description' => $description,
             'user' => $user,
-            'hashtags' => ['#hashtag1', '#hashtag2'],
+            'hashtags' => ['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'],
         ]);
 
         $actual = (array)$this->getResponseJsonData('data.hashtags');
-        $this->assertEquals(['#hashtag1', '#hashtag2'], $actual);
+        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'], $actual);
     }
 }

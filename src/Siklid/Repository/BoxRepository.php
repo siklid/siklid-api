@@ -6,8 +6,8 @@ namespace App\Siklid\Repository;
 
 use App\Foundation\Pagination\Contract\PageInterface;
 use App\Foundation\Pagination\CursorPaginator;
+use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Document\Box;
-use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class BoxRepository extends DocumentRepository
@@ -30,7 +30,7 @@ class BoxRepository extends DocumentRepository
      *
      * @return Box[]
      */
-    public function findByUserAndIds(User $getUser, array $ids): array
+    public function findByUserAndIds(UserInterface $getUser, array $ids): array
     {
         return $this->findBy([
             'user' => $getUser,
