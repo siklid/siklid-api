@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Concern;
 
+use App\Foundation\Action\Config;
 use App\Tests\Concern\Assertion\AssertODMTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
@@ -19,6 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
@@ -296,17 +298,9 @@ trait KernelTestCaseTrait
      */
     public function getConfig(string $key, mixed $default = null): mixed
     {
-        $keyParts = explode('.', $key);
-        $config = $this->container()->getParameter($keyParts[0]);
+        /** @var ContainerBag $parameterBag */
+        $parameterBag = $this->container()->get('parameter_bag');
 
-        for ($i = 1, $iMax = count($keyParts); $i < $iMax; ++$i) {
-            if (! isset($config[$keyParts[$i]])) {
-                return $default;
-            }
-            assert(is_array($config));
-            $config = $config[$keyParts[$i]];
-        }
-
-        return $config ?? $default;
+        return (new Config($parameterBag))->get($key, $default);
     }
 }
