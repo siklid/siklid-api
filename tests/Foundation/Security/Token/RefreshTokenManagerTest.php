@@ -29,7 +29,7 @@ class RefreshTokenManagerTest extends TestCase
         $ttl = $this->faker->numberBetween(1, 3600);
         $config->expects($this->once())
             ->method('get')
-            ->with('security.tokens.refresh_token_ttl')
+            ->with('@gesdinet_jwt_refresh_token.ttl')
             ->willReturn($ttl);
 
         $sut = new RefreshTokenManager($generator, $manager, $config);
