@@ -14,6 +14,9 @@ class ViewFlashcardTest extends TestCase
     use WebTestCaseTrait;
     use FlashcardFactoryTrait;
 
+    /**
+     * @test
+     */
     public function user_can_show_single_flashcard(): void
     {
         $client = $this->makeClient();

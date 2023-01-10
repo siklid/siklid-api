@@ -6,7 +6,6 @@ namespace App\Tests\Feature\Flashcard;
 
 use App\Siklid\Document\Flashcard;
 use App\Tests\Concern\Factory\BoxFactoryTrait;
-use App\Tests\Concern\Factory\FlashcardFactoryTrait;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
@@ -14,7 +13,6 @@ class CreateFlashcardTest extends TestCase
 {
     use WebTestCaseTrait;
     use BoxFactoryTrait;
-    use FlashcardFactoryTrait;
 
     /**
      * @test
