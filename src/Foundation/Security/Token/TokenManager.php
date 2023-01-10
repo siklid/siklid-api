@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
+use App\Foundation\Security\Token\RefreshTokenManagerInterface as RefreshTokenManager;
 use App\Siklid\Document\AccessToken;
-use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
-use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JwtManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,30 +14,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class TokenManager implements TokenManagerInterface
 {
-    private JWTTokenManagerInterface $JWTTokenManager;
+    private JwtManager $jwtManager;
+    private RefreshTokenManager $refreshTokenManager;
 
-    private RefreshTokenGeneratorInterface $refreshTokenGenerator;
-
-    private RefreshTokenManagerInterface $refreshTokenManager;
-
-    public function __construct(
-        JWTTokenManagerInterface $JWTTokenManager,
-        RefreshTokenGeneratorInterface $refreshTokenGenerator,
-        RefreshTokenManagerInterface $refreshTokenManager
-    ) {
-        $this->JWTTokenManager = $JWTTokenManager;
-        $this->refreshTokenGenerator = $refreshTokenGenerator;
+    public function __construct(JwtManager $jwtManager, RefreshTokenManager $refreshTokenManager)
+    {
+        $this->jwtManager = $jwtManager;
         $this->refreshTokenManager = $refreshTokenManager;
     }
 
     public function createAccessToken(UserInterface $user): AccessTokenInterface
     {
-        $token = $this->JWTTokenManager->create($user);
+        $token = $this->jwtManager->create($user);
         $accessToken = new AccessToken($token);
 
-        $refreshToken = $this->refreshTokenGenerator->createForUserWithTtl($user, 2592000);
-        $this->refreshTokenManager->save($refreshToken);
-
+        $refreshToken = $this->refreshTokenManager->createForUser($user, RefreshTokenManager::CONFIGURED_TTL);
         $accessToken->setRefreshToken($refreshToken);
 
         return $accessToken;
