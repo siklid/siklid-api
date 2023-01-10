@@ -25,7 +25,7 @@ class RefreshTokenManager implements RefreshTokenManagerInterface
 
     public function createForUser(UserInterface $user, int $ttl = 0): RefreshToken
     {
-        $ttl = $ttl > 0 ? $ttl : (int)$this->config->get('security.tokens.refresh_token_ttl');
+        $ttl = $ttl > 0 ? $ttl : (int)$this->config->get('@gesdinet_jwt_refresh_token.ttl');
         $refreshToken = $this->generator->createForUserWithTtl($user, $ttl);
         $this->manager->save($refreshToken);
 
