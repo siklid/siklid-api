@@ -81,9 +81,8 @@ class ConfigTest extends TestCase
         $parameterBag = $this->container()->get('parameter_bag');
         $sut = new Config($parameterBag);
 
-        $actual = $sut->get('foo.bar', 'default');
-
-        $this->assertSame('default', $actual);
+        $this->assertSame('default', $sut->get('foo.bar', 'default'));
+        $this->assertSame('default', $sut->get('@foo.bar', 'default'));
     }
 
     /**
@@ -98,5 +97,19 @@ class ConfigTest extends TestCase
         $actual = $sut->get('foo.baz', 'default');
 
         $this->assertSame('default', $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function access_keys_that_have_periods_in_names(): void
+    {
+        $parameterBag = $this->createMock(ParameterBagInterface::class);
+        $parameterBag->expects($this->once())->method('get')->with('foo.bar')->willReturn('baz');
+        $sut = new Config($parameterBag);
+
+        $actual = $sut->get('@foo.bar');
+
+        $this->assertSame('baz', $actual);
     }
 }

@@ -36,12 +36,14 @@ class Config implements ConfigInterface
             $default instanceof UnitEnum
         );
 
-        $keyParts = explode('.', $key);
-        try {
-            $config = $this->config->get($keyParts[0]);
-        } catch (InvalidArgumentException) {
-            return $default;
+        if (str_starts_with($key, '@')) {
+            $key = substr($key, 1);
+
+            return $this->getConfigOrDefault($key, $default);
         }
+
+        $keyParts = explode('.', $key);
+        $config = $this->getConfigOrDefault($keyParts[0], $default);
 
         for ($i = 1, $iMax = count($keyParts); $i < $iMax; ++$i) {
             if ($config instanceof UnitEnum || ! isset($config[$keyParts[$i]])) {
@@ -57,5 +59,14 @@ class Config implements ConfigInterface
     public function has(string $key): bool
     {
         return $this->config->has($key);
+    }
+
+    private function getConfigOrDefault(string $key, mixed $default = null): mixed
+    {
+        try {
+            return $this->config->get($key);
+        } catch (InvalidArgumentException) {
+            return $default;
+        }
     }
 }
