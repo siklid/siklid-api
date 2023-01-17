@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6aaf8a8cf776d5f2edf5c8ba1c8e9ef",
+    "content-hash": "181faac9176d43f33b68112420cc92ca",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1573,6 +1573,70 @@
                 "source": "https://github.com/namshi/jose/tree/master"
             },
             "time": "2016-12-05T07:27:31+00:00"
+        },
+        {
+            "name": "piscibus/php-hashtag",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/piscibus/php-hashtag.git",
+                "reference": "7aafdb2f6dd49e5c06017812f75bbbb51fb912cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/piscibus/php-hashtag/zipball/7aafdb2f6dd49e5c06017812f75bbbb51fb912cb",
+                "reference": "7aafdb2f6dd49e5c06017812f75bbbb51fb912cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.13",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Piscibus\\PhpHashtag\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Gamal",
+                    "email": "mg.dev1992@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Moemen Gaballa",
+                    "email": "moemengaballa@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A simple php service for parsing hashtags from a string in any language.",
+            "homepage": "https://github.com/piscibus/php-hashtag",
+            "keywords": [
+                "all languages",
+                "hashtag",
+                "parse",
+                "php",
+                "service"
+            ],
+            "support": {
+                "issues": "https://github.com/piscibus/php-hashtag/issues",
+                "source": "https://github.com/piscibus/php-hashtag/tree/1.1.0"
+            },
+            "time": "2023-01-16T10:24:25+00:00"
         },
         {
             "name": "psr/cache",
