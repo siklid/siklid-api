@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Foundation\Security\Token;
 
+use App\Foundation\Action\ConfigInterface;
+use App\Foundation\Redis\Contract\SetInterface;
 use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
@@ -45,5 +47,27 @@ class TokenManagerTest extends TestCase
 
         $this->assertNotNull($accessToken->getToken());
         $this->assertExists(RefreshToken::class, ['username' => $user->getUserIdentifier()]);
+    }
+
+    /**
+     * @test
+     */
+    public function revoke(): void
+    {
+        $container = $this->container();
+        $user = new User();
+        $email = $this->faker->email();
+        $user->setEmail(Email::fromString($email));
+        $sut = $container->get(TokenManagerInterface::class);
+        $accessToken = $sut->createAccessToken($user);
+
+        $sut->revokeAccessTokenForUser($accessToken, $user);
+
+        $revokedTokensSet = $container->get(SetInterface::class);
+        $key = sprintf(TokenManagerInterface::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
+        $this->assertTrue($revokedTokensSet->contains($key, $accessToken->getToken()));
+        $config = $container->get(ConfigInterface::class);
+        $ttl = (int)$config->get('@lexik_jwt_authentication.token_ttl');
+        $this->assertTrue($revokedTokensSet->getTtl($key) <= $ttl);
     }
 }

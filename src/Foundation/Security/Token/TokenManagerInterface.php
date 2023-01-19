@@ -12,10 +12,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 interface TokenManagerInterface
 {
+    public const REVOKED_TOKENS_KEY_PATTERNS = 'user:%s:revoked-tokens';
+
     /**
      * Creates a new token for the given user.
      *
      * @param UserInterface $user the user to create a token for
      */
     public function createAccessToken(UserInterface $user): AccessTokenInterface;
+
+    public function revokeAccessTokenForUser(AccessTokenInterface $accessToken, UserInterface $user): void;
 }
