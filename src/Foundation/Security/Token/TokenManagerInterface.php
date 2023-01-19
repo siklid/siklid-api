@@ -16,10 +16,11 @@ interface TokenManagerInterface
 
     /**
      * Creates a new token for the given user.
-     *
-     * @param UserInterface $user the user to create a token for
      */
     public function createAccessToken(UserInterface $user): AccessTokenInterface;
 
+    /**
+     * Revokes the given token for the given user.
+     */
     public function revokeAccessTokenForUser(AccessTokenInterface $accessToken, UserInterface $user): void;
 }
