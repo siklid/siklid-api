@@ -13,7 +13,7 @@
     "doctrine/annotations": "^1.14",
     "doctrine/mongodb-odm-bundle": "^4.5",
     "gesdinet/jwt-refresh-token-bundle": "^1.1",
-    "lcobucci/clock": "^2.3",
+    "lcobucci/clock": "^3.0",
     "lexik/jwt-authentication-bundle": "^2.16",
     "piscibus/php-hashtag": "^1.1",
     "sensio/framework-extra-bundle": "^6.2",
