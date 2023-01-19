@@ -12,4 +12,6 @@ interface RefreshTokenManagerInterface
     public const CONFIGURED_TTL = 0;
 
     public function createForUser(UserInterface $user, int $ttl): RefreshToken;
+
+    public function revoke(RefreshToken $refreshToken): void;
 }

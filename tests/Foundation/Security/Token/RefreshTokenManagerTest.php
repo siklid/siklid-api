@@ -74,4 +74,22 @@ class RefreshTokenManagerTest extends TestCase
 
         $this->assertSame($refreshToken, $actual);
     }
+
+    /**
+     * @test
+     */
+    public function revoke(): void
+    {
+        $generator = $this->createMock(GesdinetGenerator::class);
+        $manager = $this->createMock(GesdinetManager::class);
+        $config = $this->createMock(ConfigInterface::class);
+
+        $sut = new RefreshTokenManager($generator, $manager, $config);
+        $refreshToken = $this->createMock(RefreshTokenInterface::class);
+
+        $manager->expects($this->once())->method('delete')->with($refreshToken);
+        $manager->expects($this->once())->method('save')->with($refreshToken);
+
+        $sut->revoke($refreshToken);
+    }
 }
