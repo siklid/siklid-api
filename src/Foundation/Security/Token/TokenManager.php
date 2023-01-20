@@ -44,15 +44,22 @@ class TokenManager implements TokenManagerInterface
         return $accessToken;
     }
 
-    public function revokeAccessTokenForUser(AccessTokenInterface $accessToken, UserInterface $user): void
+    public function revokeAccessTokenForUser(string $accessToken, UserInterface $user): void
     {
         $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
 
-        $this->revokedTokens->add($key, $accessToken->getToken());
+        $this->revokedTokens->add($key, $accessToken);
 
         $ttl = $this->config->get('@lexik_jwt_authentication.token_ttl');
         assert(is_int($ttl));
 
         $this->revokedTokens->setTtl($key, $ttl);
+    }
+
+    public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool
+    {
+        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
+
+        return $this->revokedTokens->contains($key, $accessToken);
     }
 }

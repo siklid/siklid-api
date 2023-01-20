@@ -52,20 +52,20 @@ class TokenManagerTest extends TestCase
     /**
      * @test
      */
-    public function revoke(): void
+    public function revoke_access_token_for_user(): void
     {
         $container = $this->container();
         $user = new User();
         $email = $this->faker->email();
         $user->setEmail(Email::fromString($email));
         $sut = $container->get(TokenManagerInterface::class);
-        $accessToken = $sut->createAccessToken($user);
+        $accessToken = $this->faker->sha256();
 
         $sut->revokeAccessTokenForUser($accessToken, $user);
 
         $revokedTokensSet = $container->get(SetInterface::class);
         $key = sprintf(TokenManagerInterface::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
-        $this->assertTrue($revokedTokensSet->contains($key, $accessToken->getToken()));
+        $this->assertTrue($revokedTokensSet->contains($key, $accessToken));
         $config = $container->get(ConfigInterface::class);
         $ttl = (int)$config->get('@lexik_jwt_authentication.token_ttl');
         $this->assertTrue($revokedTokensSet->getTtl($key) <= $ttl);

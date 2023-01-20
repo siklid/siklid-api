@@ -69,4 +69,9 @@ class AccessToken implements AccessTokenInterface
     {
         return $this->refreshToken?->getRefreshToken();
     }
+
+    public function __toString(): string
+    {
+        return $this->token;
+    }
 }

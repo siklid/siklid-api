@@ -22,5 +22,10 @@ interface TokenManagerInterface
     /**
      * Revokes the given token for the given user.
      */
-    public function revokeAccessTokenForUser(AccessTokenInterface $accessToken, UserInterface $user): void;
+    public function revokeAccessTokenForUser(string $accessToken, UserInterface $user): void;
+
+    /**
+     * Checks if the given token is revoked for the given user.
+     */
+    public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool;
 }
