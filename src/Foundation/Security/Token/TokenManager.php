@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
-use App\Foundation\Action\ConfigInterface;
-use App\Foundation\Redis\Contract\SetInterface;
+use App\Foundation\Action\ConfigInterface as Config;
+use App\Foundation\Redis\Contract\SetInterface as RevokedTokens;
 use App\Foundation\Security\Token\RefreshTokenManagerInterface as RefreshTokenManager;
 use App\Siklid\Document\AccessToken;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
@@ -19,14 +19,14 @@ class TokenManager implements TokenManagerInterface
 {
     private JwtManager $jwtManager;
     private RefreshTokenManager $refreshTokenManager;
-    private SetInterface $revokedTokens;
-    private ConfigInterface $config;
+    private RevokedTokens $revokedTokens;
+    private Config $config;
 
     public function __construct(
         JwtManager $jwtManager,
         RefreshTokenManager $refreshTokenManager,
-        SetInterface $revokedTokens,
-        ConfigInterface $config
+        RevokedTokens $revokedTokens,
+        Config $config
     ) {
         $this->jwtManager = $jwtManager;
         $this->refreshTokenManager = $refreshTokenManager;
