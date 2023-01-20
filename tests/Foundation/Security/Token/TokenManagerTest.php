@@ -70,4 +70,40 @@ class TokenManagerTest extends TestCase
         $ttl = (int)$config->get('@lexik_jwt_authentication.token_ttl');
         $this->assertTrue($revokedTokensSet->getTtl($key) <= $ttl);
     }
+
+    /**
+     * @test
+     */
+    public function is_access_token_revoked_for_user(): void
+    {
+        $container = $this->container();
+        $user = new User();
+        $email = $this->faker->email();
+        $user->setEmail(Email::fromString($email));
+        $sut = $container->get(TokenManagerInterface::class);
+        $accessToken = $this->faker->sha256();
+
+        $this->assertFalse($sut->isAccessTokenRevokedForUser($accessToken, $user));
+        $sut->revokeAccessTokenForUser($accessToken, $user);
+        $this->assertTrue($sut->isAccessTokenRevokedForUser($accessToken, $user));
+    }
+
+    /**
+     * @test
+     */
+    public function revoke_refresh_token(): void
+    {
+        $container = $this->container();
+        $user = new User();
+        $email = $this->faker->email();
+        $user->setEmail(Email::fromString($email));
+        $sut = $container->get(TokenManagerInterface::class);
+        $accessToken = $sut->createAccessToken($user);
+        /** @var RefreshToken $refreshToken */
+        $refreshToken = $accessToken->getRefreshToken();
+
+        $sut->revokeRefreshToken($refreshToken);
+
+        $this->assertNotExists(RefreshToken::class, ['id' => $refreshToken->getId()]);
+    }
 }

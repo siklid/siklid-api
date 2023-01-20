@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -28,4 +29,9 @@ interface TokenManagerInterface
      * Checks if the given token is revoked for the given user.
      */
     public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool;
+
+    /**
+     * Revokes refresh token.
+     */
+    public function revokeRefreshToken(RefreshTokenInterface $refreshToken): void;
 }

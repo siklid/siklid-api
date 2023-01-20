@@ -8,6 +8,7 @@ use App\Foundation\Action\ConfigInterface;
 use App\Foundation\Redis\Contract\SetInterface;
 use App\Foundation\Security\Token\RefreshTokenManagerInterface as RefreshTokenManager;
 use App\Siklid\Document\AccessToken;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JwtManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -61,5 +62,10 @@ class TokenManager implements TokenManagerInterface
         $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
 
         return $this->revokedTokens->contains($key, $accessToken);
+    }
+
+    public function revokeRefreshToken(RefreshTokenInterface $refreshToken): void
+    {
+        $this->refreshTokenManager->revoke($refreshToken);
     }
 }
