@@ -35,6 +35,5 @@ class RefreshTokenManager implements RefreshTokenManagerInterface
     public function revoke(RefreshToken $refreshToken): void
     {
         $this->manager->delete($refreshToken);
-        $this->manager->save($refreshToken);
     }
 }

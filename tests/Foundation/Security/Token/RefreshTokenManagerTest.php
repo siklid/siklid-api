@@ -88,7 +88,6 @@ class RefreshTokenManagerTest extends TestCase
         $refreshToken = $this->createMock(RefreshTokenInterface::class);
 
         $manager->expects($this->once())->method('delete')->with($refreshToken);
-        $manager->expects($this->once())->method('save')->with($refreshToken);
 
         $sut->revoke($refreshToken);
     }
