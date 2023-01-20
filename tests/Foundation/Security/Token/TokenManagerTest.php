@@ -64,7 +64,7 @@ class TokenManagerTest extends TestCase
         $sut->revokeAccessTokenForUser($accessToken, $user);
 
         $revokedTokensSet = $container->get(SetInterface::class);
-        $key = sprintf(TokenManagerInterface::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
+        $key = sprintf(TokenManagerInterface::REVOKED_TOKENS_KEY_PATTERN, $user->getUserIdentifier());
         $this->assertTrue($revokedTokensSet->contains($key, $accessToken));
         $config = $container->get(ConfigInterface::class);
         $ttl = (int)$config->get('@lexik_jwt_authentication.token_ttl');

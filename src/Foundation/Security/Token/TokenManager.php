@@ -47,7 +47,7 @@ class TokenManager implements TokenManagerInterface
 
     public function revokeAccessTokenForUser(string $accessToken, UserInterface $user): void
     {
-        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
+        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERN, $user->getUserIdentifier());
 
         $this->revokedTokens->add($key, $accessToken);
 
@@ -59,7 +59,7 @@ class TokenManager implements TokenManagerInterface
 
     public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool
     {
-        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERNS, $user->getUserIdentifier());
+        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERN, $user->getUserIdentifier());
 
         return $this->revokedTokens->contains($key, $accessToken);
     }

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 interface TokenManagerInterface
 {
-    public const REVOKED_TOKENS_KEY_PATTERNS = 'user:%s:revoked-tokens';
+    public const REVOKED_TOKENS_KEY_PATTERN = 'user:%s:revoked-tokens';
 
     /**
      * Creates a new token for the given user.
