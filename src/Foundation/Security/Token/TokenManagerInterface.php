@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
-use App\Siklid\Application\Auth\Request\LogoutRequest;
-use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -14,14 +13,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 interface TokenManagerInterface
 {
+    public const REVOKED_TOKENS_KEY_PATTERN = 'user:%s:revoked-tokens';
+
     /**
      * Creates a new token for the given user.
-     *
-     * @param UserInterface $user the user to create a token for
      */
     public function createAccessToken(UserInterface $user): AccessTokenInterface;
 
-    public function revokeAccessToken(SiklidUserInterface $user, string $token): bool;
+    /**
+     * Revokes the given token for the given user.
+     */
+    public function revokeAccessTokenForUser(string $accessToken, UserInterface $user): void;
 
-    public function deleteRefreshToken(LogoutRequest $request): bool;
+    /**
+     * Checks if the given token is revoked for the given user.
+     */
+    public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool;
+
+    /**
+     * Revokes refresh token.
+     */
+    public function revokeRefreshToken(RefreshTokenInterface $refreshToken): void;
 }

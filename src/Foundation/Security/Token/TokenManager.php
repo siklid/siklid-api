@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace App\Foundation\Security\Token;
 
-use App\Foundation\Redis\Contract\SetInterface;
-use App\Siklid\Application\Auth\Request\LogoutRequest;
-use App\Siklid\Application\Contract\Entity\UserInterface as SiklidUserInterface;
+use App\Foundation\Action\ConfigInterface as Config;
+use App\Foundation\Redis\Contract\SetInterface as RevokedTokens;
+use App\Foundation\Security\Token\RefreshTokenManagerInterface as RefreshTokenManager;
 use App\Siklid\Document\AccessToken;
-use App\Siklid\Document\RefreshToken;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Gesdinet\JWTRefreshTokenBundle\Document\RefreshTokenRepository;
-use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
-use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-
-use function PHPUnit\Framework\assertNotNull;
-
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JwtManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,67 +17,55 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class TokenManager implements TokenManagerInterface
 {
-    private JWTTokenManagerInterface $JWTTokenManager;
-
-    private RefreshTokenGeneratorInterface $refreshTokenGenerator;
-
-    private RefreshTokenManagerInterface $refreshTokenManager;
-
-    private DocumentManager $dm;
-
-    private SetInterface $set;
+    private JwtManager $jwtManager;
+    private RefreshTokenManager $refreshTokenManager;
+    private RevokedTokens $revokedTokens;
+    private Config $config;
 
     public function __construct(
-        JWTTokenManagerInterface $JWTTokenManager,
-        RefreshTokenGeneratorInterface $refreshTokenGenerator,
-        RefreshTokenManagerInterface $refreshTokenManager,
-        DocumentManager $dm,
-        SetInterface $set,
+        JwtManager $jwtManager,
+        RefreshTokenManager $refreshTokenManager,
+        RevokedTokens $revokedTokens,
+        Config $config
     ) {
-        $this->JWTTokenManager = $JWTTokenManager;
-        $this->refreshTokenGenerator = $refreshTokenGenerator;
+        $this->jwtManager = $jwtManager;
         $this->refreshTokenManager = $refreshTokenManager;
-        $this->dm = $dm;
-        $this->set = $set;
+        $this->revokedTokens = $revokedTokens;
+        $this->config = $config;
     }
 
     public function createAccessToken(UserInterface $user): AccessTokenInterface
     {
-        $token = $this->JWTTokenManager->create($user);
+        $token = $this->jwtManager->create($user);
         $accessToken = new AccessToken($token);
 
-        $refreshToken = $this->refreshTokenGenerator->createForUserWithTtl($user, 2592000);
-        $this->refreshTokenManager->save($refreshToken);
-
+        $refreshToken = $this->refreshTokenManager->createForUser($user, RefreshTokenManager::CONFIGURED_TTL);
         $accessToken->setRefreshToken($refreshToken);
 
         return $accessToken;
     }
 
-    public function revokeAccessToken(SiklidUserInterface $user, string $token): bool
+    public function revokeAccessTokenForUser(string $accessToken, UserInterface $user): void
     {
-        $userId = $user->getId();
+        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERN, $user->getUserIdentifier());
 
-        $setKey = 'user.'.$userId.'.accessToken';
-        $this->set->add($setKey, $token);
-        $this->set->setTtl($setKey, time() + (60 * 60));
+        $this->revokedTokens->add($key, $accessToken);
 
-        return true;
+        $ttl = $this->config->get('@lexik_jwt_authentication.token_ttl');
+        assert(is_int($ttl));
+
+        $this->revokedTokens->setTtl($key, $ttl);
     }
 
-    public function deleteRefreshToken(LogoutRequest $request): bool
+    public function isAccessTokenRevokedForUser(string $accessToken, UserInterface $user): bool
     {
-        $refreshTokenRepository = $this->dm->getRepository(RefreshToken::class);
+        $key = sprintf(self::REVOKED_TOKENS_KEY_PATTERN, $user->getUserIdentifier());
 
-        assert($refreshTokenRepository instanceof RefreshTokenRepository);
+        return $this->revokedTokens->contains($key, $accessToken);
+    }
 
-        $refreshTokenVal = (string)$request->get('refreshToken');
-        $refreshTokenObject = $refreshTokenRepository->findOneBy(['refreshToken' => $refreshTokenVal]);
-        assertNotNull($refreshTokenObject);
-
-        $this->dm->remove($refreshTokenObject);
-        $this->dm->flush();
-
-        return true;
+    public function revokeRefreshToken(RefreshTokenInterface $refreshToken): void
+    {
+        $this->refreshTokenManager->revoke($refreshToken);
     }
 }

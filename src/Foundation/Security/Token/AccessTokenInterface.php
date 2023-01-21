@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Foundation\Security\Token;
 
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
+use Stringable;
 
-interface AccessTokenInterface
+interface AccessTokenInterface extends Stringable
 {
     /**
      * Returns the token string.
