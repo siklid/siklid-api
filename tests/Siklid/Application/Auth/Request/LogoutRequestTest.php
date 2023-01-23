@@ -41,7 +41,7 @@ class LogoutRequestTest extends TestCase
     public function get_access_token(): void
     {
         $accessToken = $this->faker()->md5();
-        $internalRequest = new Request([], [], [], [], [], ['HTTP_AUTHORIZATION' => $accessToken]);
+        $internalRequest = new Request([], [], [], [], [], ['HTTP_AUTHORIZATION' => 'Bearer '.$accessToken]);
         $requestStack = new RequestStack();
         $requestStack->push($internalRequest);
 

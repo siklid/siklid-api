@@ -18,7 +18,9 @@ final class LogoutRequest extends Request
 
     public function getAccessToken(): string
     {
-        return (string)$this->getHeader('Authorization');
+        $accessToken = (string)$this->getHeader('Authorization');
+
+        return str_replace('Bearer ', '', $accessToken);
     }
 
     protected function constraints(): array
