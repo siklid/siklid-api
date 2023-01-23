@@ -16,10 +16,8 @@ class LogoutController extends ApiController
     {
         $action->execute();
 
-        $data = [
+        return $this->ok([
             'message' => 'You have been logged out.',
-        ];
-
-        return $this->json($data, Response::HTTP_OK);
+        ]);
     }
 }
