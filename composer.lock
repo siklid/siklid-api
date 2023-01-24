@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c07ba6c9a1de2258444c69aa05efd673",
+    "content-hash": "ba5dc8b326f3345d1874a143481702e6",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2221,16 +2221,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.1.9",
+            "version": "v6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "b800f23e66bcb96602da4941fe966e50f0fff1f3"
+                "reference": "0f579613e771dba2dbb8211c382342a641f5da06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/b800f23e66bcb96602da4941fe966e50f0fff1f3",
-                "reference": "b800f23e66bcb96602da4941fe966e50f0fff1f3",
+                "url": "https://api.github.com/repos/symfony/console/zipball/0f579613e771dba2dbb8211c382342a641f5da06",
+                "reference": "0f579613e771dba2dbb8211c382342a641f5da06",
                 "shasum": ""
             },
             "require": {
@@ -2297,7 +2297,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.1.9"
+                "source": "https://github.com/symfony/console/tree/v6.2.3"
             },
             "funding": [
                 {
@@ -2313,7 +2313,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-28T14:22:24+00:00"
+            "time": "2022-12-28T14:26:22+00:00"
         },
         {
             "name": "symfony/dependency-injection",
