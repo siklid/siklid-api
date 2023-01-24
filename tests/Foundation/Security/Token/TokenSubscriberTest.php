@@ -7,9 +7,9 @@ namespace App\Tests\Foundation\Security\Token;
 use App\Foundation\Security\Token\TokenManagerInterface;
 use App\Foundation\Security\Token\TokenSubscriber;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenSubscriberTest extends TestCase
@@ -34,7 +34,7 @@ class TokenSubscriberTest extends TestCase
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $sut = new TokenSubscriber($tokenManager, $tokenStorage);
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = $this->createMock(JWTPostAuthenticationToken::class);
         $tokenStorage->expects($this->once())
             ->method('getToken')
             ->willReturn($token);
@@ -80,7 +80,7 @@ class TokenSubscriberTest extends TestCase
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $sut = new TokenSubscriber($tokenManager, $tokenStorage);
 
-        $token = $this->createMock(TokenInterface::class);
+        $token = $this->createMock(JWTPostAuthenticationToken::class);
         $tokenStorage->expects($this->once())
             ->method('getToken')
             ->willReturn($token);
