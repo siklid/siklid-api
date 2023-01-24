@@ -9,23 +9,19 @@ use App\Foundation\Exception\LogicException;
 use App\Foundation\Security\Token\TokenManagerInterface as TokenManager;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Document\RefreshToken;
-use App\Siklid\Security\UserResolverInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Siklid\Security\UserResolverInterface as UserResolver;
+use Doctrine\ODM\MongoDB\DocumentManager as DM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class Logout extends AbstractAction
 {
     private TokenManager $tokenManager;
     private LogoutRequest $request;
-    private UserResolverInterface $userResolver;
-    private DocumentManager $dm;
+    private UserResolver $userResolver;
+    private DM $dm;
 
-    public function __construct(
-        TokenManager $tokenManager,
-        LogoutRequest $request,
-        UserResolverInterface $userResolver,
-        DocumentManager $dm
-    ) {
+    public function __construct(TokenManager $tokenManager, LogoutRequest $request, UserResolver $userResolver, DM $dm)
+    {
         $this->tokenManager = $tokenManager;
         $this->request = $request;
         $this->userResolver = $userResolver;
