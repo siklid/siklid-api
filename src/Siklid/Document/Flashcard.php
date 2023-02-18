@@ -7,6 +7,7 @@ namespace App\Siklid\Document;
 use App\Siklid\Application\Contract\Entity\FlashCardInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -56,6 +57,7 @@ class Flashcard implements FlashCardInterface
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->boxes = new ArrayCollection();
     }
 
     public function getId(): string
