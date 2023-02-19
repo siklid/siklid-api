@@ -30,4 +30,17 @@ class DeleteFlashCardTest extends TestCase
         $this->assertResponseIsOk();
         $this->assertSoftDeleted($flashcard);
     }
+
+    /** @test */
+    public function delete_with_invalid_flashcard_id(): void
+    {
+        $client = $this->makeClient();
+        $user = $this->makeUser();
+        $this->persistDocument($user);
+        $client->loginUser($user);
+
+        $client->request('DELETE', 'api/v1/flashcards/invalid-id');
+
+        $this->assertResponseIsNotFound();
+    }
 }
