@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
+use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\FlashCardInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Lcobucci\Clock\SystemClock;
+use Psr\Clock\ClockInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[MongoDB\Document(collection: 'flashcards')]
+#[MongoDB\HasLifecycleCallbacks]
 class Flashcard implements FlashCardInterface
 {
     #[MongoDB\Id]
@@ -53,8 +57,11 @@ class Flashcard implements FlashCardInterface
     #[Groups(['flashcard:read', 'flashcard:index'])]
     private ?DateTimeImmutable $deletedAt = null;
 
-    public function __construct()
+    private ClockInterface $clock;
+
+    public function __construct(?ClockInterface $clock = null)
     {
+        $this->clock = $clock ?? SystemClock::fromSystemTimezone();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
         $this->boxes = new ArrayCollection();
@@ -154,5 +161,22 @@ class Flashcard implements FlashCardInterface
         $this->deletedAt = $deletedAt;
 
         return $this;
+    }
+
+    #[MongoDB\PostLoad]
+    public function setClock(): void
+    {
+        $this->clock = SystemClock::fromSystemTimezone();
+    }
+
+    public function delete(): void
+    {
+        if (null === $this->deletedAt) {
+            $this->deletedAt = $this->clock->now();
+
+            return;
+        }
+
+        throw new LogicException('Box is already deleted');
     }
 }
