@@ -68,26 +68,18 @@ class Request
     }
 
     /**
-     * Retrieves $_GET and $_POST variables respectively.
+     * Get parameter value from any bag.
+     *
+     * @psalm-suppress InternalMethod
      */
     public function get(string $key, mixed $default = null): string|int|bool|null|float
     {
         assert(is_scalar($default) || is_null($default));
 
-        $getVariables = $this->request()->query;
-        $postVariables = $this->request()->request;
+        $value = $this->request()->get($key, $default);
+        assert(is_scalar($value) || is_null($value));
 
-        if ($getVariables->has($key)) {
-            assert(is_string($default) || is_null($default));
-
-            return $getVariables->get($key, $default);
-        }
-
-        if ($postVariables->has($key)) {
-            return $postVariables->get($key, $default);
-        }
-
-        return $default;
+        return $value;
     }
 
     /**
