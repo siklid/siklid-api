@@ -74,8 +74,6 @@ class Request
      */
     public function get(string $key, mixed $default = null): string|int|bool|null|float
     {
-        assert(is_scalar($default) || is_null($default));
-
         $value = $this->request()->get($key, $default);
         assert(is_scalar($value) || is_null($value));
 
