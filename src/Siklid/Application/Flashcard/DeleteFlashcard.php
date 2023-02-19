@@ -30,8 +30,13 @@ class DeleteFlashcard extends AbstractAction
         $flashcardId = (string)$this->request->get('id');
         $flashcard = $this->dm->getRepository(Flashcard::class)->find($flashcardId);
 
-        assert($flashcard instanceof Flashcard, new NotFoundHttpException('Flashcard not found'));
-        assert($flashcard->getUser() === $this->userResolver->getUser(), new UnauthorizedHttpException('You are not allowed to delete this flashcard'));
+        if (! $flashcard instanceof Flashcard) {
+            throw new NotFoundHttpException('Flashcard not found');
+        }
+
+        if ($flashcard->getUser() !== $this->userResolver->getUser()) {
+            throw new UnauthorizedHttpException('You are not allowed to delete this flashcard');
+        }
 
         $flashcard->delete();
         $this->dm->persist($flashcard);
