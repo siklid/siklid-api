@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @psalm-suppress MissingConstructor - We don't need a constructor for this test
@@ -33,7 +34,8 @@ class LoginSuccessHandlerTest extends TestCase
     {
         // Given
         $tokenManager = $this->createMock(TokenManagerInterface::class);
-        $sut = new LoginSuccessHandler($tokenManager);
+        $serializer = $this->createMock(Serializer::class);
+        $sut = new LoginSuccessHandler($tokenManager, $serializer);
         $container = $this->createMock(ContainerInterface::class);
         $sut->setContainer($container);
 
@@ -67,7 +69,9 @@ class LoginSuccessHandlerTest extends TestCase
     {
         // Given
         $tokenManager = $this->createMock(TokenManagerInterface::class);
-        $sut = new LoginSuccessHandler($tokenManager);
+        $serializer = $this->createMock(Serializer::class);
+        $serializer->expects($this->once())->method('normalize')->willReturn(['data' => ['user' => [], 'token' => []]]);
+        $sut = new LoginSuccessHandler($tokenManager, $serializer);
         $container = $this->createMock(ContainerInterface::class);
         $sut->setContainer($container);
 
@@ -87,6 +91,6 @@ class LoginSuccessHandlerTest extends TestCase
 
         // Then
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertSame('{"data":{"user":{},"token":{}}}', $response->getContent());
+        $this->assertSame('{"data":{"data":{"user":[],"token":[]}}}', $response->getContent());
     }
 }
