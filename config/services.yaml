@@ -36,6 +36,9 @@ services:
     arguments:
       $registry: '@doctrine_mongodb'
 
+  Psr\Container\ContainerInterface:
+    alias: 'service_container'
+
   Redis:
     class: Redis
     calls:
