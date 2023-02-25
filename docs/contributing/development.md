@@ -32,7 +32,7 @@ docker-compose up -d
 ## Stopping the development environment
 
 ```bash
-docker compose down --remove-orphans
+docker compose stop
 ```
 
 ## Commands
