@@ -6,6 +6,7 @@ namespace App\Siklid\Application\Flashcard;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Http\Request;
+use App\Siklid\Application\Contract\Entity\FlashCardInterface;
 use App\Siklid\Document\Flashcard;
 use App\Siklid\Security\UserResolverInterface as UserResolver;
 use Doctrine\ODM\MongoDB\DocumentManager as DM;
@@ -25,18 +26,14 @@ class DeleteFlashcard extends AbstractAction
         $this->userResolver = $userResolver;
     }
 
-    public function execute(): mixed
+    public function execute(): FlashCardInterface
     {
         $flashcardId = (string)$this->request->get('id');
         $flashcard = $this->dm->getRepository(Flashcard::class)->find($flashcardId);
 
-        if (! $flashcard instanceof Flashcard) {
-            throw new NotFoundHttpException('Flashcard not found');
-        }
+        assert($flashcard instanceof Flashcard, new NotFoundHttpException('Flashcard not found'));
 
-        if ($flashcard->getUser() !== $this->userResolver->getUser()) {
-            throw new UnauthorizedHttpException('You are not allowed to delete this flashcard');
-        }
+        assert($flashcard->getUser() === $this->userResolver->getUser(), new UnauthorizedHttpException('You are not allowed to delete this flashcard'));
 
         $flashcard->delete();
         $this->dm->persist($flashcard);
