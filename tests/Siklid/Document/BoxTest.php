@@ -49,7 +49,7 @@ class BoxTest extends TestCase
     public function it_should_not_delete_already_deleted_box(Box $sut): void
     {
         $this->expectException(LogicException::class);
-        $this->expectErrorMessage('Box is already deleted');
+        $this->expectExceptionMessage('Box is already deleted');
 
         $sut->delete();
     }
