@@ -8,7 +8,7 @@ use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Token manager interface.
+ * Authentication manager interface.
  * All access token managers must implement this interface.
  */
 interface TokenManagerInterface
