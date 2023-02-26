@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Security\Token;
+namespace App\Foundation\Security\Authentication;
 
 interface HasAccessToken
 {

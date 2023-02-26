@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Security\Token;
+namespace App\Foundation\Security\Authentication;
 
 use App\Foundation\Action\ConfigInterface as Config;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface as Generator;

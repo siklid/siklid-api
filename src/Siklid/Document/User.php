@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use App\Foundation\Security\Token\AccessTokenInterface;
-use App\Foundation\Security\Token\HasAccessToken;
+use App\Foundation\Security\Authentication\AccessTokenInterface;
+use App\Foundation\Security\Authentication\HasAccessToken;
 use App\Foundation\Validation\Constraint as AppAssert;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;

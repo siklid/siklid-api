@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Security\Token;
+namespace App\Tests\Foundation\Security\Authentication;
 
 use App\Foundation\Action\ConfigInterface;
-use App\Foundation\Security\Token\RefreshTokenManager;
-use App\Foundation\Security\Token\RefreshTokenManagerInterface;
+use App\Foundation\Security\Authentication\RefreshTokenManager;
+use App\Foundation\Security\Authentication\RefreshTokenManagerInterface;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface as GesdinetGenerator;
