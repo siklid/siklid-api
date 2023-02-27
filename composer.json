@@ -21,7 +21,7 @@
     "symfony/dotenv": "^6.2.5",
     "symfony/flex": "^2.2.5",
     "symfony/form": "^6.2.5",
-    "symfony/framework-bundle": "^6.1.11",
+    "symfony/framework-bundle": "^6.2.5",
     "symfony/property-access": "^6.2.5",
     "symfony/property-info": "^6.2.5",
     "symfony/runtime": "^6.2.5",
