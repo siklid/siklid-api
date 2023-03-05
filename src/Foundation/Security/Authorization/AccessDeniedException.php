@@ -26,7 +26,7 @@ final class AccessDeniedException extends SiklidException implements RenderableI
 
     public function __construct(string $message = 'Access Denied.', Throwable $previous = null)
     {
-        parent::__construct($message, 403, $previous);
+        parent::__construct($message, Response::HTTP_FORBIDDEN, $previous);
     }
 
     /**
