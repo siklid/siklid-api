@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Http\ApiController;
-use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
 use App\Siklid\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
