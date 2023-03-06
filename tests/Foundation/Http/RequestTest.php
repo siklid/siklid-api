@@ -53,7 +53,7 @@ class RequestTest extends TestCase
     public function all_get_request_content_if_request_is_json(): void
     {
         $request = $this->createMock(Request::class);
-        $request->method('getContentType')->willReturn('json');
+        $request->method('getContentTypeFormat')->willReturn('json');
         $request->method('getContent')->willReturn('{"foo":"bar"}');
         $request->request = new InputBag();
         $this->requestStack->push($request);
@@ -82,8 +82,7 @@ class RequestTest extends TestCase
      */
     public function is_json_returns_true_if_content_type_is_json(): void
     {
-        $request = $this->createMock(Request::class);
-        $request->method('getContentType')->willReturn('json');
+        $request = new Request([], [], [], [], [], ['CONTENT_TYPE' => 'application/json']);
         $this->requestStack->push($request);
         $sut = new Sut($this->requestStack, $this->util);
 
