@@ -6,7 +6,7 @@ namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Exception\LogicException;
-use App\Foundation\Security\Token\TokenManagerInterface as TokenManager;
+use App\Foundation\Security\Authentication\TokenManagerInterface as TokenManager;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Security\UserResolverInterface as UserResolver;

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Security\Token;
+namespace App\Tests\Foundation\Security\Authentication;
 
 use App\Foundation\Action\ConfigInterface;
 use App\Foundation\Redis\Contract\SetInterface;
-use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Siklid\Document\RefreshToken;
 use App\Siklid\Document\User;
