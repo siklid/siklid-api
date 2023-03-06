@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Foundation\Security\Token;
+namespace App\Tests\Foundation\Security\Authentication;
 
-use App\Foundation\Security\Token\TokenManagerInterface;
-use App\Foundation\Security\Token\TokenSubscriber;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenSubscriber;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
 use PHPUnit\Framework\TestCase;

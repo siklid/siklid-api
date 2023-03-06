@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Siklid\Application\Auth;
 
-use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
 use App\Siklid\Application\Auth\LoginSuccessHandler;

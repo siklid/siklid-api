@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Feature\Auth;
 
-use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
 use App\Tests\Concern\Factory\UserFactoryTrait;
 use App\Tests\Concern\Util\WithJson;
 use App\Tests\Concern\WebTestCaseTrait;
