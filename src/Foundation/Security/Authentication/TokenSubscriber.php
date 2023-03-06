@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Security\Token;
+namespace App\Foundation\Security\Authentication;
 
-use App\Foundation\Security\Token\TokenManagerInterface as Manager;
+use App\Foundation\Security\Authentication\TokenManagerInterface as Manager;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

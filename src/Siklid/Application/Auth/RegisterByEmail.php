@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Auth;
 
 use App\Foundation\Action\AbstractAction;
-use App\Foundation\Security\Token\TokenManagerInterface;
+use App\Foundation\Security\Authentication\TokenManagerInterface;
 use App\Siklid\Application\Auth\Request\RegisterRequest;
 use App\Siklid\Document\User;
 use Doctrine\ODM\MongoDB\DocumentManager;
