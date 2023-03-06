@@ -54,7 +54,9 @@ class Request
      */
     public function isJson(): bool
     {
-        return 'json' === $this->request()->getContentType();
+        $contentTypeFormat = $this->request()->getContentTypeFormat();
+
+        return 'json' === $contentTypeFormat;
     }
 
     /**
