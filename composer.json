@@ -17,7 +17,7 @@
     "lexik/jwt-authentication-bundle": "^2.18.1",
     "piscibus/php-hashtag": "^1.1",
     "sensio/framework-extra-bundle": "^6.2.10",
-    "symfony/console": "^6.2.5",
+    "symfony/console": "^6.2.7",
     "symfony/dotenv": "^6.2.5",
     "symfony/flex": "^2.2.5",
     "symfony/form": "^6.2.5",
