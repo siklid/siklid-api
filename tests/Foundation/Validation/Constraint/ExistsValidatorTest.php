@@ -76,7 +76,7 @@ class ExistsValidatorTest extends TestCase
     public function it_requires_document(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Document class must be specified.');
+        $this->expectExceptionMessage('Document class must be specified.');
 
         $this->sut->validate('foo', new Exists());
     }
@@ -87,7 +87,7 @@ class ExistsValidatorTest extends TestCase
     public function it_requires_field(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Field must be specified.');
+        $this->expectExceptionMessage('Field must be specified.');
 
         $this->sut->validate('foo', new Exists('foo', ''));
     }
@@ -98,7 +98,7 @@ class ExistsValidatorTest extends TestCase
     public function document_class_should_exist(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Document class "Foo" does not exist.');
+        $this->expectExceptionMessage('Document class "Foo" does not exist.');
 
         $this->sut->validate('foo', new Exists('Foo'));
     }

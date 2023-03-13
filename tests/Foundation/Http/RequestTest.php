@@ -53,7 +53,7 @@ class RequestTest extends TestCase
     public function all_get_request_content_if_request_is_json(): void
     {
         $request = $this->createMock(Request::class);
-        $request->method('getContentType')->willReturn('json');
+        $request->method('getContentTypeFormat')->willReturn('json');
         $request->method('getContent')->willReturn('{"foo":"bar"}');
         $request->request = new InputBag();
         $this->requestStack->push($request);
@@ -82,8 +82,7 @@ class RequestTest extends TestCase
      */
     public function is_json_returns_true_if_content_type_is_json(): void
     {
-        $request = $this->createMock(Request::class);
-        $request->method('getContentType')->willReturn('json');
+        $request = new Request([], [], [], [], [], ['CONTENT_TYPE' => 'application/json']);
         $this->requestStack->push($request);
         $sut = new Sut($this->requestStack, $this->util);
 
@@ -209,5 +208,19 @@ class RequestTest extends TestCase
         $sut = new Sut($this->requestStack, new RequestUtil($this->json, $validator));
         $this->requestStack->push(new Request());
         $sut->validate();
+    }
+
+    /**
+     * @test
+     */
+    public function get_header(): void
+    {
+        $internalRequest = new Request();
+        $internalRequest->headers->set('X-Foo', 'bar');
+        $this->requestStack->push($internalRequest);
+        $sut = new Sut($this->requestStack, $this->util);
+
+        $this->assertSame('bar', $sut->getHeader('X-Foo'));
+        $this->assertNull($sut->getHeader('X-Missing'));
     }
 }

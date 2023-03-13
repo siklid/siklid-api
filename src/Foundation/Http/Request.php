@@ -54,7 +54,9 @@ class Request
      */
     public function isJson(): bool
     {
-        return 'json' === $this->request()->getContentType();
+        $contentTypeFormat = $this->request()->getContentTypeFormat();
+
+        return 'json' === $contentTypeFormat;
     }
 
     /**
@@ -130,5 +132,13 @@ class Request
     protected function allowExtraFields(): bool
     {
         return true;
+    }
+
+    /**
+     * Gets a header value by name.
+     */
+    public function getHeader(string $key): ?string
+    {
+        return $this->request()->headers->get($key);
     }
 }
