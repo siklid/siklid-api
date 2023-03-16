@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation\Security\Token;
+namespace App\Foundation\Security\Authentication;
 
 use App\Foundation\Action\ConfigInterface as Config;
 use App\Foundation\Redis\Contract\SetInterface as RevokedTokens;
-use App\Foundation\Security\Token\RefreshTokenManagerInterface as RefreshTokenManager;
+use App\Foundation\Security\Authentication\RefreshTokenManagerInterface as RefreshTokenManager;
 use App\Siklid\Document\AccessToken;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JwtManager;
