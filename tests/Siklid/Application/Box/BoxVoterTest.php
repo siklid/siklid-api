@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Siklid\Security\Voter;
+namespace App\Tests\Siklid\Application\Box;
 
+use App\Siklid\Application\Box\BoxVoter;
 use App\Siklid\Document\Box;
 use App\Siklid\Document\User;
-use App\Siklid\Security\Voter\BoxVoter;
 use App\Tests\TestCase;
 
 /**
