@@ -18,7 +18,7 @@
     "piscibus/php-hashtag": "^1.1",
     "sensio/framework-extra-bundle": "^6.2.10",
     "symfony/console": "^6.2.7",
-    "symfony/dotenv": "^6.2.5",
+    "symfony/dotenv": "^6.2.7",
     "symfony/flex": "^2.2.5",
     "symfony/form": "^6.2.5",
     "symfony/framework-bundle": "^6.2.5",
