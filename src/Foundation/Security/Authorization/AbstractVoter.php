@@ -35,8 +35,12 @@ abstract class AbstractVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $method = 'can'.ucfirst($attribute);
+        $user = $token->getUser();
+        if (is_null($user)) {
+            return false;
+        }
 
-        $vote = $this->$method($subject, $token);
+        $vote = $this->$method($subject, $user);
         assert(is_bool($vote));
 
         return $vote;

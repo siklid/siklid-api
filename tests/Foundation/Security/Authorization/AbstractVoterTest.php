@@ -10,6 +10,7 @@ use App\Tests\TestCase;
 use stdClass;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AbstractVoterTest extends TestCase
 {
@@ -83,12 +84,13 @@ class AbstractVoterTest extends TestCase
             protected array $supportedAttributes = ['foo'];
             protected ?string $supportedClass = stdClass::class;
 
-            public function canFoo(stdClass $subject, TokenInterface $token): bool
+            public function canFoo(stdClass $subject, UserInterface $token): bool
             {
                 return true;
             }
         };
         $token = $this->createMock(TokenInterface::class);
+        $token->method('getUser')->willReturn($this->createMock(UserInterface::class));
 
         $actual = $sut->vote($token, new stdClass(), ['foo']);
 
@@ -102,12 +104,13 @@ class AbstractVoterTest extends TestCase
             protected array $supportedAttributes = ['foo'];
             protected ?string $supportedClass = stdClass::class;
 
-            public function canFoo(stdClass $subject, TokenInterface $token): bool
+            public function canFoo(stdClass $subject, UserInterface $token): bool
             {
                 return false;
             }
         };
         $token = $this->createMock(TokenInterface::class);
+        $token->method('getUser')->willReturn($this->createMock(UserInterface::class));
 
         $actual = $sut->vote($token, new stdClass(), ['foo']);
 
