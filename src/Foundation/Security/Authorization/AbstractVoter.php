@@ -18,16 +18,16 @@ abstract class AbstractVoter extends Voter
     /**
      * @var string[] the attributes that this voter supports
      */
-    protected array $attributes = [];
+    protected array $supportedAttributes = [];
 
     /**
      * @var class-string|null the subject that this voter supports
      */
-    protected ?string $subject = null;
+    protected ?string $supportedClass = null;
 
     public function __construct()
     {
-        if (is_null($this->subject)) {
+        if (is_null($this->supportedClass)) {
             throw new InvalidArgumentException('The subject must be set.');
         }
     }
@@ -44,11 +44,11 @@ abstract class AbstractVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (! in_array($attribute, $this->attributes)) {
+        if (! in_array($attribute, $this->supportedAttributes)) {
             return false;
         }
 
-        if (! is_null($this->subject) && ! is_a($subject, $this->subject)) {
+        if (! is_null($this->supportedClass) && ! is_a($subject, $this->supportedClass)) {
             return false;
         }
 

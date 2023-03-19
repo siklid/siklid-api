@@ -17,8 +17,8 @@ class AbstractVoterTest extends TestCase
     public function vote_with_empty_attributes(): void
     {
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = [];
-            protected ?string $subject = stdClass::class;
+            protected array $supportedAttributes = [];
+            protected ?string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
         $subject = new stdClass();
@@ -35,8 +35,8 @@ class AbstractVoterTest extends TestCase
         $this->expectExceptionMessage('The subject must be set.');
 
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = [];
-            protected ?string $subject = null;
+            protected array $supportedAttributes = [];
+            protected ?string $supportedClass = null;
         };
         $token = $this->createMock(TokenInterface::class);
 
@@ -47,8 +47,8 @@ class AbstractVoterTest extends TestCase
     public function vote_with_non_supported_attribute(): void
     {
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = ['foo'];
-            protected ?string $subject = stdClass::class;
+            protected array $supportedAttributes = ['foo'];
+            protected ?string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
 
@@ -61,8 +61,8 @@ class AbstractVoterTest extends TestCase
     public function vote_with_non_supported_subject(): void
     {
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = ['foo'];
-            protected ?string $subject = stdClass::class;
+            protected array $supportedAttributes = ['foo'];
+            protected ?string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
 
@@ -80,8 +80,8 @@ class AbstractVoterTest extends TestCase
     public function vote_on_a_grant_able_resource(): void
     {
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = ['foo'];
-            protected ?string $subject = stdClass::class;
+            protected array $supportedAttributes = ['foo'];
+            protected ?string $supportedClass = stdClass::class;
 
             public function canFoo(stdClass $subject, TokenInterface $token): bool
             {
@@ -99,8 +99,8 @@ class AbstractVoterTest extends TestCase
     public function vote_on_a_non_accessible_resource(): void
     {
         $sut = new class() extends AbstractVoter {
-            protected array $attributes = ['foo'];
-            protected ?string $subject = stdClass::class;
+            protected array $supportedAttributes = ['foo'];
+            protected ?string $supportedClass = stdClass::class;
 
             public function canFoo(stdClass $subject, TokenInterface $token): bool
             {
