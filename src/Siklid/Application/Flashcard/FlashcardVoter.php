@@ -10,9 +10,17 @@ use App\Siklid\Application\Contract\Entity\FlashCardInterface;
 final class FlashcardVoter extends AbstractVoter
 {
     protected string $supportedClass = FlashCardInterface::class;
-    protected array $supportedAttributes = [self::CREATE];
+    protected array $supportedAttributes = [
+        self::CREATE,
+        self::READ,
+    ];
 
     public function canCreate(): bool
+    {
+        return true;
+    }
+
+    public function canRead(): bool
     {
         return true;
     }

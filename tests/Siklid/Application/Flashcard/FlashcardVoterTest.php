@@ -18,4 +18,14 @@ class FlashcardVoterTest extends TestCase
 
         $this->assertTrue($actual);
     }
+
+    /** @test */
+    public function can_read(): void
+    {
+        $sut = new FlashcardVoter();
+
+        $actual = $sut->canRead();
+
+        $this->assertTrue($actual);
+    }
 }
