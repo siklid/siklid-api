@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Foundation\Security\Authorization;
 
-use App\Foundation\Exception\InvalidArgumentException;
 use App\Foundation\Security\Authorization\AbstractVoter;
 use App\Tests\TestCase;
 use stdClass;
@@ -19,7 +18,7 @@ class AbstractVoterTest extends TestCase
     {
         $sut = new class() extends AbstractVoter {
             protected array $supportedAttributes = [];
-            protected ?string $supportedClass = stdClass::class;
+            protected string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
         $subject = new stdClass();
@@ -30,26 +29,11 @@ class AbstractVoterTest extends TestCase
     }
 
     /** @test */
-    public function vote_with_empty_subject(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The subject must be set.');
-
-        $sut = new class() extends AbstractVoter {
-            protected array $supportedAttributes = [];
-            protected ?string $supportedClass = null;
-        };
-        $token = $this->createMock(TokenInterface::class);
-
-        $sut->vote($token, null, []);
-    }
-
-    /** @test */
     public function vote_with_non_supported_attribute(): void
     {
         $sut = new class() extends AbstractVoter {
             protected array $supportedAttributes = ['foo'];
-            protected ?string $supportedClass = stdClass::class;
+            protected string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
 
@@ -63,7 +47,7 @@ class AbstractVoterTest extends TestCase
     {
         $sut = new class() extends AbstractVoter {
             protected array $supportedAttributes = ['foo'];
-            protected ?string $supportedClass = stdClass::class;
+            protected string $supportedClass = stdClass::class;
         };
         $token = $this->createMock(TokenInterface::class);
 
@@ -82,7 +66,7 @@ class AbstractVoterTest extends TestCase
     {
         $sut = new class() extends AbstractVoter {
             protected array $supportedAttributes = ['foo'];
-            protected ?string $supportedClass = stdClass::class;
+            protected string $supportedClass = stdClass::class;
 
             public function canFoo(stdClass $subject, UserInterface $token): bool
             {
@@ -102,7 +86,7 @@ class AbstractVoterTest extends TestCase
     {
         $sut = new class() extends AbstractVoter {
             protected array $supportedAttributes = ['foo'];
-            protected ?string $supportedClass = stdClass::class;
+            protected string $supportedClass = stdClass::class;
 
             public function canFoo(stdClass $subject, UserInterface $token): bool
             {
@@ -115,5 +99,25 @@ class AbstractVoterTest extends TestCase
         $actual = $sut->vote($token, new stdClass(), ['foo']);
 
         $this->assertSame(VoterInterface::ACCESS_DENIED, $actual);
+    }
+
+    /** @test */
+    public function vote_on_a_class_string(): void
+    {
+        $sut = new class() extends AbstractVoter {
+            protected array $supportedAttributes = ['foo'];
+            protected string $supportedClass = stdClass::class;
+
+            public function canFoo(string $subject, UserInterface $token): bool
+            {
+                return true;
+            }
+        };
+        $token = $this->createMock(TokenInterface::class);
+        $token->method('getUser')->willReturn($this->createMock(UserInterface::class));
+
+        $actual = $sut->vote($token, stdClass::class, ['foo']);
+
+        $this->assertSame(VoterInterface::ACCESS_GRANTED, $actual);
     }
 }
