@@ -5,14 +5,23 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Flashcard;
 
 use App\Foundation\Security\Authorization\AbstractVoter;
-use App\Siklid\Application\Contract\Entity\FlashCardInterface;
+use App\Siklid\Application\Contract\Entity\FlashcardInterface as Flashcard;
+use App\Siklid\Application\Contract\Entity\UserInterface as User;
 
 final class FlashcardVoter extends AbstractVoter
 {
-    protected string $supportedClass = FlashCardInterface::class;
+    /**
+     * @var class-string the subject that this voter supports
+     */
+    protected string $supportedClass = Flashcard::class;
+
+    /**
+     * @var string[] the attributes that this voter supports
+     */
     protected array $supportedAttributes = [
         self::CREATE,
         self::READ,
+        self::UPDATE,
     ];
 
     public function canCreate(): bool
@@ -23,5 +32,10 @@ final class FlashcardVoter extends AbstractVoter
     public function canRead(): bool
     {
         return true;
+    }
+
+    public function canUpdate(Flashcard $flashcard, User $user): bool
+    {
+        return $flashcard->getUser()->getId() === $user->getId();
     }
 }
