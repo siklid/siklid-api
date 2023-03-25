@@ -15,49 +15,17 @@ there are some differences.
 ### How to create a voter
 
 The Voter class must be created in the Subdomain namespace. For example, if you want to check if a user has access to
-a specific `Box` entity, you should create a `BoxVoter` class in the `App\Siklid\Application\Box` namespace.
+a specific `Flashcard` entity, you should create a `FlashcardVoter` class in the `App\Siklid\Application\Flashcard`
+namespace.
 
 Then extend the `\App\Foundation\Security\Authorization\AbstractVoter` class. Then, you should set two properties:
 
-- `$supportedClass` - the class that the voter supports (in our example, it's `Box::class`).
+- `$supportedClass` - the class that the voter supports (in our example, it's `FlashcardInterface::class`).
 - `$supportedAttributes` - the attributes that the voter supports. It should be an array of strings.
 
 Finally, you should implement a method for each attribute that you want to support. The method name should start with
 `can` and end with the attribute name. For example, if you want to support the `view` attribute, you should create a
 `canView` method. The method should return a boolean value.
 
-```php
-declare(strict_types=1);
-
-namespace App\Siklid\Application\Box;
-
-use App\Foundation\Security\Authorization\AbstractVoter;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use App\Siklid\Application\Contract\Entity\UserInterface;
-
-class BoxVoter extends AbstractVoter
-{
-    protected $supportedClass = Box::class;
-
-    protected $supportedAttributes = [
-        'view',
-        'edit',
-        'delete',
-    ];
-
-    protected function canView(Box $box, UserInterface $user): bool
-    {
-        // ...
-    }
-
-    protected function canEdit(Box $box, UserInterface $user): bool
-    {
-        // ...
-    }
-    
-    protected function canDelete(Box $box, UserInterface $user): bool
-    {
-        // ...
-    }
-}
-```
+You can find an example of a voter in
+the `App\Siklid\Application\Flashcard\FlashcardVoter` [class](../../../src/Siklid/Application/Flashcard/FlashcardVoter.php).
