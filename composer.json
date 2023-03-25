@@ -27,7 +27,7 @@
     "symfony/runtime": "^6.2.5",
     "symfony/security-bundle": "^6.1.12",
     "symfony/serializer": "^6.2.5",
-    "symfony/validator": "^6.2.5",
+    "symfony/validator": "^6.2.7",
     "symfony/yaml": "^6.2.7",
     "voku/portable-ascii": "^2.0.1"
   },
