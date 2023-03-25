@@ -15,6 +15,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 abstract class AbstractVoter extends Voter
 {
+    public const CREATE = 'create';
+    public const READ = 'read';
+    public const UPDATE = 'update';
+    public const DELETE = 'delete';
+
     /**
      * @var string[] the attributes that this voter supports
      */
