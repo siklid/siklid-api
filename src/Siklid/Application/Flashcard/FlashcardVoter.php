@@ -22,6 +22,7 @@ final class FlashcardVoter extends AbstractVoter
         self::CREATE,
         self::READ,
         self::UPDATE,
+        self::DELETE,
     ];
 
     public function canCreate(): bool
@@ -35,6 +36,11 @@ final class FlashcardVoter extends AbstractVoter
     }
 
     public function canUpdate(Flashcard $flashcard, User $user): bool
+    {
+        return $flashcard->getUser()->getId() === $user->getId();
+    }
+
+    public function canDelete(Flashcard $flashcard, User $user): bool
     {
         return $flashcard->getUser()->getId() === $user->getId();
     }
