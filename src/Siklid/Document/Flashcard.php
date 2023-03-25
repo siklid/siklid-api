@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Siklid\Document;
 
-use App\Siklid\Application\Contract\Entity\FlashCardInterface;
+use App\Siklid\Application\Contract\Entity\FlashcardInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 #[MongoDB\Document(collection: 'flashcards')]
-class Flashcard implements FlashCardInterface
+class Flashcard implements FlashcardInterface
 {
     #[MongoDB\Id]
     #[Groups(['flashcard:read', 'flashcard:delete', 'flashcard:create', 'flashcard:index'])]
