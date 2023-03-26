@@ -6,7 +6,7 @@ namespace App\Siklid\Application\Flashcard;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Validation\ValidatorInterface as Validator;
-use App\Siklid\Application\Contract\Entity\FlashCardInterface;
+use App\Siklid\Application\Contract\Entity\FlashcardInterface;
 use App\Siklid\Application\Flashcard\Request\CreateFlashcardRequest as Request;
 use App\Siklid\Document\Box;
 use App\Siklid\Document\Flashcard;
@@ -31,7 +31,7 @@ class CreateFlashcard extends AbstractAction
         $this->userResolver = $userResolver;
     }
 
-    public function execute(): FlashCardInterface
+    public function execute(): FlashcardInterface
     {
         $flashcard = new Flashcard();
         $flashcard->setUser($this->userResolver->getUser());
