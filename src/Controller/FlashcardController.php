@@ -16,7 +16,7 @@ class FlashcardController extends ApiController
     #[Route('/flashcards/{id}', name: 'flashcard_show', methods: ['GET'])]
     public function show(ViewFlashcard $action, Flashcard $flashcard): JsonResponse
     {
-        return $this->ok($action->setFlashcard($flashcard)->execute(), ['box:show', 'resource:read']);
+        return $this->ok($action->setFlashcard($flashcard)->execute(), ['flashcard:read', 'resource:read']);
     }
 
     #[Route('/flashcards', name: 'flashcard_store', methods: ['POST'])]
