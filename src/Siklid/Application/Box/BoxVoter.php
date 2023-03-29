@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Siklid\Security\Voter;
+namespace App\Siklid\Application\Box;
 
 use App\Foundation\Exception\LogicException;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
