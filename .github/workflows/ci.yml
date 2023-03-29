@@ -53,7 +53,7 @@ jobs:
         run: "sh ./bin/keypair.sh"
 
       - name: "Tests"
-        run: "composer test"
+        run: "composer test -- --fail-on-warning"
 
   static-analysis-psalm:
     name: "Static Analysis by Psalm"

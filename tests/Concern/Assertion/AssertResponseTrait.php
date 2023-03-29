@@ -63,6 +63,14 @@ trait AssertResponseTrait
     }
 
     /**
+     * Asserts that the response status code is 401.
+     */
+    protected function assertResponseIsUnAuthorized(string $message = ''): void
+    {
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED, $message);
+    }
+
+    /**
      * Assert that the response has validation errors.
      */
     protected function assertResponseHasValidationError(?string $key = null, ?string $error = null): void
