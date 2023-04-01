@@ -20,7 +20,7 @@ The API is build using PHP (Symfony) and MongoDB.
     * Routing
     * Controllers
     * Request
-    * Validation
+    * [Validation](./basic-workflow/validation.md)
     * Error Handling
     * Logging
     * Response
