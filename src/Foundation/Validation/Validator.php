@@ -24,7 +24,10 @@ final class Validator implements AppValidator
         $this->validator = $validator;
     }
 
-    public function validate(
+    /**
+     * {@inheritdoc}
+     */
+    public function stopUnlessValid(
         mixed $value,
         Constraint|array $constraints = null,
         string|GroupSequence|array $groups =
