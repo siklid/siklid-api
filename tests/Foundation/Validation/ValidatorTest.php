@@ -6,14 +6,25 @@ namespace App\Tests\Foundation\Validation;
 
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\Validation\Validator;
+use App\Foundation\Validation\ValidatorInterface;
 use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator;
 
 class ValidatorTest extends TestCase
 {
     use KernelTestCaseTrait;
+
+    private ValidatorInterface $sut;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $validator = $this->container()->get(SymfonyValidator::class);
+        $this->sut = new Validator($validator);
+    }
 
     /**
      * @test
@@ -22,10 +33,7 @@ class ValidatorTest extends TestCase
     {
         $this->expectException(ValidationException::class);
 
-        $validator = $this->container()->get(ValidatorInterface::class);
-        $sut = new Validator($validator);
-
-        $sut->stopUnlessValid(new Foo());
+        $this->sut->stopUnlessValid(new Foo());
     }
 
     /**
@@ -33,11 +41,9 @@ class ValidatorTest extends TestCase
      */
     public function stop_unless_valid_with_valid_data(): void
     {
-        $validator = $this->container()->get(ValidatorInterface::class);
-        $sut = new Validator($validator);
+        $this->expectNotToPerformAssertions();
 
-        $violations = $sut->stopUnlessValid(new Foo('foo'));
-        $this->assertCount(0, $violations);
+        $this->sut->stopUnlessValid(new Foo('foo'));
     }
 }
 

@@ -8,7 +8,6 @@ use App\Foundation\Exception\ValidationException;
 use App\Foundation\Validation\ValidatorInterface as AppValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\GroupSequence;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -32,7 +31,7 @@ final class Validator implements AppValidator
         Constraint|array $constraints = null,
         string|GroupSequence|array $groups =
         null
-    ): ConstraintViolationListInterface {
+    ): void {
         $violations = $this->validator->validate(
             $value,
             $constraints,
@@ -44,7 +43,5 @@ final class Validator implements AppValidator
             $validationException->setViolationList($violations);
             throw $validationException;
         }
-
-        return $violations;
     }
 }
