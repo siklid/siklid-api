@@ -45,7 +45,7 @@ abstract class AbstractVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (! in_array($attribute, $this->supportedAttributes)) {
+        if (! in_array($attribute, $this->supportedAttributes, true)) {
             return false;
         }
 

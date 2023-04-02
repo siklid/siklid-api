@@ -4,50 +4,33 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Box;
 
-use App\Foundation\Exception\LogicException;
+use App\Foundation\Security\Authorization\AbstractVoter;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-final class BoxVoter extends Voter
+final class BoxVoter extends AbstractVoter
 {
-    public const VIEW = 'view';
-    public const DELETE = 'delete';
-    public const UPDATE = 'update';
+    /**
+     * @var class-string the subject that this voter supports
+     */
+    protected string $supportedClass = BoxInterface::class;
 
-    protected function supports(string $attribute, mixed $subject): bool
+    /**
+     * @var string[] the attributes that this voter supports
+     */
+    protected array $supportedAttributes = [
+        self::CREATE,
+        self::READ,
+        self::UPDATE,
+        self::DELETE,
+    ];
+
+    public function canCreate(): bool
     {
-        if (! in_array($attribute, [self::VIEW, self::DELETE, self::UPDATE])) {
-            return false;
-        }
-
-        if (! $subject instanceof BoxInterface) {
-            return false;
-        }
-
         return true;
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
-    {
-        $user = $token->getUser();
-        if (! $user instanceof UserInterface) {
-            return false;
-        }
-
-        /** @var BoxInterface $box */
-        $box = $subject;
-
-        return match ($attribute) {
-            self::VIEW => $this->canView($box, $user),
-            self::DELETE => $this->canDelete($box, $user),
-            self::UPDATE => $this->canUpdate($box, $user),
-            default => throw new LogicException('This code should not be reached!'),
-        };
-    }
-
-    public function canView(BoxInterface $box, UserInterface $user): bool
+    public function canRead(BoxInterface $box, UserInterface $user): bool
     {
         if (! $box->isDeleted()) {
             return true;
@@ -58,7 +41,7 @@ final class BoxVoter extends Voter
 
     public function canUpdate(BoxInterface $box, UserInterface $user): bool
     {
-        if (! $this->canView($box, $user)) {
+        if (! $this->canRead($box, $user)) {
             return false;
         }
 
