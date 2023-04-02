@@ -39,7 +39,7 @@ class CreateFlashcard extends AbstractAction
         $flashcard->setBack($this->request->back());
         $flashcard->setBoxes($this->boxes());
 
-        $this->validator->stopUnlessValid($flashcard);
+        $this->validator->abortUnlessValid($flashcard);
 
         $this->dm->persist($flashcard);
         $this->dm->flush();

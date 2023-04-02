@@ -25,7 +25,7 @@ interface ValidatorInterface
      *
      * @throws ValidationException When validation fails
      */
-    public function stopUnlessValid(
+    public function abortUnlessValid(
         mixed $value,
         Constraint|array $constraints = null,
         string|GroupSequence|array $groups = null

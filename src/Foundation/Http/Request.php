@@ -113,7 +113,7 @@ class Request
             null,
             $this->allowExtraFields()
         );
-        $validator->stopUnlessValid($this->all(), $constraint);
+        $validator->abortUnlessValid($this->all(), $constraint);
     }
 
     /**

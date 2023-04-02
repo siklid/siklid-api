@@ -39,7 +39,7 @@ final class CreateBox extends AbstractAction
         $box->setUser($this->userResolver->getUser());
         $box->setHashtags(extract_hashtags((string)$box->getDescription()));
 
-        $this->validator->stopUnlessValid($box);
+        $this->validator->abortUnlessValid($box);
 
         $this->dm->persist($box);
         $this->dm->flush();

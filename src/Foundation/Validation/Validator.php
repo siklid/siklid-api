@@ -26,7 +26,7 @@ final class Validator implements AppValidator
     /**
      * {@inheritdoc}
      */
-    public function stopUnlessValid(
+    public function abortUnlessValid(
         mixed $value,
         Constraint|array $constraints = null,
         string|GroupSequence|array $groups =

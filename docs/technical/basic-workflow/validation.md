@@ -2,7 +2,7 @@
 
 Siklid uses the [Symfony validator](https://symfony.com/doc/current/components/validator.html) to validate the data and
 the object states. This is done by injecting the `\App\Foundation\Validation\ValidatorInterface` into your action class,
-and then calling the `stopUnlessValid` method.
+and then calling the `abortUnlessValid` method.
 
 If the validation fails, an exception is thrown, and the action is not executed. Don't worry, the exception is caught
 by the framework, and the response is returned to the client.
@@ -25,14 +25,14 @@ class CreateBox extends AbstractAction
     
     private function validateSomeEntity(Box $box): void
     {
-        $this->validator->stopUnlessValid($box);
+        $this->validator->abortUnlessValid($box);
         // Or you can pass the validation rules as the second argument.
-        $this->validator->stopUnlessValid($box, [
+        $this->validator->abortUnlessValid($box, [
             'name' => new Assert\NotBlank(),
             'color' => new Assert\NotBlank(),
         ]);
         // Or you can pass the validation groups as the third argument.
-        $this->validator->stopUnlessValid($box, [], ['create']);
+        $this->validator->abortUnlessValid($box, [], ['create']);
     }
 }
 ```

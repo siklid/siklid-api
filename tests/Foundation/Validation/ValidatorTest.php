@@ -33,7 +33,7 @@ class ValidatorTest extends TestCase
     {
         $this->expectException(ValidationException::class);
 
-        $this->sut->stopUnlessValid(new Foo());
+        $this->sut->abortUnlessValid(new Foo());
     }
 
     /**
@@ -43,7 +43,7 @@ class ValidatorTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $this->sut->stopUnlessValid(new Foo('foo'));
+        $this->sut->abortUnlessValid(new Foo('foo'));
     }
 }
 
