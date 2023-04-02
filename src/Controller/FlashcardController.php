@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Foundation\Http\ApiController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Siklid\Application\Flashcard\ViewFlashcard;
 use App\Siklid\Application\Flashcard\CreateFlashcard;
 use App\Siklid\Application\Flashcard\DeleteFlashcard;
+use App\Siklid\Application\Flashcard\ViewFlashcard;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class FlashcardController extends ApiController
 {
