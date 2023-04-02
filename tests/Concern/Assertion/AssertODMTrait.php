@@ -29,6 +29,12 @@ trait AssertODMTrait
         $this->assertNull($object, 'Failed asserting that the document does not exist.');
     }
 
+    protected function assertSoftDeleted(object $document): void
+    {
+        $this->assertNotNull($document->getDeletedAt());
+        $this->assertExists(get_class($document), ['id' => $document->getId()]);
+    }
+
     /**
      * Asserts that the given collection is empty.
      */

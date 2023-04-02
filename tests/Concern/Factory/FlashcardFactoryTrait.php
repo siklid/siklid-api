@@ -6,6 +6,7 @@ namespace App\Tests\Concern\Factory;
 
 use App\Siklid\Document\Flashcard;
 use App\Siklid\Document\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * This trait is used to create flashcards for testing purposes.
@@ -18,9 +19,10 @@ trait FlashcardFactoryTrait
     {
         $flashcard = new Flashcard();
 
-        $flashcard->setFront($attributes['front'] ?? $this->faker()->sentence());
-        $flashcard->setBack($attributes['back'] ?? $this->faker()->sentence());
-        $flashcard->setUser($attributes['user'] ?? new User());
+        $flashcard->setUser($attributes['user']);
+        $flashcard->setFront($attributes['front'] ?? $this->faker->sentence());
+        $flashcard->setBack($attributes['back'] ?? $this->faker->sentence());
+        $flashcard->setBoxes($attributes['boxes'] ?? new ArrayCollection());
 
         $this->touchCollection(Flashcard::class);
 
