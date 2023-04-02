@@ -26,13 +26,11 @@ class ViewFlashcardTest extends TestCase
         $this->persistDocument($user);
         $box = $this->makeBox(['user' => $user]);
         $this->persistDocument($box);
-
         $back = $this->faker->sentence();
         $front = $this->faker->sentence();
         $flashcard = $this->makeFlashcard(['front' => $front, 'back' => $back, 'user' => $user]);
         $flashcard->setBoxes(new ArrayCollection([$box]));
         $this->persistDocument($flashcard);
-
         $client->loginUser($user);
 
         $client->request('GET', '/api/v1/flashcards/'.$flashcard->getId());
