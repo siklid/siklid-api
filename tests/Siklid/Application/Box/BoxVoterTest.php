@@ -14,6 +14,16 @@ use App\Tests\TestCase;
  */
 class BoxVoterTest extends TestCase
 {
+    /** @test */
+    public function user_can_create_a_box(): void
+    {
+        $sut = new BoxVoter();
+
+        $actual = $sut->canCreate();
+
+        self::assertTrue($actual);
+    }
+
     /**
      * @test
      */
@@ -23,7 +33,7 @@ class BoxVoterTest extends TestCase
         $visitor = new User();
         $box = new Box();
 
-        $actual = $sut->canView($box, $visitor);
+        $actual = $sut->canRead($box, $visitor);
 
         self::assertTrue($actual);
     }
@@ -39,7 +49,7 @@ class BoxVoterTest extends TestCase
         $box->setUser(new User());
         $box->delete();
 
-        $actual = $sut->canView($box, $visitor);
+        $actual = $sut->canRead($box, $visitor);
 
         self::assertFalse($actual);
     }
@@ -55,7 +65,7 @@ class BoxVoterTest extends TestCase
         $box->setUser($user);
         $box->delete();
 
-        $actual = $sut->canView($box, $user);
+        $actual = $sut->canRead($box, $user);
 
         self::assertTrue($actual);
     }
