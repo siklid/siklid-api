@@ -7,16 +7,15 @@ namespace App\Controller;
 use App\Foundation\Http\ApiController;
 use App\Siklid\Application\Flashcard\CreateFlashcard;
 use App\Siklid\Application\Flashcard\ViewFlashcard;
-use App\Siklid\Document\Flashcard;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FlashcardController extends ApiController
 {
     #[Route('/flashcards/{id}', name: 'flashcard_show', methods: ['GET'])]
-    public function show(ViewFlashcard $action, Flashcard $flashcard): JsonResponse
+    public function show(ViewFlashcard $action): JsonResponse
     {
-        return $this->ok($action->setFlashcard($flashcard)->execute(), ['flashcard:read', 'resource:read']);
+        return $this->ok($action->execute(), ['flashcard:read', 'resource:read']);
     }
 
     #[Route('/flashcards', name: 'flashcard_store', methods: ['POST'])]
