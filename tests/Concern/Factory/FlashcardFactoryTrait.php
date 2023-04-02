@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Concern\Factory;
 
 use App\Siklid\Document\Flashcard;
-use App\Siklid\Document\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
