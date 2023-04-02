@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Siklid\Application\Flashcard;
 
 use App\Foundation\Http\Request;
+use App\Foundation\Security\Authorization\AuthorizationCheckerInterface;
 use App\Siklid\Application\Flashcard\DeleteFlashcard;
 use App\Siklid\Document\Flashcard;
 use App\Siklid\Document\User;
-use App\Siklid\Security\UserResolver;
 use App\Tests\TestCase;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
@@ -29,9 +29,8 @@ class DeleteFlashcardTest extends TestCase
         $repository->method('find')->willReturn($flashcard);
         $user = $this->createMock(User::class);
         $flashcard->method('getUser')->willReturn($user);
-        $userResolver = $this->createMock(UserResolver::class);
-        $userResolver->method('getUser')->willReturn($user);
-        $sut = new DeleteFlashcard($request, $documentManager, $userResolver);
+        $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $sut = new DeleteFlashcard($request, $documentManager, $authChecker);
 
         $flashcard->expects($this->once())->method('delete');
 
@@ -47,8 +46,8 @@ class DeleteFlashcardTest extends TestCase
         $repository = $this->createMock(DocumentRepository::class);
         $documentManager->method('getRepository')->willReturn($repository);
         $repository->method('find')->willReturn(null);
-        $userResolver = $this->createMock(UserResolver::class);
-        $sut = new DeleteFlashcard($request, $documentManager, $userResolver);
+        $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $sut = new DeleteFlashcard($request, $documentManager, $authChecker);
 
         $this->expectException(NotFoundHttpException::class);
 
@@ -67,9 +66,9 @@ class DeleteFlashcardTest extends TestCase
         $repository->method('find')->willReturn($flashcard);
         $user = $this->createMock(User::class);
         $flashcard->method('getUser')->willReturn($user);
-        $userResolver = $this->createMock(UserResolver::class);
-        $userResolver->method('getUser')->willReturn($this->createMock(User::class));
-        $sut = new DeleteFlashcard($request, $documentManager, $userResolver);
+        $authChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authChecker->method('denyAccessUnlessGranted')->willThrowException(new UnauthorizedHttpException(''));
+        $sut = new DeleteFlashcard($request, $documentManager, $authChecker);
 
         $this->expectException(UnauthorizedHttpException::class);
 

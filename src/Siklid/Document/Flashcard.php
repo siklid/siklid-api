@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use App\Foundation\Exception\LogicException;
+use App\Foundation\Security\Authorization\AuthorizableInterface;
 use App\Siklid\Application\Contract\Entity\FlashcardInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 use DateTimeImmutable;
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[MongoDB\Document(collection: 'flashcards')]
 #[MongoDB\HasLifecycleCallbacks]
-class Flashcard implements FlashcardInterface
+class Flashcard implements FlashcardInterface, AuthorizableInterface
 {
     #[MongoDB\Id]
     #[Groups(['flashcard:read', 'flashcard:delete', 'flashcard:create', 'flashcard:index'])]
@@ -178,5 +179,15 @@ class Flashcard implements FlashcardInterface
         }
 
         throw new LogicException('Box is already deleted');
+    }
+
+    public function getHumanReadableName(): string
+    {
+        return 'Flashcard';
+    }
+
+    public function getKeyName(): string
+    {
+        return 'flashcard';
     }
 }
