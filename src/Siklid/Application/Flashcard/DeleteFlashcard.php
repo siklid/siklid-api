@@ -6,7 +6,7 @@ namespace App\Siklid\Application\Flashcard;
 
 use App\Foundation\Action\AbstractAction;
 use App\Foundation\Http\Request;
-use App\Foundation\Security\Authorization\AuthorizationCheckerInterface as AuthChecker;
+use App\Foundation\Security\Authorization\AuthorizationCheckerInterface as Auth;
 use App\Siklid\Application\Contract\Entity\FlashcardInterface;
 use App\Siklid\Document\Flashcard;
 use Doctrine\ODM\MongoDB\DocumentManager as DM;
@@ -16,13 +16,13 @@ class DeleteFlashcard extends AbstractAction
 {
     private Request $request;
     private DM $dm;
-    private AuthChecker $authChecker;
+    private Auth $auth;
 
-    public function __construct(Request $request, DM $dm, AuthChecker $authChecker)
+    public function __construct(Request $request, DM $dm, Auth $auth)
     {
         $this->request = $request;
         $this->dm = $dm;
-        $this->authChecker = $authChecker;
+        $this->auth = $auth;
     }
 
     public function execute(): FlashcardInterface
@@ -34,7 +34,7 @@ class DeleteFlashcard extends AbstractAction
             throw new NotFoundHttpException('Flashcard not found');
         }
 
-        $this->authChecker->denyAccessUnlessGranted('delete', $flashcard);
+        $this->auth->denyAccessUnlessGranted('delete', $flashcard);
 
         $flashcard->delete();
         $this->dm->persist($flashcard);
