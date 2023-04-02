@@ -7,6 +7,9 @@ namespace App\Tests\Concern\Factory;
 use App\Siklid\Document\Flashcard;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * This trait is used to create flashcards for testing purposes.
+ */
 trait FlashcardFactoryTrait
 {
     use FactoryConcern;
