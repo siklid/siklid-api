@@ -203,7 +203,7 @@ class RequestTest extends TestCase
         $constraint = new Assert\Collection([], null, null, true);
         $validator = $this->createMock(ValidatorInterface::class);
         $validator->expects($this->once())
-            ->method('validate')
+            ->method('abortUnlessValid')
             ->with([], $constraint);
         $sut = new Sut($this->requestStack, new RequestUtil($this->json, $validator));
         $this->requestStack->push(new Request());

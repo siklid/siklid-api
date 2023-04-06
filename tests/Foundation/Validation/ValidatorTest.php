@@ -6,38 +6,44 @@ namespace App\Tests\Foundation\Validation;
 
 use App\Foundation\Exception\ValidationException;
 use App\Foundation\Validation\Validator;
+use App\Foundation\Validation\ValidatorInterface;
 use App\Tests\Concern\KernelTestCaseTrait;
 use App\Tests\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidator;
 
 class ValidatorTest extends TestCase
 {
     use KernelTestCaseTrait;
 
-    /**
-     * @test
-     */
-    public function validate_with_invalid_data(): void
+    private ValidatorInterface $sut;
+
+    protected function setUp(): void
     {
-        $this->expectException(ValidationException::class);
+        parent::setUp();
 
-        $validator = $this->container()->get(ValidatorInterface::class);
-        $sut = new Validator($validator);
-
-        $sut->validate(new Foo());
+        $validator = $this->container()->get(SymfonyValidator::class);
+        $this->sut = new Validator($validator);
     }
 
     /**
      * @test
      */
-    public function validate_with_valid_data(): void
+    public function stop_unless_valid_with_invalid_data(): void
     {
-        $validator = $this->container()->get(ValidatorInterface::class);
-        $sut = new Validator($validator);
+        $this->expectException(ValidationException::class);
 
-        $violations = $sut->validate(new Foo('foo'));
-        $this->assertCount(0, $violations);
+        $this->sut->abortUnlessValid(new Foo());
+    }
+
+    /**
+     * @test
+     */
+    public function stop_unless_valid_with_valid_data(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $this->sut->abortUnlessValid(new Foo('foo'));
     }
 }
 
