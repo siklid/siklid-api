@@ -5,52 +5,39 @@ declare(strict_types=1);
 namespace App\Siklid\Application\Box;
 
 use App\Foundation\Action\AbstractAction;
-use App\Foundation\Http\Request;
-use App\Foundation\Security\Authorization\AbstractVoter;
-use App\Foundation\Security\Authorization\AuthorizationCheckerInterface as Auth;
+use App\Foundation\Exception\SiklidException;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
-use App\Siklid\Document\Box;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\LockException;
-use Doctrine\ODM\MongoDB\Mapping\MappingException;
-use Doctrine\ODM\MongoDB\MongoDBException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DeleteBox extends AbstractAction
 {
+    private ?BoxInterface $box;
     private DocumentManager $dm;
-    private Request $request;
-    private Auth $auth;
 
-    public function __construct(DocumentManager $dm, Request $request, Auth $auth)
+    public function __construct(DocumentManager $dm, ?BoxInterface $box = null)
     {
         $this->dm = $dm;
-        $this->request = $request;
-        $this->auth = $auth;
+        $this->box = $box;
     }
 
-    /**
-     * @throws MappingException
-     * @throws MongoDBException
-     * @throws LockException
-     */
     public function execute(): BoxInterface
     {
-        $boxRepository = $this->dm->getRepository(Box::class);
-        $boxId = (string)$this->request->get('id');
-        $box = $boxRepository->find($boxId);
-
-        if (! $box) {
-            throw new NotFoundHttpException('Box not found');
+        if (null === $this->box) {
+            throw new SiklidException('Box is not set');
         }
 
-        $this->auth->denyAccessUnlessGranted(AbstractVoter::DELETE, $box);
+        $this->box->delete();
 
-        $box->delete();
-
-        $this->dm->persist($box);
+        $this->dm->persist($this->box);
         $this->dm->flush();
 
-        return $box;
+        return $this->box;
+    }
+
+    public function setBox(BoxInterface $box): self
+    {
+        $this->box = $box;
+
+        return $this;
     }
 }

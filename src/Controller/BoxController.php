@@ -8,6 +8,8 @@ use App\Foundation\Http\ApiController;
 use App\Siklid\Application\Box\CreateBox;
 use App\Siklid\Application\Box\DeleteBox;
 use App\Siklid\Application\Box\ListBoxes;
+use App\Siklid\Document\Box;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,9 +22,10 @@ class BoxController extends ApiController
     }
 
     #[Route('/boxes/{id}', name: 'box_delete', methods: ['DELETE'])]
-    public function delete(DeleteBox $action): Response
+    #[IsGranted('delete', subject: 'box')]
+    public function delete(DeleteBox $action, Box $box): Response
     {
-        return $this->ok($action->execute(), ['box:delete']);
+        return $this->ok($action->setBox($box)->execute(), ['box:delete']);
     }
 
     #[Route('/boxes', name: 'box_index', methods: ['GET'])]

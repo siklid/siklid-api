@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Siklid\Document;
 
 use App\Foundation\Exception\LogicException;
-use App\Foundation\Security\Authorization\AuthorizableInterface;
 use App\Foundation\Validation\Constraint as AppAssert;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
@@ -26,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[MongoDB\Document(collection: 'boxes', repositoryClass: BoxRepository::class)]
 #[MongoDB\HasLifecycleCallbacks]
-class Box implements BoxInterface, AuthorizableInterface
+class Box implements BoxInterface
 {
     #[MongoDB\Id]
     #[Groups(['box:read', 'box:delete', 'box:create', 'box:index', 'resource:read'])]
@@ -229,15 +228,5 @@ class Box implements BoxInterface, AuthorizableInterface
     public function setClock(): void
     {
         $this->clock = SystemClock::fromSystemTimezone();
-    }
-
-    public function getHumanReadableName(): string
-    {
-        return 'Box';
-    }
-
-    public function getKeyName(): string
-    {
-        return 'box';
     }
 }
