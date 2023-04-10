@@ -36,7 +36,7 @@
     "friendsofphp/php-cs-fixer": "^3.14.2",
     "phpunit/phpunit": "^9.6.4",
     "psalm/plugin-phpunit": "^0.18.4",
-    "psalm/plugin-symfony": "^4.0.2",
+    "psalm/plugin-symfony": "^4.0.3",
     "roave/security-advisories": "dev-latest",
     "symfony/browser-kit": "^6.2",
     "symfony/css-selector": "^6.2",
