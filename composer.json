@@ -82,7 +82,7 @@
   "scripts": {
     "check-style": "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --format=txt --verbose",
     "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-    "psalm": "vendor/bin/psalm --show-info=true --no-cache --shepherd --stats",
+    "psalm": "vendor/bin/psalm --show-info=true",
     "test": "php bin/phpunit --testdox",
     "console": "php bin/console",
     "auto-scripts": {
