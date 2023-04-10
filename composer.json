@@ -35,14 +35,14 @@
     "friendsofphp/php-cs-fixer": "^3.14.2",
     "phpunit/phpunit": "^9.6.4",
     "psalm/plugin-phpunit": "^0.18.4",
-    "psalm/plugin-symfony": "^4.0.3",
+    "psalm/plugin-symfony": "^5.0",
     "roave/security-advisories": "dev-latest",
     "symfony/browser-kit": "^6.2",
     "symfony/css-selector": "^6.2",
     "symfony/maker-bundle": "^1.48",
     "symfony/phpunit-bridge": "^6.2.7",
     "symfony/var-dumper": "^6.2",
-    "vimeo/psalm": "^4.30"
+    "vimeo/psalm": "^5.9"
   },
   "config": {
     "platform": {
@@ -82,7 +82,7 @@
   "scripts": {
     "check-style": "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --format=txt --verbose",
     "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-    "psalm": "vendor/bin/psalm --show-info=true --no-cache --shepherd --stats",
+    "psalm": "vendor/bin/psalm --show-info=true --no-progress",
     "test": "php bin/phpunit --testdox",
     "console": "php bin/console",
     "auto-scripts": {

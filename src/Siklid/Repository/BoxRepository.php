@@ -10,6 +10,9 @@ use App\Siklid\Application\Contract\Entity\UserInterface;
 use App\Siklid\Document\Box;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
+/**
+ * @template-extends DocumentRepository<Box>
+ */
 class BoxRepository extends DocumentRepository
 {
     public function PaginateAfter(string $after = '', ?string $hashtag = null, int $perPage = 25): PageInterface
