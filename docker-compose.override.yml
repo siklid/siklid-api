@@ -28,5 +28,13 @@ services:
       - ./public:/srv/app/public:ro
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
