@@ -28,11 +28,16 @@ services:
       - ./public:/srv/app/public:ro
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+  ###> symfony/mercure-bundle ###
+  ###< symfony/mercure-bundle ###
 
-###> symfony/mailer ###
+  ###> symfony/mailer ###
   mailer:
     image: schickling/mailcatcher
-    ports: ["1025", "1080"]
+    container_name: siklid_mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    networks:
+      - siklid_network
 ###< symfony/mailer ###
