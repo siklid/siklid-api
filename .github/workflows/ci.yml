@@ -1,5 +1,3 @@
-# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
-
 name: "Continuous Integration"
 
 on:
@@ -10,26 +8,17 @@ jobs:
   phpunit:
     name: "PHPUnit tests"
 
-    runs-on: ${{ matrix.operating-system }}
-
-    strategy:
-      matrix:
-        dependencies:
-          - "locked"
-        php-version:
-          - "8.2"
-        operating-system:
-          - "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v3"
+        uses: actions/checkout@v3
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
           coverage: "pcov"
-          php-version: "${{ matrix.php-version }}"
+          php-version: "8.2"
           ini-values: memory_limit=-1
           extensions: sodium, fileinfo, redis
 
@@ -45,80 +34,62 @@ jobs:
           redis-version: 7.0
 
       - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
+        uses: ramsey/composer-install@v2
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
+          dependency-versions: "locked"
 
       - name: "Generate openssl keys"
-        run: "sh ./bin/keypair.sh"
+        run: sh ./bin/keypair.sh
 
       - name: "Tests"
-        run: "composer test -- --fail-on-warning"
+        run: composer test -- --fail-on-warning
 
   static-analysis-psalm:
     name: "Static Analysis by Psalm"
 
-    runs-on: ${{ matrix.operating-system }}
-
-    strategy:
-      matrix:
-        dependencies:
-          - "locked"
-        php-version:
-          - "8.2"
-        operating-system:
-          - "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v3"
+        uses: actions/checkout@v3
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
           coverage: "none"
-          php-version: "${{ matrix.php-version }}"
+          php-version: "8.2"
           ini-values: memory_limit=-1
           extensions: sodium, fileinfo, redis
 
       - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
+        uses: ramsey/composer-install@v2
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
+          dependency-versions: "locked"
 
       - name: "psalm"
-        run: "composer psalm"
+        run: composer psalm
 
   coding-standards:
     name: "Check Coding Standards"
 
-    runs-on: ${{ matrix.operating-system }}
-
-    strategy:
-      matrix:
-        dependencies:
-          - "locked"
-        php-version:
-          - "8.2"
-        operating-system:
-          - "ubuntu-latest"
+    runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v3"
+        uses: actions/checkout@v3
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
           coverage: "none"
-          php-version: "${{ matrix.php-version }}"
+          php-version: "8.2"
           ini-values: memory_limit=-1
           extensions: sodium, fileinfo, redis
 
       - name: "Install dependencies"
-        uses: "ramsey/composer-install@v2"
+        uses: ramsey/composer-install@v2
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
+          dependency-versions: "locked"
 
       - name: "Coding Standard"
-        run: "composer check-style"
+        run: composer check-style
