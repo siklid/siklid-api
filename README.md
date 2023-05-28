@@ -11,4 +11,4 @@ Follow the [contributing guidelines](CONTRIBUTING.md).
 
 ## License
 
-Siklid is licensed under the [MIT License](LICENSE).
+Siklid is licensed under the [MIT License](LICENSE). FPP
