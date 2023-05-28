@@ -6,11 +6,6 @@ on:
   pull_request:
   push:
 
-env:
-  PHP_VERSION: "8.2"
-  OS: "ubuntu-latest"
-  DEPENDENCIES: "locked"
-
 jobs:
   phpunit:
     name: "PHPUnit tests"
@@ -20,11 +15,11 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - ${{ env.DEPENDENCIES }}
+          - "locked"
         php-version:
-          - ${{ env.PHP_VERSION }}
+          - "8.2"
         operating-system:
-          - ${{ env.OS }}
+          - "ubuntu-latest"
 
     steps:
       - name: "Checkout"
@@ -68,11 +63,11 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - ${{ env.DEPENDENCIES }}
+          - "locked"
         php-version:
-          - ${{ env.PHP_VERSION }}
+          - "8.2"
         operating-system:
-          - ${{ env.OS }}
+          - "ubuntu-latest"
 
     steps:
       - name: "Checkout"
@@ -102,11 +97,11 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - ${{ env.DEPENDENCIES }}
+          - "locked"
         php-version:
-          - ${{ env.PHP_VERSION }}
+          - "8.2"
         operating-system:
-          - ${{ env.OS }}
+          - "ubuntu-latest"
 
     steps:
       - name: "Checkout"
