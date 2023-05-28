@@ -80,8 +80,8 @@
     "symfony/polyfill-php81": "*"
   },
   "scripts": {
-    "check-style": "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --format=txt --verbose",
-    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "check-style": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --format=txt --verbose",
+    "format": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --allow-risky=yes",
     "psalm": "vendor/bin/psalm --show-info=true --no-progress",
     "test": "php bin/phpunit --testdox",
     "console": "php bin/console",
