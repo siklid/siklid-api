@@ -1,5 +1,7 @@
 #syntax=docker/dockerfile:1.4
 
+#dunglas/symfony-docker latest commit: d05206ba37c6be7292e01b4caf563fb98e584f42
+
 # The different stages of this Dockerfile are meant to be built into separate images
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
 # https://docs.docker.com/compose/compose-file/#target
