@@ -6,10 +6,10 @@ namespace App\Siklid\Application\Auth\Request;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
-use Symblaze\Bundle\Http\Request\Request;
+use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class RegisterRequest extends Request
+final class RegisterRequest extends ValidatAbleRequest
 {
     /**
      * @return array<string, mixed>
@@ -32,7 +32,7 @@ final class RegisterRequest extends Request
         return $data;
     }
 
-    protected function constraints(): array
+    public function constraints(): array
     {
         $notBlank = new Assert\NotBlank();
 

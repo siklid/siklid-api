@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Box\Request;
 
-use Symblaze\Bundle\Http\Request\Request;
+use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateBoxRequest extends Request
+final class CreateBoxRequest extends ValidatAbleRequest
 {
-    protected function constraints(): array
+    public function constraints(): array
     {
         return [
             'name' => [new Assert\NotBlank()],

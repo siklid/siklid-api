@@ -6,10 +6,10 @@ namespace App\Siklid\Application\Auth\Request;
 
 use App\Foundation\Validation\Constraint\Exists;
 use App\Siklid\Document\RefreshToken;
-use Symblaze\Bundle\Http\Request\Request;
+use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class LogoutRequest extends Request
+final class LogoutRequest extends ValidatAbleRequest
 {
     public function refreshToken(): string
     {
@@ -23,7 +23,7 @@ final class LogoutRequest extends Request
         return str_replace('Bearer ', '', $accessToken);
     }
 
-    protected function constraints(): array
+    public function constraints(): array
     {
         $notBlank = new Assert\NotBlank();
         $exist = new Exists(RefreshToken::class, 'refreshToken');

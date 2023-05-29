@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Flashcard\Request;
 
-use App\Foundation\Http\Request;
+use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateFlashcardRequest extends Request
+class CreateFlashcardRequest extends ValidatAbleRequest
 {
-    protected function constraints(): array
+    public function constraints(): array
     {
         $notBlank = new Assert\NotBlank();
 
@@ -32,7 +32,7 @@ class CreateFlashcardRequest extends Request
 
     public function front(): ?string
     {
-        $front = $this->get('front');
+        $front = $this->input('front');
         assert(is_string($front) || is_null($front));
 
         return $front;
@@ -40,6 +40,6 @@ class CreateFlashcardRequest extends Request
 
     public function back(): string
     {
-        return (string)$this->get('back');
+        return (string)$this->input('back');
     }
 }
