@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "905c958d79f05cb4c4f70015455f905f",
+    "content-hash": "7275be2f119e5b3c29e35778d4ea373f",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1965,6 +1965,57 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
             "time": "2021-07-14T16:46:02+00:00"
+        },
+        {
+            "name": "symblaze/http-bundle",
+            "version": "0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symblaze/http-bundle.git",
+                "reference": "c1548036775a9a216e0d41258e5ebecabc0a0b70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symblaze/http-bundle/zipball/c1548036775a9a216e0d41258e5ebecabc0a0b70",
+                "reference": "c1548036775a9a216e0d41258e5ebecabc0a0b70",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2",
+                "symfony/config": "^6.2",
+                "symfony/dependency-injection": "^6.2",
+                "symfony/http-kernel": "^6.2",
+                "symfony/validator": "^6.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.17",
+                "phpunit/phpunit": "^10.1",
+                "roave/security-advisories": "dev-latest",
+                "vimeo/psalm": "^5.12"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Symblaze\\Bundle\\Http\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dhemy",
+                    "email": "imdhemy@gmail.com"
+                }
+            ],
+            "description": "The SymBlaze HTTP bundle",
+            "support": {
+                "issues": "https://github.com/symblaze/http-bundle/issues",
+                "source": "https://github.com/symblaze/http-bundle/tree/0.x"
+            },
+            "time": "2023-05-29T06:06:21+00:00"
         },
         {
             "name": "symfony/cache",
@@ -9946,6 +9997,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "symblaze/http-bundle": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

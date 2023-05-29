@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Auth\Request;
 
-use App\Foundation\Http\Request;
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
+use Symblaze\Bundle\Http\Request\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class RegisterRequest extends Request
 {
-    public function formInput(): array
+    public function all(): array
     {
         $data = [];
-        if ($this->has('email') && ! empty($this->get('email'))) {
-            $data['email'] = Email::fromString((string)$this->get('email'));
+        if ($this->has('email') && ! empty($this->input('email'))) {
+            $data['email'] = Email::fromString((string)$this->input('email'));
         }
 
-        if ($this->has('username') && ! empty($this->get('username'))) {
-            $data['username'] = Username::fromString((string)$this->get('username'));
+        if ($this->has('username') && ! empty($this->input('username'))) {
+            $data['username'] = Username::fromString((string)$this->input('username'));
         }
 
-        if ($this->has('password') && ! empty($this->get('password'))) {
-            $data['password'] = (string)$this->get('password');
+        if ($this->has('password') && ! empty($this->input('password'))) {
+            $data['password'] = (string)$this->input('password');
         }
 
         return $data;

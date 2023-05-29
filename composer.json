@@ -16,6 +16,7 @@
     "lcobucci/clock": "^3.0",
     "lexik/jwt-authentication-bundle": "^2.18",
     "piscibus/php-hashtag": "^1.1",
+    "symblaze/http-bundle": "0.x-dev",
     "symfony/console": "^6.2",
     "symfony/dotenv": "^6.2",
     "symfony/flex": "^2.2",
@@ -83,7 +84,7 @@
     "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff --ansi",
     "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --ansi",
     "test": "phpunit --testdox",
-    "psalm": "psalm",
+    "psalm": "psalm --no-cache",
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"
