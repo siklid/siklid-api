@@ -1972,12 +1972,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symblaze/http-bundle.git",
-                "reference": "c1548036775a9a216e0d41258e5ebecabc0a0b70"
+                "reference": "0545f1f88d6be2993f1f8d56e8b811c902f68397"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symblaze/http-bundle/zipball/c1548036775a9a216e0d41258e5ebecabc0a0b70",
-                "reference": "c1548036775a9a216e0d41258e5ebecabc0a0b70",
+                "url": "https://api.github.com/repos/symblaze/http-bundle/zipball/0545f1f88d6be2993f1f8d56e8b811c902f68397",
+                "reference": "0545f1f88d6be2993f1f8d56e8b811c902f68397",
                 "shasum": ""
             },
             "require": {
@@ -2015,7 +2015,7 @@
                 "issues": "https://github.com/symblaze/http-bundle/issues",
                 "source": "https://github.com/symblaze/http-bundle/tree/0.x"
             },
-            "time": "2023-05-29T06:06:21+00:00"
+            "time": "2023-05-29T07:26:43+00:00"
         },
         {
             "name": "symfony/cache",

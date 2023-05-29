@@ -11,7 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class RegisterRequest extends Request
 {
-    public function all(): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function optimizedInput(): array
     {
         $data = [];
         if ($this->has('email') && ! empty($this->input('email'))) {
