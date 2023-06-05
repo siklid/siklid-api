@@ -8,6 +8,9 @@ use App\Foundation\Security\Authorization\AbstractVoter;
 use App\Siklid\Application\Contract\Entity\FlashcardInterface as Flashcard;
 use App\Siklid\Application\Contract\Entity\UserInterface as User;
 
+/**
+ * @extends AbstractVoter<string, Flashcard>
+ */
 final class FlashcardVoter extends AbstractVoter
 {
     /**
