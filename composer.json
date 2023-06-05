@@ -9,40 +9,40 @@
     "ext-iconv": "*",
     "ext-mongodb": "*",
     "ext-redis": "*",
-    "beberlei/assert": "^3.3",
+    "beberlei/assert": "^3.3.2",
     "doctrine/annotations": "^1.14",
     "doctrine/mongodb-odm-bundle": "^4.5",
     "gesdinet/jwt-refresh-token-bundle": "^1.1",
-    "lcobucci/clock": "^3.0",
-    "lexik/jwt-authentication-bundle": "^2.18",
+    "lcobucci/clock": "^3.1",
+    "lexik/jwt-authentication-bundle": "^2.19",
     "piscibus/php-hashtag": "^1.1",
-    "symfony/console": "^6.2",
-    "symfony/dotenv": "^6.2",
-    "symfony/flex": "^2.2",
-    "symfony/framework-bundle": "^6.2",
-    "symfony/mailer": "6.3.*",
-    "symfony/property-access": "^6.2",
-    "symfony/property-info": "^6.2",
-    "symfony/runtime": "^6.2",
-    "symfony/security-bundle": "^6.2",
-    "symfony/serializer": "^6.2",
-    "symfony/validator": "^6.2",
-    "symfony/yaml": "^6.2",
+    "symfony/console": "^6.3",
+    "symfony/dotenv": "^6.3",
+    "symfony/flex": "^2.3.1",
+    "symfony/framework-bundle": "^6.3",
+    "symfony/mailer": "^6.3",
+    "symfony/property-access": "^6.3",
+    "symfony/property-info": "^6.3",
+    "symfony/runtime": "^6.3",
+    "symfony/security-bundle": "^6.3",
+    "symfony/serializer": "^6.3",
+    "symfony/validator": "^6.3",
+    "symfony/yaml": "^6.3",
     "voku/portable-ascii": "^2.0"
   },
   "require-dev": {
-    "fakerphp/faker": "^1.21",
+    "fakerphp/faker": "^1.22",
     "friendsofphp/php-cs-fixer": "^3.14",
     "phpunit/phpunit": "^9.6",
     "psalm/plugin-phpunit": "^0.18",
     "psalm/plugin-symfony": "^5.0",
     "roave/security-advisories": "dev-latest",
-    "symfony/browser-kit": "^6.2",
-    "symfony/css-selector": "^6.2",
+    "symfony/browser-kit": "^6.3",
+    "symfony/css-selector": "^6.3",
     "symfony/maker-bundle": "^1.48",
-    "symfony/phpunit-bridge": "^6.2",
-    "symfony/var-dumper": "^6.2",
-    "vimeo/psalm": "^5.9"
+    "symfony/phpunit-bridge": "^6.3",
+    "symfony/var-dumper": "^6.3",
+    "vimeo/psalm": "^5.12"
   },
   "config": {
     "platform": {
@@ -101,7 +101,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": "true",
-      "require": "6.2.*"
+      "require": "6.3.*"
     }
   }
 }
