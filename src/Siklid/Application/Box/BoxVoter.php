@@ -8,6 +8,9 @@ use App\Foundation\Security\Authorization\AbstractVoter;
 use App\Siklid\Application\Contract\Entity\BoxInterface;
 use App\Siklid\Application\Contract\Entity\UserInterface;
 
+/**
+ * @extends AbstractVoter<string, BoxInterface>
+ */
 final class BoxVoter extends AbstractVoter
 {
     /**
