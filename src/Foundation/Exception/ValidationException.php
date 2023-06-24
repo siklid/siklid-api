@@ -37,7 +37,7 @@ class ValidationException extends SiklidException implements RenderableInterface
         return new JsonResponse([
             'message' => $this->getMessage(),
             'errors' => $this->formatErrorMessages(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     /**

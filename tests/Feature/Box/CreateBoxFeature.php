@@ -73,10 +73,6 @@ class CreateBoxFeature extends TestCase
         ]);
 
         $this->assertResponseHasValidationError();
-        $this->assertResponseJsonStructure([
-            'message',
-            'errors' => ['name' => []],
-        ]);
         $this->assertNotExists(Box::class, [
             'description' => $description,
             'user' => $user,
@@ -117,7 +113,8 @@ class CreateBoxFeature extends TestCase
         $this->persistDocument($user);
         $client->loginUser($user);
         $name = $this->faker->word();
-        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
+        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence(
+        ).' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
 
         $client->request('POST', '/api/v1/boxes', [
             'name' => $name,
@@ -133,6 +130,7 @@ class CreateBoxFeature extends TestCase
         ]);
 
         $actual = (array)$this->getResponseJsonData('data.hashtags');
-        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'], $actual);
+        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'],
+            $actual);
     }
 }

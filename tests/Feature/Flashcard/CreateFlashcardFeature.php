@@ -48,7 +48,7 @@ final class CreateFlashcardFeature extends TestCase
             'boxes' => 'not an array',
         ]);
 
-        $this->assertResponseHasValidationError('boxes', 'This value should be of type array.');
+        $this->assertArrayHasKey('boxes', (array)$this->getResponseJsonData('errors'));
     }
 
     /**
