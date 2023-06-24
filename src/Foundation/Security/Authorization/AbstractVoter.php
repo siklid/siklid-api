@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  * Abstract Voter
  * All Voters should extend this class. It provides some basic functionality
  * and makes sure that the voter source code is descriptive to the developer.
+ *
+ * @psalm-suppress MissingTemplateParam
  */
 abstract class AbstractVoter extends Voter
 {

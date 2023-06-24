@@ -61,6 +61,9 @@ class Config implements ConfigInterface
         return $this->config->has($key);
     }
 
+    /**
+     * @param UnitEnum|array|scalar|null $default
+     */
     private function getConfigOrDefault(string $key, mixed $default = null): mixed
     {
         try {
