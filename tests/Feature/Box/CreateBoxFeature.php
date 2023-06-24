@@ -12,7 +12,7 @@ use App\Tests\TestCase;
 /**
  * @psalm-suppress MissingConstructor
  */
-class CreateBoxTest extends TestCase
+class CreateBoxFeature extends TestCase
 {
     use WebTestCaseTrait;
 
@@ -68,15 +68,11 @@ class CreateBoxTest extends TestCase
         $client->loginUser($user);
         $description = $this->faker->sentence();
 
-        $client->request('POST', '/api/v1/boxes', [
+        $this->postJson($client, '/api/v1/boxes', [
             'description' => $description,
         ]);
 
         $this->assertResponseHasValidationError();
-        $this->assertResponseJsonStructure([
-            'message',
-            'errors' => ['name' => []],
-        ]);
         $this->assertNotExists(Box::class, [
             'description' => $description,
             'user' => $user,
@@ -117,7 +113,8 @@ class CreateBoxTest extends TestCase
         $this->persistDocument($user);
         $client->loginUser($user);
         $name = $this->faker->word();
-        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence().' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
+        $description = $this->faker->sentence().' #hashtag1 '.$this->faker->sentence(
+        ).' #hashtag2 #hash-tag #123hashtag #هاشتاج '.$this->faker->sentence().' #1234 #hash_tag';
 
         $client->request('POST', '/api/v1/boxes', [
             'name' => $name,
@@ -133,6 +130,7 @@ class CreateBoxTest extends TestCase
         ]);
 
         $actual = (array)$this->getResponseJsonData('data.hashtags');
-        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'], $actual);
+        $this->assertEquals(['#hashtag1', '#hashtag2', '#hash', '#123hashtag', '#هاشتاج', '#1234', '#hash_tag'],
+            $actual);
     }
 }

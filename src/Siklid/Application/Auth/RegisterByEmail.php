@@ -38,7 +38,7 @@ final class RegisterByEmail extends AbstractAction
      */
     public function execute(): User
     {
-        $user = $this->fill(User::class, $this->request->formInput());
+        $user = $this->fill(User::class, $this->request->optimizedInput());
         $user->setPassword($this->hash->hashPassword($user, $user->getPassword()));
 
         $this->dm->persist($user);

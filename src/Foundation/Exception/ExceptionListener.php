@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Foundation\Exception;
 
+use Symblaze\Bundle\Http\Exception\RenderableExceptionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -20,6 +21,12 @@ final class ExceptionListener
         $exception = $event->getThrowable();
 
         if ($exception instanceof RenderableInterface) {
+            $event->setResponse($exception->render());
+
+            return;
+        }
+
+        if ($exception instanceof RenderableExceptionInterface) {
             $event->setResponse($exception->render());
 
             return;

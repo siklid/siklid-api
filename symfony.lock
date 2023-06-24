@@ -73,6 +73,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "symblaze/http-bundle": {
+        "version": "0.x-dev"
+    },
     "symfony/console": {
         "version": "6.1",
         "recipe": {

@@ -6,6 +6,7 @@ namespace App\Tests\Concern;
 
 use App\Tests\Concern\Assertion\AssertResponseTrait;
 use App\Tests\Concern\Factory\UserFactoryTrait;
+use App\Tests\Concern\Util\JsonRequestTrait;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\Concern\Util\WithJson;
 use App\Tests\TestCase;
@@ -29,6 +30,7 @@ trait WebTestCaseTrait
     use WithJson;
     use UserFactoryTrait;
     use AssertResponseTrait;
+    use JsonRequestTrait;
 
     /**
      * Custom template method to tear down the test case.

@@ -75,7 +75,7 @@ trait AssertResponseTrait
      */
     protected function assertResponseHasValidationError(?string $key = null, ?string $error = null): void
     {
-        $this->assertResponseIsUnprocessableEntity();
+        $this->assertResponseIsBadRequest();
         if (null !== $key) {
             $errors = $this->getResponseJsonData('errors');
             self::assertArrayHasKey($key, $errors);

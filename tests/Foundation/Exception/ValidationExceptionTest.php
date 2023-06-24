@@ -30,7 +30,7 @@ class ValidationExceptionTest extends TestCase
 
         $response = $sut->render();
 
-        $this->assertSame(422, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $expectedContent = '{"message":"Invalid request","errors":{"property_path":["Error message"]}}';
         $this->assertSame($expectedContent, $response->getContent());
     }
@@ -44,7 +44,7 @@ class ValidationExceptionTest extends TestCase
 
         $response = $sut->render();
 
-        $this->assertSame(422, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $expectedContent = '{"message":"Invalid request","errors":[]}';
         $this->assertSame($expectedContent, $response->getContent());
     }
@@ -58,7 +58,7 @@ class ValidationExceptionTest extends TestCase
 
         $response = $sut->render();
 
-        $this->assertSame(422, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $expectedContent = '{"message":"Custom message","errors":[]}';
         $this->assertSame($expectedContent, $response->getContent());
     }

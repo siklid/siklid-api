@@ -9,7 +9,7 @@ use App\Tests\Concern\Factory\UserFactoryTrait;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
-class DeleteFlashCardTest extends TestCase
+class DeleteFlashCardFeature extends TestCase
 {
     use WebTestCaseTrait;
     use UserFactoryTrait;

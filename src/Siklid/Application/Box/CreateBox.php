@@ -35,7 +35,7 @@ final class CreateBox extends AbstractAction
 
     public function execute(): BoxInterface
     {
-        $box = $this->fill(Box::class, $this->request->formInput());
+        $box = $this->fill(Box::class, $this->request->all());
         $box->setUser($this->userResolver->getUser());
         $box->setHashtags(extract_hashtags((string)$box->getDescription()));
 

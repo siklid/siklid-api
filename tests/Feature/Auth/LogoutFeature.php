@@ -10,7 +10,7 @@ use App\Tests\Concern\Util\WithJson;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
-class LogoutTest extends TestCase
+class LogoutFeature extends TestCase
 {
     use WebTestCaseTrait;
     use UserFactoryTrait;
