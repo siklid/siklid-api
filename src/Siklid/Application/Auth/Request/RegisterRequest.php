@@ -6,7 +6,7 @@ namespace App\Siklid\Application\Auth\Request;
 
 use App\Foundation\ValueObject\Email;
 use App\Foundation\ValueObject\Username;
-use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
+use Symblaze\Bundle\Http\Request\ValidatableRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class RegisterRequest extends ValidatAbleRequest

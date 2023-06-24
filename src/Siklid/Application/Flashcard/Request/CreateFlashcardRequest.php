@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Siklid\Application\Flashcard\Request;
 
-use Symblaze\Bundle\Http\Request\ValidatAbleRequest;
+use Symblaze\Bundle\Http\Request\ValidatableRequest;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateFlashcardRequest extends ValidatAbleRequest
+class CreateFlashcardRequest extends ValidatableRequest
 {
     public function constraints(): array
     {
