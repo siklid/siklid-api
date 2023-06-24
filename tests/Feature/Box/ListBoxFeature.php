@@ -11,7 +11,7 @@ use App\Tests\TestCase;
 /**
  * @psalm-suppress MissingConstructor
  */
-class ListBoxTest extends TestCase
+class ListBoxFeature extends TestCase
 {
     use WebTestCaseTrait;
     use BoxFactoryTrait;

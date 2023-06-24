@@ -10,7 +10,7 @@ use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class ViewFlashcardTest extends TestCase
+class ViewFlashcardFeature extends TestCase
 {
     use WebTestCaseTrait;
     use FlashcardFactoryTrait;

@@ -12,7 +12,7 @@ use App\Tests\TestCase;
 /**
  * @psalm-suppress MissingConstructor
  */
-class DeleteBoxTest extends TestCase
+class DeleteBoxFeature extends TestCase
 {
     use WebTestCaseTrait;
     use BoxFactoryTrait;

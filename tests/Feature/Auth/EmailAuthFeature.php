@@ -18,7 +18,7 @@ use App\Tests\TestCase;
  *
  * @see            {https://github.com/piscibus/siklid-api/issues/43}
  */
-class EmailAuthTest extends TestCase
+class EmailAuthFeature extends TestCase
 {
     use WebTestCaseTrait;
 

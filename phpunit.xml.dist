@@ -19,7 +19,8 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Feature.php">tests</directory>
         </testsuite>
     </testsuites>
 

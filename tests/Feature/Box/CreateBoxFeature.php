@@ -12,7 +12,7 @@ use App\Tests\TestCase;
 /**
  * @psalm-suppress MissingConstructor
  */
-class CreateBoxTest extends TestCase
+class CreateBoxFeature extends TestCase
 {
     use WebTestCaseTrait;
 
@@ -68,7 +68,7 @@ class CreateBoxTest extends TestCase
         $client->loginUser($user);
         $description = $this->faker->sentence();
 
-        $client->request('POST', '/api/v1/boxes', [
+        $this->postJson($client, '/api/v1/boxes', [
             'description' => $description,
         ]);
 

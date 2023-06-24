@@ -9,7 +9,7 @@ use App\Tests\Concern\Factory\BoxFactoryTrait;
 use App\Tests\Concern\WebTestCaseTrait;
 use App\Tests\TestCase;
 
-class CreateFlashcardTest extends TestCase
+final class CreateFlashcardFeature extends TestCase
 {
     use WebTestCaseTrait;
     use BoxFactoryTrait;
