@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Siklid\Application\Auth\Request;
 
-use App\Foundation\Util\Json;
-use App\Foundation\Util\RequestUtil;
-use App\Foundation\Validation\ValidatorInterface;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class LogoutRequestTest extends TestCase
 {
@@ -29,7 +27,7 @@ class LogoutRequestTest extends TestCase
 
         $sut = new LogoutRequest(
             $requestStack,
-            new RequestUtil(new Json(), $this->createMock(ValidatorInterface::class))
+            $this->createMock(ValidatorInterface::class)
         );
 
         $this->assertSame($refreshToken, $sut->refreshToken());
@@ -47,7 +45,7 @@ class LogoutRequestTest extends TestCase
 
         $sut = new LogoutRequest(
             $requestStack,
-            new RequestUtil(new Json(), $this->createMock(ValidatorInterface::class))
+            $this->createMock(ValidatorInterface::class)
         );
 
         $this->assertSame($accessToken, $sut->getAccessToken());
