@@ -7,9 +7,9 @@ namespace App\Tests\Siklid\Application\Auth\Request;
 use App\Siklid\Application\Auth\Request\LogoutRequest;
 use App\Tests\Concern\Util\WithFaker;
 use App\Tests\TestCase;
+use Symblaze\Bundle\Http\Validation\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class LogoutRequestTest extends TestCase
 {
