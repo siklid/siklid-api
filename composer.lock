@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0dd53b7650ed674fe1e220f52164794",
+    "content-hash": "114b4e041bbc7caf9bbbd0f004dc891b",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1973,16 +1973,16 @@
         },
         {
             "name": "symblaze/http-bundle",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symblaze/http-bundle.git",
-                "reference": "4a12a207a96a7ff649ff94ae179a134c8828ca47"
+                "reference": "4f39237d027380dd9821739d6ff3fd83807f9b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symblaze/http-bundle/zipball/4a12a207a96a7ff649ff94ae179a134c8828ca47",
-                "reference": "4a12a207a96a7ff649ff94ae179a134c8828ca47",
+                "url": "https://api.github.com/repos/symblaze/http-bundle/zipball/4f39237d027380dd9821739d6ff3fd83807f9b12",
+                "reference": "4f39237d027380dd9821739d6ff3fd83807f9b12",
                 "shasum": ""
             },
             "require": {
@@ -1997,6 +1997,7 @@
                 "friendsofphp/php-cs-fixer": "^3.17",
                 "phpunit/phpunit": "^10.2",
                 "roave/security-advisories": "dev-latest",
+                "symfony/yaml": "^6.3",
                 "vimeo/psalm": "^5.12"
             },
             "type": "symfony-bundle",
@@ -2018,9 +2019,9 @@
             "description": "The SymBlaze HTTP bundle",
             "support": {
                 "issues": "https://github.com/symblaze/http-bundle/issues",
-                "source": "https://github.com/symblaze/http-bundle/tree/0.0.3"
+                "source": "https://github.com/symblaze/http-bundle/tree/0.0.4"
             },
-            "time": "2023-07-29T10:06:59+00:00"
+            "time": "2023-07-29T15:13:51+00:00"
         },
         {
             "name": "symfony/cache",
